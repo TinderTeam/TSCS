@@ -1,0 +1,9 @@
+C:\Users\asus\Documents\Visual Studio 2008\Projects\TrafficScreen\ScreenManager\bin\Release\ScreenManager.exe
+C:\Users\asus\Documents\Visual Studio 2008\Projects\TrafficScreen\ScreenManager\bin\Release\ScreenManager.pdb
+C:\Users\asus\Documents\Visual Studio 2008\Projects\TrafficScreen\ScreenManager\obj\Release\ResolveAssemblyReference.cache
+C:\Users\asus\Documents\Visual Studio 2008\Projects\TrafficScreen\ScreenManager\obj\Release\ScreenManager.MainForm.resources
+C:\Users\asus\Documents\Visual Studio 2008\Projects\TrafficScreen\ScreenManager\obj\Release\ScreenManager.Properties.Resources.resources
+C:\Users\asus\Documents\Visual Studio 2008\Projects\TrafficScreen\ScreenManager\obj\Release\ScreenManager.ScreenForm.resources
+C:\Users\asus\Documents\Visual Studio 2008\Projects\TrafficScreen\ScreenManager\obj\Release\ScreenManager.csproj.GenerateResource.Cache
+C:\Users\asus\Documents\Visual Studio 2008\Projects\TrafficScreen\ScreenManager\obj\Release\ScreenManager.exe
+C:\Users\asus\Documents\Visual Studio 2008\Projects\TrafficScreen\ScreenManager\obj\Release\ScreenManager.pdb

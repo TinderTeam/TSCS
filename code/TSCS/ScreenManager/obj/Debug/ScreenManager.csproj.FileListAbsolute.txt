@@ -1,0 +1,13 @@
+C:\Users\asus\Documents\Visual Studio 2008\Projects\TrafficScreen\ScreenManager\bin\Debug\ScreenManager.exe
+C:\Users\asus\Documents\Visual Studio 2008\Projects\TrafficScreen\ScreenManager\bin\Debug\ScreenManager.pdb
+C:\Users\asus\Documents\Visual Studio 2008\Projects\TrafficScreen\ScreenManager\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\asus\Documents\Visual Studio 2008\Projects\TrafficScreen\ScreenManager\obj\Debug\ScreenManager.MainForm.resources
+C:\Users\asus\Documents\Visual Studio 2008\Projects\TrafficScreen\ScreenManager\obj\Debug\ScreenManager.Properties.Resources.resources
+C:\Users\asus\Documents\Visual Studio 2008\Projects\TrafficScreen\ScreenManager\obj\Debug\ScreenManager.csproj.GenerateResource.Cache
+C:\Users\asus\Documents\Visual Studio 2008\Projects\TrafficScreen\ScreenManager\obj\Debug\ScreenManager.exe
+C:\Users\asus\Documents\Visual Studio 2008\Projects\TrafficScreen\ScreenManager\obj\Debug\ScreenManager.pdb
+C:\Users\asus\Documents\Visual Studio 2008\Projects\TrafficScreen\ScreenManager\obj\Debug\ScreenManager.ScreenForm.resources
+C:\Users\asus\Documents\Visual Studio 2008\Projects\TrafficScreen\ScreenManager\bin\Debug\ScreenManager.exe.config
+C:\Users\asus\Documents\Visual Studio 2008\Projects\TrafficScreen\ScreenManager\obj\Debug\ScreenManager.Form.EditRoadForm.resources
+C:\Users\asus\Documents\Visual Studio 2008\Projects\TrafficScreen\ScreenManager\obj\Debug\ScreenManager.Model.UI.ComboListView.resources
+C:\Users\asus\Documents\Visual Studio 2008\Projects\TrafficScreen\ScreenManager\obj\Debug\ScreenManager.Form.ScreenEditForm.resources
