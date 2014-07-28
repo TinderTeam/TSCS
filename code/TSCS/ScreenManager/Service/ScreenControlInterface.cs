@@ -71,7 +71,7 @@ namespace ScreenManager.Service
         /// </summary>
         /// <param name="ip"></param>
         /// <returns></returns>
-       ScreenModel connectScreen(String ip);
+       ScreenModel getScreenInfo(String ip);
 
 
     }

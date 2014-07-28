@@ -32,7 +32,17 @@ namespace ScreenManager.Model
            
         }
 
-      
+        public void setRoadNameWithId(String roadID,String roadName)
+        {
+
+            for (int i = 0; i < roadList.Count; i++)
+            {
+                if (roadList[i].RoadID.Equals(roadID))
+                {
+                    roadList[i].RoadName = roadName;
+                }
+            }
+        }
 
         public RoadModel getRoadById(String id)
         {
