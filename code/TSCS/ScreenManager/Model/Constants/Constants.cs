@@ -13,15 +13,45 @@ namespace ScreenManager.Model.Constant
 {
     public static class Constants
     {
-        public static String DEFAULT_COLOR ="无";
+        public static String DEFAULT_COLOR ="无色";
         public static String RED_COLOR ="红色";
         public static String GREEN_COLOR ="绿色";
         public static String YELLOW_COLOR = "黄色";
         public static String ALL_COLOR = "全亮";
 
-        public static String[] colorArray ={RED_COLOR,YELLOW_COLOR,GREEN_COLOR,DEFAULT_COLOR,ALL_COLOR};
 
-     
+        public static String RESERVED_5 = "保留";
+        public static String RESERVED_6 = "保留";
+        public static String RESERVED_7 = "保留";
+        public static String RESERVED_8 = "保留";
+        public static String RESERVED_9 = "保留";
+        public static String RESERVED_10 = "保留";
+        public static String RESERVED_11 = "保留";
+        public static String RESERVED_12 = "保留";
+        public static String RESERVED_13 = "保留";
+        public static String RESERVED_14 = "保留";
+        public static String RESERVED_15 = "保留";
+
+        public static String[] colorArray = { 
+                                                DEFAULT_COLOR,
+                                                RED_COLOR,
+                                                YELLOW_COLOR, 
+                                                GREEN_COLOR,
+                                                ALL_COLOR,
+                                                RESERVED_5,
+                                                RESERVED_6,
+                                                RESERVED_7,
+                                                RESERVED_8,
+                                                RESERVED_9,
+                                                RESERVED_10,
+                                                RESERVED_11,
+                                                RESERVED_12,
+                                                RESERVED_13,
+                                                RESERVED_14,
+                                                RESERVED_15
+                                            };
+
+       
 
 
         public static  Color getColorByName(String str)

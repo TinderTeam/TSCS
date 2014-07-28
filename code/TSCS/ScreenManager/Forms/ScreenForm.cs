@@ -46,7 +46,11 @@ namespace ScreenManager
 
         private void 关闭软屏幕ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            ///Stub
+            
+            ScreenManager.Form.ScreenEditForm sef = new ScreenManager.Form.ScreenEditForm();
+            sef.loadScreen(Stub.Stub.getScreenStub().Last());
+            sef.Show();
         }
 
         private void 搜索屏幕ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -204,7 +208,7 @@ namespace ScreenManager
         {
             ScreenModel screenModel = InitModel();
             ScreenManager.Model.UI.RoadPanel panel = (ScreenManager.Model.UI.RoadPanel)sender;
-            RoadModel roadModel = screenModel.getRoadById(panel.roadID);    
+            RoadModel roadModel = screenModel.getRoadById(panel.Road.RoadID.ToString());    
             roadModel.RoadLenght = screenModel.ScreenLong;
 
             Graphics g = e.Graphics;

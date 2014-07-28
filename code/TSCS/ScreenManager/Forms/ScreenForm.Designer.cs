@@ -508,15 +508,15 @@ namespace ScreenManager
                 // 
                 // labelid
                 // 
-                rv.id = new System.Windows.Forms.Label();
-                rv.id.Text = (i+1).ToString();            
-                rv.id.AutoSize = true;
-                rv.id.Dock = System.Windows.Forms.DockStyle.Fill;
-                rv.id.Location = new System.Drawing.Point(3, 0);
-                rv.id.Name = "roadID_"+i.ToString();
-                rv.id.Size = new System.Drawing.Size(34, 59);
-                rv.id.TabIndex = i;
-                rv.id.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+                rv.LblIndex = new System.Windows.Forms.Label();
+                rv.LblIndex.Text = (i+1).ToString();            
+                rv.LblIndex.AutoSize = true;
+                rv.LblIndex.Dock = System.Windows.Forms.DockStyle.Fill;
+                rv.LblIndex.Location = new System.Drawing.Point(3, 0);
+                rv.LblIndex.Name = "roadID_"+i.ToString();
+                rv.LblIndex.Size = new System.Drawing.Size(34, 59);
+                rv.LblIndex.TabIndex = i;
+                rv.LblIndex.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 
 
                 rv.name = new System.Windows.Forms.Label();
@@ -542,20 +542,20 @@ namespace ScreenManager
                 rv.btn.Click += new System.EventHandler(this.roadEdit);
 
 
-                rv.panel = new RoadPanel(roadModel.RoadID);
-                rv.panel.Dock = System.Windows.Forms.DockStyle.Fill;
-                rv.panel.Location = new System.Drawing.Point(124, 20);
-                rv.panel.Margin = new System.Windows.Forms.Padding(10, 20, 10, 20);
-                rv.panel.Name = "roadPanel_"+i.ToString();
-                rv.panel.Size = new System.Drawing.Size(536, 19);
-                rv.panel.TabIndex = i;
-                rv.panel.Paint += new System.Windows.Forms.PaintEventHandler(this.roadPanel_Paint);
+                rv.PanelView = new RoadPanel(System.Convert.ToInt16(roadModel.RoadID));
+                rv.PanelView.Dock = System.Windows.Forms.DockStyle.Fill;
+                rv.PanelView.Location = new System.Drawing.Point(124, 20);
+                rv.PanelView.Margin = new System.Windows.Forms.Padding(10, 20, 10, 20);
+                rv.PanelView.Name = "roadPanel_"+i.ToString();
+                rv.PanelView.Size = new System.Drawing.Size(536, 19);
+                rv.PanelView.TabIndex = i;
+                rv.PanelView.Paint += new System.Windows.Forms.PaintEventHandler(this.roadPanel_Paint);
 
 
 
-                this.tableLayoutPanel1.Controls.Add(rv.id, 0, i);
+                this.tableLayoutPanel1.Controls.Add(rv.LblIndex, 0, i);
                 this.tableLayoutPanel1.Controls.Add(rv.name, 1, i);            
-                this.tableLayoutPanel1.Controls.Add(rv.panel, 2, i);
+                this.tableLayoutPanel1.Controls.Add(rv.PanelView, 2, i);
                 this.tableLayoutPanel1.Controls.Add(rv.btn, 3, i);
             }
            
