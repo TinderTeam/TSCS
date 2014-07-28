@@ -63,7 +63,7 @@ namespace ScreenManager.Service
         {
             return true;
         }
-        public Boolean setScreenInfo(ScreenModel screenModel)
+        public Boolean setScreenInfo(ScreenBasicInfoModel basicInfo)
         {
             return true;
         }

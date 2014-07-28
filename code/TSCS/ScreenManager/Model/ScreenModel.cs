@@ -7,15 +7,12 @@ namespace ScreenManager.Model
 {
    public class ScreenModel
     {
-        private String screenIP;
 
-        private String screenName="未命名";
-        private int lightLeverA=0;
-        private int lightLeverB=0;
-        private String screenColor = Constant.Constants.DEFAULT_COLOR;
-        private int screenLong = 150;
 
-        public List<RoadModel> roadList = new List<RoadModel>();
+        private ScreenBasicInfoModel basicInfo = new ScreenBasicInfoModel();
+
+       
+       public List<RoadModel> roadList = new List<RoadModel>();
 
 
         public ScreenModel()
@@ -25,7 +22,7 @@ namespace ScreenManager.Model
                 RoadModel rm = new RoadModel();
                 rm.RoadID = i.ToString();
                 rm.BaseColor = Constant.Constants.DEFAULT_COLOR;
-                rm.RoadLenght = screenLong;
+                rm.RoadLenght = this.basicInfo.ScreenLength;
                 rm.RoadName = "";
                 roadList.Add(rm);
             }
@@ -57,52 +54,61 @@ namespace ScreenManager.Model
         }
 
 
-
+        public ScreenBasicInfoModel BasicInfo
+        {
+            get { return basicInfo; }
+            set { basicInfo = value; }
+        }
 
         public int ScreenLong
         {
-            get { return screenLong; }
-            set { screenLong = value; }
+            get { return this.basicInfo.ScreenLength; }
+            set { this.basicInfo.ScreenLength = value; }
         }
 
 
         public String ScreenColor
         {
-            get { return screenColor; }
-            set { screenColor = value; }
+            get { return this.basicInfo.ScreenColor; }
+            set { this.basicInfo.ScreenColor = value; }
         }
 
 
 
 
-        public int LightLeverB
+        public int LightLevelB
         {
-            get { return lightLeverB; }
-            set { lightLeverB = value; }
+            get { return this.basicInfo.LightLevelB; }
+            set { this.basicInfo.LightLevelB = value; }
         }
 
 
-        public int LightLeverA
+        public int LightLevelA
         {
-            get { return lightLeverA; }
-            set { lightLeverA = value; }
+            get { return this.basicInfo.LightLevelA; }
+            set { this.basicInfo.LightLevelA = value; }
         }
        
 
         public String ScreenIP
         {
-            get { return screenIP; }
-            set { screenIP = value; }
+            get { return this.basicInfo.ScreenIP; }
+            set { this.basicInfo.ScreenIP = value; }
         }
        
 
        
         public String ScreenName
         {
-            get { return screenName; }
-            set { screenName = value; }
+            get { return this.basicInfo.ScreenName; }
+            set { this.basicInfo.ScreenName = value; }
         }
 
-       
+
+        public int ScreenColorCtrl
+        {
+            get { return this.basicInfo.ScreenColorCtrl; }
+            set { this.basicInfo.ScreenColorCtrl = value; }
+        }
     }
 }

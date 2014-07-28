@@ -13,6 +13,13 @@ namespace ScreenManager.Model.Constant
 {
     public static class Constants
     {
+
+       
+        public static String AUTO ="自动";
+        public static String MANUL  ="手动";
+        public static String[] colorCtrlArray = { AUTO, MANUL };
+
+
         public static String DEFAULT_COLOR ="无色";
         public static String RED_COLOR ="红色";
         public static String GREEN_COLOR ="绿色";

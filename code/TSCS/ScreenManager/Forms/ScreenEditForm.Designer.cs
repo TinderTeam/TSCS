@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("");
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ScreenEditForm));
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileMnlst = new System.Windows.Forms.ToolStripMenuItem();
@@ -38,13 +38,13 @@
             this.saveMntm = new System.Windows.Forms.ToolStripMenuItem();
             this.exitMntm = new System.Windows.Forms.ToolStripMenuItem();
             this.functionMnlst = new System.Windows.Forms.ToolStripMenuItem();
-            this.搜索屏幕ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.屏幕控制ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.打开屏幕ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.初始化屏幕ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.保存屏幕ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.关闭屏幕ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.屏幕长度配置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.searchScrnMntm = new System.Windows.Forms.ToolStripMenuItem();
+            this.scrnCtrlMnLst = new System.Windows.Forms.ToolStripMenuItem();
+            this.openScrnMntm = new System.Windows.Forms.ToolStripMenuItem();
+            this.initScrnMntm = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveScrnMntm = new System.Windows.Forms.ToolStripMenuItem();
+            this.closeScrnMntm = new System.Windows.Forms.ToolStripMenuItem();
+            this.scrnLengthMntm = new System.Windows.Forms.ToolStripMenuItem();
             this.helpMnlst = new System.Windows.Forms.ToolStripMenuItem();
             this.helpMntm = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutMntm = new System.Windows.Forms.ToolStripMenuItem();
@@ -88,6 +88,9 @@
             this.logoBox = new System.Windows.Forms.PictureBox();
             this.groupScreenInfo = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanelScrnInfo = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.btnScrnEdit = new System.Windows.Forms.Button();
+            this.btnScrnSet = new System.Windows.Forms.Button();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.labelLtB = new System.Windows.Forms.Label();
             this.txtNumB = new System.Windows.Forms.NumericUpDown();
@@ -99,11 +102,11 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.labelLtA = new System.Windows.Forms.Label();
             this.txtNumA = new System.Windows.Forms.NumericUpDown();
-            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.btnScrnEdit = new System.Windows.Forms.Button();
-            this.btnScrnSet = new System.Windows.Forms.Button();
             this.txtIPAdrs = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
+            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.lblctrl = new System.Windows.Forms.Label();
+            this.cmbLightCtrl = new System.Windows.Forms.ComboBox();
             this.numericUpDown4 = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
             this.tableLayoutPanel10 = new System.Windows.Forms.TableLayoutPanel();
@@ -141,11 +144,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.logoBox)).BeginInit();
             this.groupScreenInfo.SuspendLayout();
             this.tableLayoutPanelScrnInfo.SuspendLayout();
+            this.tableLayoutPanel3.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtNumB)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtNumA)).BeginInit();
-            this.tableLayoutPanel3.SuspendLayout();
+            this.tableLayoutPanel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
             this.tableLayoutPanel10.SuspendLayout();
@@ -216,59 +220,60 @@
             // functionMnlst
             // 
             this.functionMnlst.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.搜索屏幕ToolStripMenuItem,
-            this.屏幕控制ToolStripMenuItem,
-            this.屏幕长度配置ToolStripMenuItem});
+            this.searchScrnMntm,
+            this.scrnCtrlMnLst,
+            this.scrnLengthMntm});
             this.functionMnlst.Name = "functionMnlst";
             this.functionMnlst.Size = new System.Drawing.Size(44, 21);
             this.functionMnlst.Text = "功能";
             // 
-            // 搜索屏幕ToolStripMenuItem
+            // searchScrnMntm
             // 
-            this.搜索屏幕ToolStripMenuItem.Name = "搜索屏幕ToolStripMenuItem";
-            this.搜索屏幕ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
-            this.搜索屏幕ToolStripMenuItem.Text = "搜索屏幕";
+            this.searchScrnMntm.Name = "searchScrnMntm";
+            this.searchScrnMntm.Size = new System.Drawing.Size(148, 22);
+            this.searchScrnMntm.Text = "搜索屏幕";
+            this.searchScrnMntm.Click += new System.EventHandler(this.searchScrnMntm_Click);
             // 
-            // 屏幕控制ToolStripMenuItem
+            // scrnCtrlMnLst
             // 
-            this.屏幕控制ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.打开屏幕ToolStripMenuItem,
-            this.初始化屏幕ToolStripMenuItem,
-            this.保存屏幕ToolStripMenuItem,
-            this.关闭屏幕ToolStripMenuItem});
-            this.屏幕控制ToolStripMenuItem.Name = "屏幕控制ToolStripMenuItem";
-            this.屏幕控制ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
-            this.屏幕控制ToolStripMenuItem.Text = "屏幕控制";
+            this.scrnCtrlMnLst.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openScrnMntm,
+            this.initScrnMntm,
+            this.saveScrnMntm,
+            this.closeScrnMntm});
+            this.scrnCtrlMnLst.Name = "scrnCtrlMnLst";
+            this.scrnCtrlMnLst.Size = new System.Drawing.Size(148, 22);
+            this.scrnCtrlMnLst.Text = "屏幕控制";
             // 
-            // 打开屏幕ToolStripMenuItem
+            // openScrnMntm
             // 
-            this.打开屏幕ToolStripMenuItem.Name = "打开屏幕ToolStripMenuItem";
-            this.打开屏幕ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
-            this.打开屏幕ToolStripMenuItem.Text = "打开屏幕";
+            this.openScrnMntm.Name = "openScrnMntm";
+            this.openScrnMntm.Size = new System.Drawing.Size(136, 22);
+            this.openScrnMntm.Text = "打开屏幕";
             // 
-            // 初始化屏幕ToolStripMenuItem
+            // initScrnMntm
             // 
-            this.初始化屏幕ToolStripMenuItem.Name = "初始化屏幕ToolStripMenuItem";
-            this.初始化屏幕ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
-            this.初始化屏幕ToolStripMenuItem.Text = "初始化屏幕";
+            this.initScrnMntm.Name = "initScrnMntm";
+            this.initScrnMntm.Size = new System.Drawing.Size(136, 22);
+            this.initScrnMntm.Text = "初始化屏幕";
             // 
-            // 保存屏幕ToolStripMenuItem
+            // saveScrnMntm
             // 
-            this.保存屏幕ToolStripMenuItem.Name = "保存屏幕ToolStripMenuItem";
-            this.保存屏幕ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
-            this.保存屏幕ToolStripMenuItem.Text = "保存屏幕";
+            this.saveScrnMntm.Name = "saveScrnMntm";
+            this.saveScrnMntm.Size = new System.Drawing.Size(136, 22);
+            this.saveScrnMntm.Text = "保存屏幕";
             // 
-            // 关闭屏幕ToolStripMenuItem
+            // closeScrnMntm
             // 
-            this.关闭屏幕ToolStripMenuItem.Name = "关闭屏幕ToolStripMenuItem";
-            this.关闭屏幕ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
-            this.关闭屏幕ToolStripMenuItem.Text = "关闭屏幕";
+            this.closeScrnMntm.Name = "closeScrnMntm";
+            this.closeScrnMntm.Size = new System.Drawing.Size(136, 22);
+            this.closeScrnMntm.Text = "关闭屏幕";
             // 
-            // 屏幕长度配置ToolStripMenuItem
+            // scrnLengthMntm
             // 
-            this.屏幕长度配置ToolStripMenuItem.Name = "屏幕长度配置ToolStripMenuItem";
-            this.屏幕长度配置ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
-            this.屏幕长度配置ToolStripMenuItem.Text = "屏幕长度配置";
+            this.scrnLengthMntm.Name = "scrnLengthMntm";
+            this.scrnLengthMntm.Size = new System.Drawing.Size(148, 22);
+            this.scrnLengthMntm.Text = "屏幕长度配置";
             // 
             // helpMnlst
             // 
@@ -414,8 +419,8 @@
             this.lstVwSgmt.FullRowSelect = true;
             this.lstVwSgmt.GridLines = true;
             this.lstVwSgmt.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2});
+            listViewItem3,
+            listViewItem4});
             this.lstVwSgmt.Location = new System.Drawing.Point(3, 3);
             this.lstVwSgmt.Name = "lstVwSgmt";
             this.lstVwSgmt.Size = new System.Drawing.Size(258, 313);
@@ -778,6 +783,7 @@
             // 
             this.tableLayoutPanelScrnInfo.ColumnCount = 1;
             this.tableLayoutPanelScrnInfo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanelScrnInfo.Controls.Add(this.tableLayoutPanel3, 0, 12);
             this.tableLayoutPanelScrnInfo.Controls.Add(this.tableLayoutPanel2, 0, 8);
             this.tableLayoutPanelScrnInfo.Controls.Add(this.labelScrnLt, 0, 6);
             this.tableLayoutPanelScrnInfo.Controls.Add(this.cmbScrnClr, 0, 5);
@@ -785,13 +791,13 @@
             this.tableLayoutPanelScrnInfo.Controls.Add(this.labelScrnName, 0, 2);
             this.tableLayoutPanelScrnInfo.Controls.Add(this.txtScrnName, 0, 3);
             this.tableLayoutPanelScrnInfo.Controls.Add(this.tableLayoutPanel1, 0, 7);
-            this.tableLayoutPanelScrnInfo.Controls.Add(this.tableLayoutPanel3, 0, 11);
             this.tableLayoutPanelScrnInfo.Controls.Add(this.txtIPAdrs, 0, 1);
             this.tableLayoutPanelScrnInfo.Controls.Add(this.label7, 0, 0);
+            this.tableLayoutPanelScrnInfo.Controls.Add(this.tableLayoutPanel4, 0, 11);
             this.tableLayoutPanelScrnInfo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanelScrnInfo.Location = new System.Drawing.Point(3, 17);
             this.tableLayoutPanelScrnInfo.Name = "tableLayoutPanelScrnInfo";
-            this.tableLayoutPanelScrnInfo.RowCount = 12;
+            this.tableLayoutPanelScrnInfo.RowCount = 13;
             this.tableLayoutPanelScrnInfo.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanelScrnInfo.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanelScrnInfo.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
@@ -804,8 +810,44 @@
             this.tableLayoutPanelScrnInfo.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanelScrnInfo.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanelScrnInfo.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanelScrnInfo.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanelScrnInfo.Size = new System.Drawing.Size(165, 523);
             this.tableLayoutPanelScrnInfo.TabIndex = 0;
+            // 
+            // tableLayoutPanel3
+            // 
+            this.tableLayoutPanel3.ColumnCount = 2;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.Controls.Add(this.btnScrnEdit, 0, 0);
+            this.tableLayoutPanel3.Controls.Add(this.btnScrnSet, 1, 0);
+            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 320);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 1;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(159, 200);
+            this.tableLayoutPanel3.TabIndex = 13;
+            // 
+            // btnScrnEdit
+            // 
+            this.btnScrnEdit.Location = new System.Drawing.Point(3, 3);
+            this.btnScrnEdit.Name = "btnScrnEdit";
+            this.btnScrnEdit.Size = new System.Drawing.Size(73, 23);
+            this.btnScrnEdit.TabIndex = 0;
+            this.btnScrnEdit.Text = "修改";
+            this.btnScrnEdit.UseVisualStyleBackColor = true;
+            this.btnScrnEdit.Click += new System.EventHandler(this.btnScrnEdit_Click);
+            // 
+            // btnScrnSet
+            // 
+            this.btnScrnSet.Location = new System.Drawing.Point(82, 3);
+            this.btnScrnSet.Name = "btnScrnSet";
+            this.btnScrnSet.Size = new System.Drawing.Size(74, 23);
+            this.btnScrnSet.TabIndex = 1;
+            this.btnScrnSet.Text = "下发";
+            this.btnScrnSet.UseVisualStyleBackColor = true;
+            this.btnScrnSet.Click += new System.EventHandler(this.btnScrnSet_Click);
             // 
             // tableLayoutPanel2
             // 
@@ -835,6 +877,7 @@
             // txtNumB
             // 
             this.txtNumB.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtNumB.Enabled = false;
             this.txtNumB.Location = new System.Drawing.Point(32, 3);
             this.txtNumB.Maximum = new decimal(new int[] {
             500,
@@ -859,6 +902,7 @@
             // cmbScrnClr
             // 
             this.cmbScrnClr.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cmbScrnClr.Enabled = false;
             this.cmbScrnClr.FormattingEnabled = true;
             this.cmbScrnClr.Location = new System.Drawing.Point(3, 130);
             this.cmbScrnClr.Name = "cmbScrnClr";
@@ -890,6 +934,7 @@
             // txtScrnName
             // 
             this.txtScrnName.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtScrnName.Enabled = false;
             this.txtScrnName.Location = new System.Drawing.Point(3, 73);
             this.txtScrnName.Name = "txtScrnName";
             this.txtScrnName.Size = new System.Drawing.Size(159, 21);
@@ -923,6 +968,7 @@
             // txtNumA
             // 
             this.txtNumA.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtNumA.Enabled = false;
             this.txtNumA.Location = new System.Drawing.Point(32, 3);
             this.txtNumA.Maximum = new decimal(new int[] {
             500,
@@ -932,41 +978,6 @@
             this.txtNumA.Name = "txtNumA";
             this.txtNumA.Size = new System.Drawing.Size(124, 21);
             this.txtNumA.TabIndex = 9;
-            // 
-            // tableLayoutPanel3
-            // 
-            this.tableLayoutPanel3.ColumnCount = 2;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Controls.Add(this.btnScrnEdit, 0, 0);
-            this.tableLayoutPanel3.Controls.Add(this.btnScrnSet, 1, 0);
-            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 245);
-            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 1;
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(159, 275);
-            this.tableLayoutPanel3.TabIndex = 10;
-            // 
-            // btnScrnEdit
-            // 
-            this.btnScrnEdit.Location = new System.Drawing.Point(3, 3);
-            this.btnScrnEdit.Name = "btnScrnEdit";
-            this.btnScrnEdit.Size = new System.Drawing.Size(73, 23);
-            this.btnScrnEdit.TabIndex = 0;
-            this.btnScrnEdit.Text = "修改";
-            this.btnScrnEdit.UseVisualStyleBackColor = true;
-            this.btnScrnEdit.Click += new System.EventHandler(this.btnScrnEdit_Click);
-            // 
-            // btnScrnSet
-            // 
-            this.btnScrnSet.Location = new System.Drawing.Point(82, 3);
-            this.btnScrnSet.Name = "btnScrnSet";
-            this.btnScrnSet.Size = new System.Drawing.Size(74, 23);
-            this.btnScrnSet.TabIndex = 1;
-            this.btnScrnSet.Text = "下发";
-            this.btnScrnSet.UseVisualStyleBackColor = true;
-            this.btnScrnSet.Click += new System.EventHandler(this.btnScrnSet_Click);
             // 
             // txtIPAdrs
             // 
@@ -987,6 +998,43 @@
             this.label7.Size = new System.Drawing.Size(41, 12);
             this.label7.TabIndex = 12;
             this.label7.Text = "IP地址";
+            // 
+            // tableLayoutPanel4
+            // 
+            this.tableLayoutPanel4.ColumnCount = 1;
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel4.Controls.Add(this.lblctrl, 0, 0);
+            this.tableLayoutPanel4.Controls.Add(this.cmbLightCtrl, 0, 1);
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 245);
+            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
+            this.tableLayoutPanel4.RowCount = 2;
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(159, 69);
+            this.tableLayoutPanel4.TabIndex = 14;
+            // 
+            // lblctrl
+            // 
+            this.lblctrl.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.lblctrl.AutoSize = true;
+            this.lblctrl.Location = new System.Drawing.Point(3, 11);
+            this.lblctrl.Name = "lblctrl";
+            this.lblctrl.Size = new System.Drawing.Size(77, 12);
+            this.lblctrl.TabIndex = 0;
+            this.lblctrl.Text = "亮度控制方式";
+            // 
+            // cmbLightCtrl
+            // 
+            this.cmbLightCtrl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cmbLightCtrl.Enabled = false;
+            this.cmbLightCtrl.FormattingEnabled = true;
+            this.cmbLightCtrl.Items.AddRange(new object[] {
+            "自动",
+            "手动"});
+            this.cmbLightCtrl.Location = new System.Drawing.Point(3, 37);
+            this.cmbLightCtrl.Name = "cmbLightCtrl";
+            this.cmbLightCtrl.Size = new System.Drawing.Size(153, 20);
+            this.cmbLightCtrl.TabIndex = 1;
             // 
             // numericUpDown4
             // 
@@ -1199,13 +1247,15 @@
             this.groupScreenInfo.ResumeLayout(false);
             this.tableLayoutPanelScrnInfo.ResumeLayout(false);
             this.tableLayoutPanelScrnInfo.PerformLayout();
+            this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtNumB)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtNumA)).EndInit();
-            this.tableLayoutPanel3.ResumeLayout(false);
+            this.tableLayoutPanel4.ResumeLayout(false);
+            this.tableLayoutPanel4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
             this.tableLayoutPanel10.ResumeLayout(false);
@@ -1260,10 +1310,7 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Label labelLtA;
         private System.Windows.Forms.NumericUpDown txtNumA;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.TableLayoutPanel paintPanel;
-        private System.Windows.Forms.Button btnScrnEdit;
-        private System.Windows.Forms.Button btnScrnSet;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
         private System.Windows.Forms.ListView lstVwSgmt;
         private System.Windows.Forms.ColumnHeader sgmtID;
@@ -1311,16 +1358,22 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
         private System.Windows.Forms.Button btnDltSgmt;
         private System.Windows.Forms.Button btnAddSgmt;
-        private System.Windows.Forms.ToolStripMenuItem 屏幕控制ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 打开屏幕ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 保存屏幕ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 关闭屏幕ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 搜索屏幕ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 初始化屏幕ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 屏幕长度配置ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem scrnCtrlMnLst;
+        private System.Windows.Forms.ToolStripMenuItem openScrnMntm;
+        private System.Windows.Forms.ToolStripMenuItem saveScrnMntm;
+        private System.Windows.Forms.ToolStripMenuItem closeScrnMntm;
+        private System.Windows.Forms.ToolStripMenuItem searchScrnMntm;
+        private System.Windows.Forms.ToolStripMenuItem initScrnMntm;
+        private System.Windows.Forms.ToolStripMenuItem scrnLengthMntm;
         private System.Windows.Forms.Label txtIPAdrs;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label indexLBL;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
+        private System.Windows.Forms.Button btnScrnEdit;
+        private System.Windows.Forms.Button btnScrnSet;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
+        private System.Windows.Forms.Label lblctrl;
+        private System.Windows.Forms.ComboBox cmbLightCtrl;
     }
 }

@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using ScreenManager.Model;
 using ScreenManager.Model.UI;
-
+using ScreenManager.Service;
 namespace ScreenManager.Form
 {
     public partial class ScreenEditForm : System.Windows.Forms.Form
@@ -16,7 +16,9 @@ namespace ScreenManager.Form
 
 
         private ScreenModel screenModel;
-        private RoadListView roadListView; 
+        private RoadListView roadListView;
+        private RoadView selcetedRoad;
+       
         public ScreenEditForm()
         {
            
@@ -33,9 +35,11 @@ namespace ScreenManager.Form
         public void initComponentsContent()
         {
             this.cmbScrnClr.Items.AddRange(Model.Constant.Constants.colorArray);
-            this.cmbRoad.Items.AddRange(Model.Constant.Constants.colorArray);
+            this.cmbScrnClr.Items.AddRange(Model.Constant.Constants.colorCtrlArray);
 
 
+
+            List<String> roadNameList = new List<String>();
             List<RoadView> viewList = new List<RoadView>();
 
 
@@ -67,6 +71,7 @@ namespace ScreenManager.Form
                 textRoad.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
                 textRoad.TextChanged += new System.EventHandler(this.roadNameChanged);
 
+                roadNameList.Add(textRoad.Text);
                 // 
                 // panelView
                 // 
@@ -90,8 +95,9 @@ namespace ScreenManager.Form
                 this.paintPanel.Controls.Add(textRoad, 1, i);
                 this.paintPanel.Controls.Add(panelView, 2, i);
             }
+
             roadListView = new RoadListView(viewList);
-           
+            this.cmbRoad.Items.AddRange(roadNameList.ToArray());
 
            
         }
@@ -124,8 +130,8 @@ namespace ScreenManager.Form
             this.txtIPAdrs.Text = screenModel.ScreenIP;
             this.txtScrnName.Text = screenModel.ScreenName;
             this.cmbScrnClr.Text = screenModel.ScreenColor;
-            this.txtNumA.Value = screenModel.LightLeverA;
-            this.txtNumB.Value = screenModel.LightLeverB;
+            this.txtNumA.Value = screenModel.LightLevelA;
+            this.txtNumB.Value = screenModel.LightLevelB;
         }
 
         public void refrashView()
@@ -182,12 +188,36 @@ namespace ScreenManager.Form
         /// <param name="e"></param>
         private void btnScrnEdit_Click(object sender, EventArgs e)
         {
+            if (this.btnScrnEdit.Text.Equals("修改"))
+            {
+                scrnInfoActivation(true);
+                this.btnScrnEdit.Text= "取消";
+            }
+            else {
+
+                txtNumA.Value= this.ScreenModel.LightLevelA;
+                txtNumB.Value = this.ScreenModel.LightLevelB; 
+                cmbScrnClr.Text= this.ScreenModel.ScreenColor;
+               txtScrnName.Text= this.screenModel.ScreenName ;
+               cmbScrnClr.SelectedIndex= this.screenModel.ScreenColorCtrl ;
+          
+                scrnInfoActivation(false);
+                this.btnScrnEdit.Text = "修改";
+            }
+           
 
         }
 
         private void btnScrnSet_Click(object sender, EventArgs e)
         {
-
+            this.ScreenModel.LightLevelA = System.Convert.ToInt16(txtNumA.Value);
+            this.ScreenModel.LightLevelB = System.Convert.ToInt16(txtNumB.Value);
+            this.ScreenModel.ScreenColor = cmbScrnClr.Text;
+            this.screenModel.ScreenName = txtScrnName.Text;
+            this.screenModel.ScreenColorCtrl = cmbScrnClr.SelectedIndex;
+            ScreenManager.Service.ScreenControlInterface service = new ScreenManager.Service.ScreenControlImpl();
+            service.setScreenInfo(this.screenModel.BasicInfo);
+            scrnInfoActivation(false);
         }
 
 
@@ -245,14 +275,39 @@ namespace ScreenManager.Form
         private void btnSet_Click(object sender, EventArgs e)
         {
 
+                   
         }
 
         private void lstVwSgmt_MouseClick(object sender, MouseEventArgs e)
         {
+            ListView lv = (ListView)sender;
+           
+            if (lv.SelectedItems.Count>0) {
+                ListViewItem item = lv.SelectedItems[lv.SelectedItems.Count - 1];
 
+                if (this.selcetedRoad == null)
+                {
+                    item.BackColor = Color.Blue;
+                    item.ForeColor = Color.White;
+
+                }
+                else if (this.selcetedRoad.Equals(lv.SelectedItems[lv.SelectedItems.Count-1]))
+                {
+                    // reselected
+                    ;
+                }
+                else
+                {
+                    // selected Other
+
+
+
+                    item.BackColor = Color.Blue;
+                    item.ForeColor = Color.White;
+                }
+                
+            }
         }
-
-
 
 
         public ScreenModel ScreenModel
@@ -268,9 +323,44 @@ namespace ScreenManager.Form
 
         }
 
-     
+        /// <summary>
+        /// search screen by ip segment
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void searchScrnMntm_Click(object sender, EventArgs e)
+        {
+            MainForm mainForm = new MainForm(this);
+            mainForm.Show();
+        }
 
 
+
+        private void selectedItem(ListViewItem item)
+        {
+           
+
+        }
+
+
+
+        private void scrnInfoActivation(Boolean b)
+        {
+            txtNumA.Enabled=b;
+            txtNumB.Enabled=b;
+            cmbScrnClr.Enabled=b;
+            txtScrnName.Enabled=b;
+            cmbScrnClr.Enabled=b;
+            cmbLightCtrl.Enabled = b;
+        }
+
+
+        public RoadView SelcetedRoad
+        {
+            get { return selcetedRoad; }
+            set { selcetedRoad = value; }
+        }
+             
 
 
     }

@@ -19,8 +19,8 @@ namespace ScreenManager.Stub
                 m.ScreenIP = "192.168.1." + i.ToString();
                 m.ScreenName = "Screen_" + i.ToString();
                 m.ScreenColor = i.ToString();
-                m.LightLeverA = i;
-                m.LightLeverB = i+1;
+                m.LightLevelA = i;
+                m.LightLevelB = i+1;
                 for (int j = 0; j < 10; j++)
                 {
                     m.roadList[j] = getRoadStub(j.ToString());
