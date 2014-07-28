@@ -8,20 +8,22 @@ namespace ScreenManager.Model
     public class SegmentModel
     {
 
-        public SegmentModel(String id)
+        int segmentID;
+        int segmentColor = 0;
+        String segmentName="未命名";
+
+        SegmentAddress address = new SegmentAddress();
+
+
+        public SegmentModel(int id)
         {
             this.SegmentID = id;
         }
 
         public SegmentModel()
         {
-            new SegmentModel("");
+            new SegmentModel(0);
         }
-
-        String segmentID;
-        String segmentColor = Constant.Constants.DEFAULT_COLOR;
-        String segmentName="未命名";
-        SegmentAddress address = new SegmentAddress();
 
 
         public SegmentAddress Address
@@ -30,13 +32,13 @@ namespace ScreenManager.Model
             set { address = value; }
         }
 
-        public String SegmentColor
+        public int SegmentColor
         {
             get { return segmentColor; }
             set { segmentColor = value; }
         }
         
-        public String SegmentID
+        public int SegmentID
         {
             get { return segmentID; }
             set { segmentID = value; }

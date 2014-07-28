@@ -38,7 +38,7 @@ namespace ScreenManager.Stub
 
             RoadModel roadModel = new RoadModel();
             roadModel.BaseColor = ScreenManager.Model.Constant.Constants.DEFAULT_COLOR;
-            roadModel.RoadID = id;
+            roadModel.RoadID = System.Convert.ToInt16(id);
             roadModel.RoadName = "RoadStub" + id;
             List<SegmentModel> sl = new List<SegmentModel>();
 
@@ -48,10 +48,10 @@ namespace ScreenManager.Stub
 
             for(int i=0;i<10;i++){
                 SegmentModel sm = new SegmentModel();
-                sm.SegmentColor = rolorArr[i%3];
+                sm.SegmentColor =i%3;
                 sm.Address.Start = k;
                 sm.Address.End = k+15;
-                sm.SegmentID = id + "-"+i;
+                sm.SegmentID =i;
                 sm.SegmentName = id + "-" + i;
                 k = k + 15;
                 sl.Add(sm);

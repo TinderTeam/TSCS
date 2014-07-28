@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("");
-            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ScreenEditForm));
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileMnlst = new System.Windows.Forms.ToolStripMenuItem();
@@ -418,9 +418,10 @@
             this.lstVwSgmt.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lstVwSgmt.FullRowSelect = true;
             this.lstVwSgmt.GridLines = true;
+            this.lstVwSgmt.HideSelection = false;
             this.lstVwSgmt.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem3,
-            listViewItem4});
+            listViewItem1,
+            listViewItem2});
             this.lstVwSgmt.Location = new System.Drawing.Point(3, 3);
             this.lstVwSgmt.Name = "lstVwSgmt";
             this.lstVwSgmt.Size = new System.Drawing.Size(258, 313);
@@ -503,6 +504,7 @@
             // cmbRdClr
             // 
             this.cmbRdClr.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cmbRdClr.Enabled = false;
             this.cmbRdClr.FormattingEnabled = true;
             this.cmbRdClr.Location = new System.Drawing.Point(3, 211);
             this.cmbRdClr.Name = "cmbRdClr";
@@ -539,6 +541,7 @@
             // numStart
             // 
             this.numStart.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.numStart.Enabled = false;
             this.numStart.Location = new System.Drawing.Point(3, 3);
             this.numStart.Maximum = new decimal(new int[] {
             500,
@@ -553,6 +556,7 @@
             // numEnd
             // 
             this.numEnd.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.numEnd.Enabled = false;
             this.numEnd.Location = new System.Drawing.Point(126, 3);
             this.numEnd.Maximum = new decimal(new int[] {
             500,
@@ -613,6 +617,7 @@
             // cmbRoad
             // 
             this.cmbRoad.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cmbRoad.Enabled = false;
             this.cmbRoad.FormattingEnabled = true;
             this.cmbRoad.Location = new System.Drawing.Point(3, 75);
             this.cmbRoad.Name = "cmbRoad";

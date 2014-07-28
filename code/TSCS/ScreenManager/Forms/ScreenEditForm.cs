@@ -17,8 +17,8 @@ namespace ScreenManager.Form
 
         private ScreenModel screenModel;
         private RoadListView roadListView;
-        private RoadView selcetedRoad;
-       
+        private ListViewItem selcetedItem;
+
         public ScreenEditForm()
         {
            
@@ -35,8 +35,8 @@ namespace ScreenManager.Form
         public void initComponentsContent()
         {
             this.cmbScrnClr.Items.AddRange(Model.Constant.Constants.colorArray);
-            this.cmbScrnClr.Items.AddRange(Model.Constant.Constants.colorCtrlArray);
-
+            this.cmbLightCtrl.Items.AddRange(Model.Constant.Constants.colorCtrlArray);
+            this.cmbRdClr.Items.AddRange(Model.Constant.Constants.colorArray);
 
 
             List<String> roadNameList = new List<String>();
@@ -146,27 +146,35 @@ namespace ScreenManager.Form
         }
 
         public void refrashSgmtList() {
+
+            int selectedID=-1;
+            if (this.selcetedItem != null) {
+                selectedID=this.selcetedItem.Index;
+            }
+            
+
             this.lstVwSgmt.Items.Clear();
-            List<System.Windows.Forms.ListViewItem> listView = new List<System.Windows.Forms.ListViewItem>() ;
-            int k=0;
-            for (int i = 0; i < screenModel.roadList.Count; i++)
+            for (int i = 0; i < screenModel.getSegmentList().Count; i++)
             {
-                for (int j = 0; j < screenModel.roadList[i].SegmentList.Count; j++)
-                {
+              
                     String[] itemString = new String[5];
-                    itemString[0]=k.ToString();
-                    itemString[1]= screenModel.roadList[i].RoadName;
-                    itemString[2]= screenModel.roadList[i].SegmentList[j].Address.Start.ToString();
-                    itemString[3]= screenModel.roadList[i].SegmentList[j].Address.End.ToString();
-                    itemString[4]= screenModel.roadList[i].SegmentList[j].SegmentColor;
+                    itemString[0]= screenModel.getSegmentList()[i].SegmentID.ToString();
+                    itemString[1] = screenModel.getRoadModelBySegmentId(screenModel.getSegmentList()[i].SegmentID).RoadName;
+                    itemString[2] = screenModel.getSegmentList()[i].Address.Start.ToString();
+                    itemString[3] = screenModel.getSegmentList()[i].Address.End.ToString();
+                    itemString[4]= ScreenManager.Model.Constant.Constants.colorArray[screenModel.getSegmentList()[i].SegmentColor];
 
                     System.Windows.Forms.ListViewItem item= new System.Windows.Forms.ListViewItem(itemString);
-                    listView.Add(item);
-                    k++;
-                }
+
+                    this.lstVwSgmt.Items.Add(item);
+           
             }
 
-            this.lstVwSgmt.Items.AddRange(listView.ToArray());
+
+            if (selectedID !=-1)
+            {
+                selectItem(this.lstVwSgmt.Items[selectedID]);
+            }
           
         }
 
@@ -239,42 +247,110 @@ namespace ScreenManager.Form
 
         private void cmbRoad_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+         
         }
 
         private void numStart_ValueChanged(object sender, EventArgs e)
         {
+            if (this.selcetedItem != null)
+            {
+                System.Windows.Forms.NumericUpDown num = (System.Windows.Forms.NumericUpDown)sender;
+                this.ScreenModel.getSegmentList()[selcetedItem.Index].Address.Start = System.Convert.ToInt16(num.Value);
+                refrashSgmtList();
+                refrashView();
+            }
+            else
+            { 
 
+            }
         }
 
         private void numEnd_ValueChanged(object sender, EventArgs e)
         {
+            if (this.selcetedItem != null)
+            {
+                System.Windows.Forms.NumericUpDown num = (System.Windows.Forms.NumericUpDown)sender;
+                this.ScreenModel.getSegmentList()[selcetedItem.Index].Address.End = System.Convert.ToInt16(num.Value);
+                refrashSgmtList();
+                refrashView();
+            }
+            else
+            {
 
+            }
         }
 
         private void cmbRdClr_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+            ComboBox combBox = (ComboBox)sender;
+
+            if (this.selcetedItem != null)
+            {
+
+                this.ScreenModel.getSegmentList()[selcetedItem.Index].SegmentColor = combBox.SelectedIndex;
+         
+                refrashSgmtList();
+                refrashView();
+                refrashSgmtInfo();
+
+            }
+            else
+            {
+                ;
+            }
         }
 
         private void btnAddSgmt_Click(object sender, EventArgs e)
         {
+             this.ScreenModel.createSegment();
 
+             refrashSgmtList();
+             refrashView();
+             refrashSgmtInfo();
         }
 
         private void btnDltSgmt_Click(object sender, EventArgs e)
         {
+    
+            if (this.selcetedItem != null)
+            {
+              
+                this.ScreenModel.deleteByIndex(this.selcetedItem.Index);
+                cancelSelectedItem(this.selcetedItem);
+                refrashSgmtList();
+                refrashView();
+                refrashSgmtInfo();
 
+            }
+            else
+            {
+                ;
+            }
+        
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnDefault_Click(object sender, EventArgs e)
         {
+            this.ScreenModel.initRoadList();
+            this.refrashSgmtInfo();
+            this.refrashSgmtList();
+            this.refrashView();
 
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSet_Click(object sender, EventArgs e)
         {
-
+            ScreenManager.Service.ScreenControlInterface service = new ScreenManager.Service.ScreenControlImpl();
+            service.setScreenSegment(this.ScreenModel);
                    
         }
 
@@ -284,26 +360,22 @@ namespace ScreenManager.Form
            
             if (lv.SelectedItems.Count>0) {
                 ListViewItem item = lv.SelectedItems[lv.SelectedItems.Count - 1];
-
-                if (this.selcetedRoad == null)
+                if (this.selcetedItem == null)
                 {
-                    item.BackColor = Color.Blue;
-                    item.ForeColor = Color.White;
-
+                    selectItem(item);
                 }
-                else if (this.selcetedRoad.Equals(lv.SelectedItems[lv.SelectedItems.Count-1]))
+                else if (this.selcetedItem.Equals(lv.SelectedItems[lv.SelectedItems.Count-1]))
                 {
-                    // reselected
-                    ;
+                    // cancel
+                    cancelSelectedItem(item);
+                    lv.SelectedItems.Clear();
                 }
-                else
+                else 
                 {
                     // selected Other
-
-
-
-                    item.BackColor = Color.Blue;
-                    item.ForeColor = Color.White;
+                    cancelSelectedItem(this.selcetedItem);
+                    lv.SelectedItems.Clear();
+                    selectItem(item);
                 }
                 
             }
@@ -335,13 +407,59 @@ namespace ScreenManager.Form
         }
 
 
-
-        private void selectedItem(ListViewItem item)
+        /// <summary>
+        /// selcted
+        /// </summary>
+        /// <param name="item"></param>
+        private void selectItem(ListViewItem item)
         {
-           
-
+            item.BackColor = Color.Blue;
+            item.ForeColor = Color.White;
+            sgmtInfoActivation(true);
+            loadSelectedSegmentInfo(item);
+            this.SelcetedItem = item;
         }
 
+
+        private void cancelSelectedItem(ListViewItem item)
+        {
+            item.BackColor = Color.White;
+            item.ForeColor = Color.Black;
+            sgmtInfoActivation(false);
+            this.SelcetedItem = null;
+            loadSelectedSegmentInfo(null);
+        }
+
+        /// <summary>
+        /// 
+        /// 
+        /// </summary>
+        /// <param name="item"></param>
+        private void loadSelectedSegmentInfo(ListViewItem item)
+        {
+
+           
+            if (item== null)
+            {
+
+                this.txtSgmtName.Text = "";
+                this.cmbRoad.Text = "";
+                this.numStart.Value = 0;
+                this.numEnd.Value =0;
+                this.cmbRdClr.Text  ="";
+            }
+            else {
+                this.txtSgmtName.Text = item.SubItems[0].Text;
+                this.cmbRoad.Text = item.SubItems[1].Text;
+                this.numStart.Value = System.Convert.ToInt16(item.SubItems[2].Text);
+                this.numEnd.Value = System.Convert.ToInt16(item.SubItems[3].Text);
+                this.cmbRdClr.Text = item.SubItems[4].Text;
+            }
+
+    
+        }
+
+     
 
 
         private void scrnInfoActivation(Boolean b)
@@ -354,14 +472,22 @@ namespace ScreenManager.Form
             cmbLightCtrl.Enabled = b;
         }
 
-
-        public RoadView SelcetedRoad
+        private void sgmtInfoActivation(Boolean b)
         {
-            get { return selcetedRoad; }
-            set { selcetedRoad = value; }
+            cmbRoad.Enabled = b;
+            numStart.Enabled = b;
+            numEnd.Enabled = b;
+            cmbRdClr.Enabled = b;
+            btnDltSgmt.Enabled = b;
+          
         }
-             
 
+        public ListViewItem SelcetedItem
+        {
+            get { return selcetedItem; }
+            set { selcetedItem = value; }
+        }
+       
 
     }
 }

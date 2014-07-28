@@ -9,7 +9,7 @@ namespace ScreenManager.Model
     {
         String baseColor=Constants.DEFAULT_COLOR;
         String rodeName;
-        String roadID;
+        int roadID;
         int roadLenght=150;
 
         List<SegmentModel> segmentList = new List<SegmentModel>();
@@ -36,9 +36,16 @@ namespace ScreenManager.Model
             }
         }
 
-        public SegmentModel getSegmentModelByIndex(String id)
+        public SegmentModel getSegmentModelByID(int  id)
         {
-            return segmentList[ Convert.ToInt16(id)];
+            for (int i = 0; i < this.SegmentList.Count; i++)
+            {
+                if (this.SegmentList[i].SegmentID == id)
+                {
+                    return this.SegmentList[i];
+                }
+            }
+            return null;
         }
 
         public int RoadLenght
@@ -59,7 +66,7 @@ namespace ScreenManager.Model
             set { baseColor = value; }
         }
 
-        public String RoadID
+        public int RoadID
         {
             get { return roadID; }
             set { roadID = value; }

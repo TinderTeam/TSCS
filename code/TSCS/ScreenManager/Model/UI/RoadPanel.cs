@@ -23,7 +23,7 @@ namespace ScreenManager.Model.UI
         public RoadPanel(int id)
         {
             road  =new RoadModel();
-            road.RoadID = id.ToString() ;
+            road.RoadID = id ;
           
       
         }
@@ -89,7 +89,7 @@ namespace ScreenManager.Model.UI
             //draw Background
             Graphics g = CreateGraphics();
 
-            Rectangle r = new Rectangle(0, 0, this.Width - 1, this.Height - 1);
+            Rectangle r = new Rectangle(0, 0, this.Width , this.Height - 1);
             SolidBrush b = new SolidBrush(ScreenManager.Model.Constant.Constants.getColorByName(road.BaseColor));
             g.FillRectangle(b, r);
         }
@@ -128,7 +128,7 @@ namespace ScreenManager.Model.UI
             int startInt = (int)(startPoint * (double)length);
             int endInt = (int)(endPoint * (double)length);
             Rectangle rectangel = new Rectangle(startInt, 0, endInt - startInt, this.Height - 1);
-            SolidBrush brush = new SolidBrush(ScreenManager.Model.Constant.Constants.getColorByName(segment.SegmentColor));
+            SolidBrush brush = new SolidBrush(ScreenManager.Model.Constant.Constants.getColorByName(ScreenManager.Model.Constant.Constants.colorArray[segment.SegmentColor]));
             g.FillRectangle(brush, rectangel);
 
         }
