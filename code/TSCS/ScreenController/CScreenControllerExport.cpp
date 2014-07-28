@@ -13,10 +13,17 @@ CSCREENCONTROLLER_API int fnScreenController(void)
 
 CSCREENCONTROLLER_API bool connectScreen(char * ipAddr)
 {
-	bool result = CInstanceFactory::getInstance()->getController()->connectScreen(ipAddr);
+	if(NULL == ipAddr)
+	{
+		LOG_ERROR("null point of ipAddr");
+		return false;
+	}
+	bool result = CInstanceFactory::getInstance()->getController()->connectScreen(std::string(ipAddr));
 	
 	return result;
 }
+
+ 
 
 
 CSCREENCONTROLLER_API bool initScreen()
@@ -47,7 +54,12 @@ CSCREENCONTROLLER_API char * getScreenName()
 
 CSCREENCONTROLLER_API bool setScreenName(char * name)
 {
-	bool result = CInstanceFactory::getInstance()->getController()->setScreenName(name);
+	if(NULL == name)
+	{
+		LOG_ERROR("null point of screen name");
+		return false;
+	}
+	bool result = CInstanceFactory::getInstance()->getController()->setScreenName(std::string(name));
 	return result;
 }
 
@@ -61,6 +73,21 @@ CSCREENCONTROLLER_API bool getRoadInfo(ROAD_INFO raodInfo[],int length)
 CSCREENCONTROLLER_API bool setRoadInfo(ROAD_INFO raodInfo[],int length)
 {
 	bool result = CInstanceFactory::getInstance()->getController()->setRoadInfo(raodInfo,length);
+	return result;
+}
+
+CSCREENCONTROLLER_API bool setScreenLight(SCREEN_LIGHT_INFO & lightInfo)
+{
+    bool result = CInstanceFactory::getInstance()->getController()->getScreenLight(lightInfo);
+
+	return result;
+
+}
+
+CSCREENCONTROLLER_API bool getScreenLight(SCREEN_LIGHT_INFO & lightInfo)
+{
+    bool result = CInstanceFactory::getInstance()->getController()->getScreenLight(lightInfo);
+
 	return result;
 }
 

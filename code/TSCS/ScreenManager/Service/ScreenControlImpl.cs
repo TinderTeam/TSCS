@@ -26,9 +26,28 @@ namespace ScreenManager.Service
                 return screenList;
             }
             List<String> ipList = IPAddrHandleUtil.getIPListFromIPSegment(start, end);
-            
-            
-            return null;
+
+            ScreenListModel screenList = new ScreenListModel();
+            for (int i = 0; i < ipList.Count; i++)
+            {
+                bool result = ScreenControlDllOperate.connectScreenByDLL();
+                if (result)
+                {
+                    String screenName = ScreenControlDllOperate.getScreenNameByDll();
+
+                    ScreenModel screen = new ScreenModel();
+                    screen.ScreenIP = ipList[i];
+                    screen.ScreenName = screenName;
+                    screenList.List.Add(screen);
+                    ScreenControlDllOperate.closeConnectByDll();
+                }
+                else
+                {
+                    log.Error("can not find the screen with ip address ." + ipList[i]);
+                }
+
+            }
+            return screenList;
         }
         public Boolean setScreenLength(int length)
         {

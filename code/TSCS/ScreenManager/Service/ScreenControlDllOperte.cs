@@ -8,11 +8,11 @@ using ScreenManager.Model;
 namespace ScreenManager.Service
 {
     [StructLayout(LayoutKind.Sequential)]
-    public struct SCREEN_INFO
+    public struct SCREEN_LIGHT_INFO
     {
-        public int roadNum;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
-        public string roadName;
+	    int lightCtr;      
+	    int lightA;
+	    int lightB;
     }
     [StructLayout(LayoutKind.Sequential)]
     public struct ROAD_INFO
@@ -105,12 +105,25 @@ namespace ScreenManager.Service
             Marshal.Copy(ptArr, 0, pt, 1); //拷贝指针数组  
 
 
-            bool result = getRoadInfo(pt, roadNum);
+            bool result = setRoadInfo(pt, roadNum);
 
 
             return result;
         }
 
+        [DllImport("ScreenController.dll", EntryPoint = "setScreenLight")]
+        private static extern bool setScreenLight(ref SCREEN_LIGHT_INFO lightInfo);
+        public static bool setScreenInfoByDll(ScreenBasicInfoModel screenBaiscInfo)
+        {
+ 
+
+            SCREEN_LIGHT_INFO screenLight = SCREEN_LIGHT_INFO();
+ 
+            bool result = setScreenInfo(screenLight);
+
+
+            return result;
+        }
                 
         [DllImport("ScreenController.dll", EntryPoint = "setScreenOff")]
         private static extern bool setScreenOff();
@@ -131,6 +144,13 @@ namespace ScreenManager.Service
         public static bool saveScreenByDll()
         {
             return saveScreen();
+        }
+
+        [DllImport("ScreenController.dll", EntryPoint = "closeConnect")]
+        private static extern bool closeConnect();
+        public static bool closeConnectByDll()
+        {
+            return closeConnect();
         }
     }
 }

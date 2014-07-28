@@ -12,7 +12,7 @@ ControllerInterface::~ControllerInterface(void)
 
 }
 
-bool ControllerInterface::connectScreen(std::string ipAddr)
+bool ControllerInterface::connectScreen(std::string & ipAddr)
 {
 	
 	LOG_INFO("connect to screen,the ip address is: ");
@@ -42,7 +42,7 @@ bool ControllerInterface::initScreen(void)
 	return result;
 }
 
-bool ControllerInterface::setScreenName(std::string name)
+bool ControllerInterface::setScreenName(std::string & name)
 {
 	 
 	//get the description from screen
@@ -133,9 +133,42 @@ bool ControllerInterface::setRoadInfo(ROAD_INFO roadInfo[],int length)
 
 	bool result =this->sendCmd(sendData);
 
-	return true;
+	return result;
 }
 
+bool ControllerInterface::setScreenLight(SCREEN_LIGHT_INFO & lightInfo)
+{
+	std::string data;
+	data.push_back((char)lightInfo.lightCtr);
+	data.push_back((char)lightInfo.lightA);
+	data.push_back((char)lightInfo.lightB);
+	std::string sendData = makeSendData(CMD_SET_L,data);
+
+	bool result =this->sendCmd(sendData);
+	return result;
+}
+bool ControllerInterface::getScreenLight(SCREEN_LIGHT_INFO & lightInfo)
+{
+	std::string sendData = makeSendData(CMD_GET_L,"");
+
+	std::string revData;
+	bool result = this->getData(sendData,revData);
+ 
+	if(!result)
+	{
+		LOG_ERROR("get screen light failed");
+	}
+
+	if(revData.length()>=3)
+	{
+		lightInfo.lightCtr = revData[0];
+		lightInfo.lightA = revData[1];
+		lightInfo.lightB = revData[2];
+
+	}
+
+	return result;
+}
 
 std::string ControllerInterface::getScreenDesp()
 {
@@ -178,7 +211,7 @@ int ControllerInterface::getScreenColor()
 	
 	return color;
 }
-bool ControllerInterface::setScreenDisp(std::string segment)
+bool ControllerInterface::setScreenDisp(std::string & segment)
 {
 	
 	std::string sendData = makeSendData(CMD_SET_DESP,segment);
@@ -196,7 +229,7 @@ bool ControllerInterface::setScreenDisp(std::string segment)
 
 }
 
-bool ControllerInterface::setScreenIpAddr(std::string ipAddr)
+bool ControllerInterface::setScreenIpAddr(std::string & ipAddr)
 {
 	std::vector< std::string>  ipList = StringUtil::split(ipAddr,std::string(IP_SPLIT_FLAG));
 
@@ -283,7 +316,7 @@ bool ControllerInterface::setScreenOff(void)
 }
 
 
-std::string ControllerInterface::makeSendData(std::string cmdCode,std::string data)
+std::string ControllerInterface::makeSendData(std::string cmdCode,std::string  data)
 {
    std::string  sendData;
  
@@ -306,7 +339,7 @@ std::string ControllerInterface::makeSendData(std::string cmdCode,std::string da
    return sendData;
 }
 
-bool ControllerInterface::sendCmd(std::string sendData)
+bool ControllerInterface::sendCmd(std::string & sendData)
 {
 	std::string revData;
 
@@ -322,7 +355,7 @@ bool ControllerInterface::sendCmd(std::string sendData)
 	return result;
 
 }
-bool ControllerInterface::getData(std::string sendData,std::string revData)
+bool ControllerInterface::getData(std::string & sendData,std::string & revData)
 {
  
 

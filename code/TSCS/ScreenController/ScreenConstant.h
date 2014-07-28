@@ -71,10 +71,11 @@ typedef struct
 }ROAD_INFO; 
 
 typedef struct       
-{     
-	int roadNum;     
-	char roadName[128];     
-}SCREEN_INFO; 
+{   
+	int lightCtr;      
+	int lightA;
+	int lightB;
+}SCREEN_LIGHT_INFO; 
 
 
 //Include .h file 

@@ -11,7 +11,7 @@ CSocketCommunicator::~CSocketCommunicator(void)
 {
 }
 
-bool CSocketCommunicator::connectServer(std::string ipAddr,int port)
+bool CSocketCommunicator::connectServer(std::string & ipAddr,int port)
 {
 	WORD wVersionRequested;
     WSADATA wsaData;

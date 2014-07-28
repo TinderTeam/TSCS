@@ -34,7 +34,9 @@ extern "C" CSCREENCONTROLLER_API bool setScreenName(char* name);
 extern "C" CSCREENCONTROLLER_API char* getScreenName();
 
 extern "C" CSCREENCONTROLLER_API bool setRoadInfo(ROAD_INFO raodInfo[],int length);
-extern "C" CSCREENCONTROLLER_API bool setRoadInfo(ROAD_INFO raodInfo[],int length);
+extern "C" CSCREENCONTROLLER_API bool getRoadInfo(ROAD_INFO raodInfo[],int length);
+extern "C" CSCREENCONTROLLER_API bool setScreenLight(SCREEN_LIGHT_INFO & lightInfo);
+extern "C" CSCREENCONTROLLER_API bool getScreenLight(SCREEN_LIGHT_INFO & lightInfo);
 
 extern "C" CSCREENCONTROLLER_API bool setScreenColor(int color);
 extern "C" CSCREENCONTROLLER_API int getScreenColor();

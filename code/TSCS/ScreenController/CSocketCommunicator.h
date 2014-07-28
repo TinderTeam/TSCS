@@ -10,7 +10,7 @@ class CSocketCommunicator
 public:
 	CSocketCommunicator(void);
 	~CSocketCommunicator(void);
-	bool connectServer(std::string ipAddr, int port);
+	bool connectServer(std::string & ipAddr, int port);
 	bool sendData(char*,int length);
 	bool receiveData(char* data,int length);
 	void closeConnect(void);
