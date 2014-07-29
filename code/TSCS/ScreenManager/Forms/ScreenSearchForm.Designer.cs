@@ -147,6 +147,7 @@ namespace ScreenManager
             this.MinimizeBox = false;
             this.Name = "MainForm";
             this.ShowInTaskbar = false;
+            this.TopMost = true;
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);

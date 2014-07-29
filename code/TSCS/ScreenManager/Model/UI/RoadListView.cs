@@ -27,5 +27,14 @@ namespace ScreenManager.Model.UI
             }
             return -1;
         }
+
+        public void cleanSelected()
+        {
+            for (int i = 0; i < list.Count; i++)
+            {
+                list[i].PanelView.Segment = null;
+            }
+        }
+
     }
 }

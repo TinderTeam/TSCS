@@ -17,7 +17,8 @@ namespace ScreenManager.Model.Constant
        
         public static String AUTO ="自动";
         public static String MANUL  ="手动";
-        public static String[] colorCtrlArray = { AUTO, MANUL };
+
+        public static String[] lightCtrlArray = { AUTO, MANUL };
 
 
         public static String DEFAULT_COLOR ="无色";

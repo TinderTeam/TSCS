@@ -72,7 +72,7 @@ namespace ScreenManager.Service
             ScreenBasicInfoModel screenBasic = ScreenControlDllOperate.getScreenBasicInfoByDll();
             screen.ScreenName = screenBasic.ScreenName;
             screen.ScreenColor = screenBasic.ScreenColor;
-            screen.ScreenColorCtrl = screenBasic.LightCtrl;
+            screen.ScreenLightCtrl = screenBasic.LightCtrl;
             screen.LightLevelA = screenBasic.LightLevelA;
             screen.LightLevelB = screenBasic.LightLevelB;
 

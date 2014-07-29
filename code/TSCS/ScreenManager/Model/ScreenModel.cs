@@ -38,7 +38,7 @@ namespace ScreenManager.Model
             
 
             //remove
-            roadModel.SegmentList.RemoveAt(segmentIndex);
+            roadModel.SegmentList.Remove(roadModel.getSegmentModelByID(segmentIndex));
             this.getSegmentList();
             
         }
@@ -192,7 +192,7 @@ namespace ScreenManager.Model
         }
 
 
-        public int ScreenColorCtrl
+        public int ScreenLightCtrl
         {
             get { return this.basicInfo.LightCtrl; }
             set { this.basicInfo.LightCtrl = value; }
