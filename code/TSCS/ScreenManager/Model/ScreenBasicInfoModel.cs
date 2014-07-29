@@ -14,7 +14,7 @@ namespace ScreenManager.Model
         private int lightCtrl = 0;
         private int lightLeverA = 0;
         private int lightLeverB = 0;
-        private String screenColor = Constant.Constants.DEFAULT_COLOR;
+        private int screenColor = 0;
 
  
 
@@ -36,7 +36,7 @@ namespace ScreenManager.Model
         }
 
 
-        public String ScreenColor
+        public int ScreenColor
         {
             get { return screenColor; }
             set { screenColor = value; }

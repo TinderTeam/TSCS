@@ -129,7 +129,7 @@ namespace ScreenManager.Form
         public void refrashScrnInfo() {
             this.txtIPAdrs.Text = screenModel.ScreenIP;
             this.txtScrnName.Text = screenModel.ScreenName;
-            this.cmbScrnClr.Text = screenModel.ScreenColor;
+            this.cmbScrnClr.Text = ScreenManager.Model.Constant.Constants.colorArray[screenModel.ScreenColor];
             this.txtNumA.Value = screenModel.LightLevelA;
             this.txtNumB.Value = screenModel.LightLevelB;
         }
@@ -180,6 +180,7 @@ namespace ScreenManager.Form
 
         public void refrashSgmtInfo(){
 
+           loadSelectedSegmentInfo(this.SelcetedItem);
         }
 
         
@@ -204,8 +205,8 @@ namespace ScreenManager.Form
             else {
 
                 txtNumA.Value= this.ScreenModel.LightLevelA;
-                txtNumB.Value = this.ScreenModel.LightLevelB; 
-                cmbScrnClr.Text= this.ScreenModel.ScreenColor;
+                txtNumB.Value = this.ScreenModel.LightLevelB;
+                cmbScrnClr.Text = ScreenManager.Model.Constant.Constants.colorArray[this.ScreenModel.ScreenColor];
                txtScrnName.Text= this.screenModel.ScreenName ;
                cmbScrnClr.SelectedIndex= this.screenModel.ScreenColorCtrl ;
           
@@ -220,7 +221,7 @@ namespace ScreenManager.Form
         {
             this.ScreenModel.LightLevelA = System.Convert.ToInt16(txtNumA.Value);
             this.ScreenModel.LightLevelB = System.Convert.ToInt16(txtNumB.Value);
-            this.ScreenModel.ScreenColor = cmbScrnClr.Text;
+            this.ScreenModel.ScreenColor = ScreenManager.Model.Constant.Constants.getIndexByStr(cmbScrnClr.Text);
             this.screenModel.ScreenName = txtScrnName.Text;
             this.screenModel.ScreenColorCtrl = cmbScrnClr.SelectedIndex;
             ScreenManager.Service.ScreenControlInterface service = new ScreenManager.Service.ScreenControlImpl();
@@ -247,7 +248,17 @@ namespace ScreenManager.Form
 
         private void cmbRoad_SelectedIndexChanged(object sender, EventArgs e)
         {
-         
+            if (this.selcetedItem != null)
+            {
+                ComboBox cmb = (ComboBox)sender;
+                this.ScreenModel.changeRoad(this.SelcetedItem.Index, cmb.SelectedIndex);
+                refrashSgmtList();
+                refrashView();
+            }
+            else
+            {
+
+            }
         }
 
         private void numStart_ValueChanged(object sender, EventArgs e)
@@ -336,6 +347,7 @@ namespace ScreenManager.Form
         /// <param name="e"></param>
         private void btnDefault_Click(object sender, EventArgs e)
         {
+            this.SelcetedItem = null;
             this.ScreenModel.initRoadList();
             this.refrashSgmtInfo();
             this.refrashSgmtList();
@@ -417,7 +429,10 @@ namespace ScreenManager.Form
             item.ForeColor = Color.White;
             sgmtInfoActivation(true);
             loadSelectedSegmentInfo(item);
+            this.roadListView.list[item.Index].PanelView.SgmtSelectedIndex = this.ScreenModel.getRoadById(this.ScreenModel.getSegmentList()[item.Index]);
+            this.roadListView.list[item.Index].PanelView.SgmtSelected = true;
             this.SelcetedItem = item;
+            
         }
 
 
@@ -426,6 +441,8 @@ namespace ScreenManager.Form
             item.BackColor = Color.White;
             item.ForeColor = Color.Black;
             sgmtInfoActivation(false);
+            this.roadListView.list[item.Index].PanelView.SgmtSelectedIndex = item.Index;
+            this.roadListView.list[item.Index].PanelView.SgmtSelected = false;
             this.SelcetedItem = null;
             loadSelectedSegmentInfo(null);
         }
@@ -438,7 +455,12 @@ namespace ScreenManager.Form
         private void loadSelectedSegmentInfo(ListViewItem item)
         {
 
-           
+            ListViewItem l = this.SelcetedItem;
+            this.SelcetedItem = null;
+
+            initRoadCmb();
+
+
             if (item== null)
             {
 
@@ -449,14 +471,32 @@ namespace ScreenManager.Form
                 this.cmbRdClr.Text  ="";
             }
             else {
-                this.txtSgmtName.Text = item.SubItems[0].Text;
+                
+                
+                
+                this.txtSgmtName.Text = item.SubItems[0].Text;            
                 this.cmbRoad.Text = item.SubItems[1].Text;
                 this.numStart.Value = System.Convert.ToInt16(item.SubItems[2].Text);
                 this.numEnd.Value = System.Convert.ToInt16(item.SubItems[3].Text);
                 this.cmbRdClr.Text = item.SubItems[4].Text;
             }
-
+            this.SelcetedItem = l;
     
+        }
+
+        private void initRoadCmb()
+        {
+
+            List<String> roadNameList = new List<String>();
+
+            this.cmbRoad.Items.Clear();
+
+            for (int i = 0; i < 10; i++)
+            {
+                roadNameList.Add(i.ToString()+":"+ScreenModel.roadList[i].RoadName);
+            }
+            this.cmbRoad.Items.AddRange(roadNameList.ToArray());
+          
         }
 
      
@@ -486,6 +526,100 @@ namespace ScreenManager.Form
         {
             get { return selcetedItem; }
             set { selcetedItem = value; }
+        }
+
+        private void mouseMove(object sender, MouseEventArgs e)
+        {
+            ScreenManager.Model.UI.RoadPanel panel = (ScreenManager.Model.UI.RoadPanel)sender;
+            if (this.SelcetedItem != null)
+            {
+                if (panel.DragSelected == true)
+                {
+                    int offset;
+                    int length = panel.Width;
+                    int roadLength = panel.Road.RoadLenght;
+                    double offsetP;
+                    SegmentAddress adrs = this.screenModel.getSegmentList()[this.SelcetedItem.Index].Address;
+                    int roadOffset;
+                    if (panel.MarkDrag.Equals("start"))
+                    {
+                        //startMove;
+                        offset = e.X - panel.StartMarkPosition;
+                        offsetP = (double)offset / (double)length;
+                        roadOffset = (int)(offsetP * (double)roadLength);
+
+                        //设置起始值拖拽结果
+
+                     
+                        if (adrs.Start + roadOffset < 0)
+                        {
+                            //最小
+
+                            adrs.Start = 0;
+                        }
+                        else if (adrs.Start + roadOffset > adrs.End)
+                        {
+                            adrs.End = adrs.Start;
+                            panel.MarkDrag = "end";
+                        }
+                        else
+                        {
+                            adrs.Start = adrs.Start + roadOffset;
+                        }
+                    }
+                    else if (panel.MarkDrag.Equals("end"))
+                    {
+                        //endMove;
+
+                        offset = e.X - panel.EndMarkPosition;
+                        offsetP = (double)offset / (double)length;
+                        roadOffset = (int)(offsetP * (double)roadLength);
+                        if (adrs.End + roadOffset < adrs.Start)
+                        {
+                            adrs.Start=adrs.End;
+                            panel.MarkDrag = "start";
+                        }
+                        else if (adrs.End + roadOffset > roadLength)
+                        {
+                            adrs.End = roadLength;
+                        }
+                        else
+                        {
+                            adrs.End = adrs.End + roadOffset;
+                        }
+
+                    
+                    };
+
+
+                } 
+                else
+                {
+                    //undrag
+                    if (e.Location.X >= panel.StartMarkPosition && e.Location.X <= (panel.StartMarkPosition + 4))
+                    {
+                        this.paintPanel.Cursor = Cursors.Hand;
+                    }
+                    else if (e.Location.X >= panel.EndMarkPosition - 4 && e.Location.X <= panel.EndMarkPosition)
+                    {
+                        this.paintPanel.Cursor = Cursors.Hand;
+                    }
+                    else
+                    {
+                        this.paintPanel.Cursor = Cursors.Arrow;
+                    }
+                }      
+                this.refrashView();
+                this.refrashSgmtList();
+                this.refrashSgmtInfo();
+            }
+            else
+            {
+                //unselected
+            }
+
+
+                   
         }
        
 

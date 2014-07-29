@@ -16,9 +16,33 @@ namespace ScreenManager.Model
 
         public ScreenModel()
         {
+
             initRoadList();
            
         }
+
+
+        public void changeRoad(int segmentIndex, int roadIndex)
+        {
+            RoadModel roadModel = getRoadModelBySegmentId(segmentIndex);
+
+            SegmentModel sm = new SegmentModel(segmentIndex);
+            sm.SegmentName = this.getSegmentList()[segmentIndex].SegmentName;
+            sm.SegmentColor = this.getSegmentList()[segmentIndex].SegmentColor;
+            sm.Address = new SegmentAddress();
+            sm.Address.Start = this.getSegmentList()[segmentIndex].Address.Start;
+            sm.Address.End = this.getSegmentList()[segmentIndex].Address.End;
+       
+            //add
+            roadList[roadIndex].SegmentList.Add( sm );
+            
+
+            //remove
+            roadModel.SegmentList.RemoveAt(segmentIndex);
+            this.getSegmentList();
+            
+        }
+
 
 
         public RoadModel getRoadModelBySegmentId(int id)
@@ -130,7 +154,7 @@ namespace ScreenManager.Model
         }
 
 
-        public String ScreenColor
+        public int ScreenColor
         {
             get { return this.basicInfo.ScreenColor; }
             set { this.basicInfo.ScreenColor = value; }
@@ -170,8 +194,8 @@ namespace ScreenManager.Model
 
         public int ScreenColorCtrl
         {
-            get { return this.basicInfo.ScreenColorCtrl; }
-            set { this.basicInfo.ScreenColorCtrl = value; }
+            get { return this.basicInfo.LightCtrl; }
+            set { this.basicInfo.LightCtrl = value; }
         }
     }
 }

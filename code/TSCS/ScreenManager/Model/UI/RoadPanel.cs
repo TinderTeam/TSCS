@@ -10,14 +10,53 @@ namespace ScreenManager.Model.UI
     {
         private RoadModel road = new RoadModel();
         private Boolean sgmtSelected = false;
-        private int sgmtSelectedIndex =0;
+
+        public Boolean SgmtSelected
+        {
+            get { return sgmtSelected; }
+            set { sgmtSelected = value; }
+        }
+        private int sgmtSelectedIndex = 0;
+
       
+        private Boolean dragSelected = false;
+        private string  markDrag;
+        private int startMarkPosition = 0;
+        private int endMarkPosition = 0;
+
+        public int EndMarkPosition
+        {
+            get { return endMarkPosition; }
+            set { endMarkPosition = value; }
+        }
+
+
+        public int SgmtSelectedIndex
+        {
+            get { return sgmtSelectedIndex; }
+            set { sgmtSelectedIndex = value; }
+        }
+    
+        
 
         public RoadPanel(RoadModel r)
         {
             road = r;
             
         
+        }
+
+
+
+        public int StartMarkPosition
+        {
+            get { return startMarkPosition; }
+            set { startMarkPosition = value; }
+        }
+        public string MarkDrag
+        {
+            get { return markDrag; }
+            set { markDrag = value; }
         }
 
         public RoadPanel(int id)
@@ -27,6 +66,13 @@ namespace ScreenManager.Model.UI
           
       
         }
+
+        public Boolean DragSelected
+        {
+            get { return dragSelected; }
+            set { dragSelected = value; }
+        }
+
 
         public void repaint()
         {
@@ -63,7 +109,7 @@ namespace ScreenManager.Model.UI
             int length = this.Width;
             int roadLength = road.RoadLenght;
 
-            SegmentModel segment = road.SegmentList[sgmtSelectedIndex];
+            SegmentModel segment = road.getSegmentModelByID(sgmtSelectedIndex);
 
             double startMarkP = (double)segment.Address.Start / (double)roadLength;
             int startMark = (int)(startMarkP * (double)length);

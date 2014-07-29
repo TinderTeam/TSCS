@@ -79,8 +79,8 @@ namespace ScreenManager.Service
             {
                 infos[i] = (ROAD_INFO)Marshal.PtrToStructure((IntPtr)(pt.ToInt32() + i * Marshal.SizeOf(typeof(ROAD_INFO))), typeof(ROAD_INFO));
                 RoadModel road = new RoadModel();
-                road.RoadID = infos[i].roadNum.ToString();
-                road.RoadID = infos[i].roadName;
+                road.RoadID = infos[i].roadNum;
+                road.RoadName = infos[i].roadName;
                 roadList.Add(road);
             }  
 
@@ -162,7 +162,7 @@ namespace ScreenManager.Service
             screenBaiscInfo.LightLevelB = screenLight.lightB;
 
             screenBaiscInfo.ScreenName = getScreenNameByDll();
-            screenBaiscInfo.ScreenColor = "1";
+            screenBaiscInfo.ScreenColor = 1;
 
             return screenBaiscInfo;
         }
