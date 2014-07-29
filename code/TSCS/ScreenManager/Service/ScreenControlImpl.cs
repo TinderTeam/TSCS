@@ -10,8 +10,9 @@ namespace ScreenManager.Service
 {
     public class ScreenControlImpl : ScreenControlInterface
     {
-        private static log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType); 
+        private static log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
+        private string connectedScreen = "";
         public ScreenListModel searchByIP(string start, string end)
         {
             ScreenListModel screenList = new ScreenListModel();
@@ -62,14 +63,17 @@ namespace ScreenManager.Service
                 return screen;
             }
             bool result = ScreenControlDllOperate.connectScreenByDLL(ip);
+
             if (!result)
             {
                 log.Error("can not connect to ip address.the ip address is" + ip);
                 return screen;
             }
-
+           
+            this.connectedScreen = ip;
             //
             ScreenBasicInfoModel screenBasic = ScreenControlDllOperate.getScreenBasicInfoByDll();
+            screen.ScreenIP = ip;
             screen.ScreenName = screenBasic.ScreenName;
             screen.ScreenColor = screenBasic.ScreenColor;
             screen.ScreenLightCtrl = screenBasic.LightCtrl;
@@ -90,26 +94,33 @@ namespace ScreenManager.Service
         {
             return true;
         }
-        public Boolean setScreenInfo(ScreenBasicInfoModel basicInfo)
+  
+        public Boolean setScreenBasicInfo(ScreenBasicInfoModel basicInfo)
         {
-            ScreenControlDllOperate.setScreenInfoByDll(basicInfo);
-            return true;
+            ScreenControlDllOperate.connectScreenByDLL("218.244.133.177");
+            Boolean result = ScreenControlDllOperate.setScreenInfoByDll(basicInfo);
+            return result;
         }
-        public Boolean setScreenSegment(ScreenModel screenModel)
+        public Boolean setScreenRoadInfo(ScreenModel screenModel)
         {
-            return true;
+            ScreenControlDllOperate.connectScreenByDLL("218.244.133.177");
+            Boolean result = ScreenControlDllOperate.setRoadInfoByDll(screenModel);
+            return result;
         }
         public Boolean closeScreen()
         {
-            return ScreenControlDllOperate.setScreenOffByDll();
+            Boolean result = ScreenControlDllOperate.setScreenOffByDll();
+            return result;
         }
         public Boolean saveScreen() 
         {
-            return ScreenControlDllOperate.saveScreenByDll();
+            Boolean result = ScreenControlDllOperate.saveScreenByDll();
+            return result;
         }
         public Boolean openScreen()
         {
-            return ScreenControlDllOperate.setScreenOnByDll();
+            Boolean result =  ScreenControlDllOperate.setScreenOnByDll();
+            return result;
         }
 
     }

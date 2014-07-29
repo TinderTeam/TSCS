@@ -41,6 +41,9 @@ extern "C" CSCREENCONTROLLER_API bool getScreenLight(SCREEN_LIGHT_INFO & lightIn
 extern "C" CSCREENCONTROLLER_API bool setScreenColor(int color);
 extern "C" CSCREENCONTROLLER_API int getScreenColor();
 
+extern "C" CSCREENCONTROLLER_API bool setScreenLength(int length);
+extern "C" CSCREENCONTROLLER_API int getScreenLength();
+
 extern "C" CSCREENCONTROLLER_API bool setScreenDisp(SEGMENT_INFO segmentInfo[],int length);
 extern "C" CSCREENCONTROLLER_API int getScreenDisp();
 

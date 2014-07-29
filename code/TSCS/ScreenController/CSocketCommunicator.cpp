@@ -55,6 +55,7 @@ bool CSocketCommunicator::connectServer(std::string & ipAddr,int port)
 
 bool CSocketCommunicator::sendData(char* data,int length)
 {
+	LOG_INFO("send data is:");
 	LOG_INFO(StringUtil::convertToIntString(data,length).c_str());
 	int err = send(this->sockClient,data,length+1,0);
 	if(err < 0)
@@ -70,8 +71,10 @@ bool CSocketCommunicator::receiveData(char* data,int length)
 	int err = recv(sockClient,data,length,0);
 	if(err < 0)
 	{
+		LOG_ERROR("receive data error");
 		return false;
 	}
+	LOG_INFO("recieve data is:");
 	LOG_INFO(StringUtil::convertToIntString(data,length).c_str());
 	return true; 
 }

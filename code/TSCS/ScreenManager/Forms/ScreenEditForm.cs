@@ -251,7 +251,7 @@ namespace ScreenManager.Form
           
 
             ScreenManager.Service.ScreenControlInterface service = new ScreenManager.Service.ScreenControlImpl();
-            service.setScreenInfo(this.screenModel.BasicInfo);
+            service.setScreenBasicInfo(this.screenModel.BasicInfo);
 
             scrnInfoActivation(false);
             this.btnScrnEdit.Text = "修改";
@@ -396,9 +396,9 @@ namespace ScreenManager.Form
         /// <param name="e"></param>
         private void btnSet_Click(object sender, EventArgs e)
         {
-            ScreenManager.Service.ScreenControlInterface service = new ScreenManager.Service.ScreenControlImpl();
-            service.setScreenSegment(this.ScreenModel);
-                   
+           
+            ScreenManager.Service.ServiceContext.getInstance().getScreenControl().setScreenRoadInfo(this.ScreenModel);
+           
         }
 
         private void lstVwSgmt_MouseClick(object sender, MouseEventArgs e)

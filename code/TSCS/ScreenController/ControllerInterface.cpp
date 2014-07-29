@@ -36,13 +36,8 @@ void ControllerInterface::closeConnect()
 
 
 bool ControllerInterface::initScreen(void)
-{
-	std::string sendData;
-
-	sendData = this->makeSendData(CMD_INIT,"");
- 
-	 
-	bool result =this->sendCmd(sendData);
+{ 
+	bool result =this->sendCmd(CMD_INIT,"");
 
 	return result;
 }
@@ -73,9 +68,9 @@ bool ControllerInterface::setScreenName(std::string & name)
 
 	std::string desp = StringUtil::convertToStringWithFlag(nameList,std::string(SPLIT_FLAG));
 	//send the description to screen
-	std::string sendData = makeSendData(CMD_SET_DESP,desp);
  
-	result =this->sendCmd(sendData);
+ 
+	result =this->sendCmd(CMD_SET_DESP,desp);
 
 	return result;
 }
@@ -143,9 +138,7 @@ bool ControllerInterface::setRoadInfo(ROAD_INFO roadInfo[],int length)
    
 	std::string desp = StringUtil::convertToStringWithFlag(nameList,std::string(SPLIT_FLAG));
 	//send the description to screen
-	std::string sendData = makeSendData(CMD_SET_DESP,desp);
-
-	result =this->sendCmd(sendData);
+	result =this->sendCmd(CMD_SET_DESP,desp);
 
 	return result;
 }
@@ -156,17 +149,15 @@ bool ControllerInterface::setScreenLight(SCREEN_LIGHT_INFO & lightInfo)
 	data.push_back((char)lightInfo.lightCtr);
 	data.push_back((char)lightInfo.lightA);
 	data.push_back((char)lightInfo.lightB);
-	std::string sendData = makeSendData(CMD_SET_L,data);
-
-	bool result =this->sendCmd(sendData);
+	bool result =this->sendCmd(CMD_SET_L,data);
 	return result;
 }
 bool ControllerInterface::getScreenLight(SCREEN_LIGHT_INFO & lightInfo)
-{
-	std::string sendData = makeSendData(CMD_GET_L,"");
+{ 
 
 	std::string revData;
-	bool result = this->getData(sendData,revData);
+	bool result  = getRecvDataByCmd(CMD_GET_L,revData);
+ 
  
 	if(!result)
 	{
@@ -187,9 +178,8 @@ bool ControllerInterface::getScreenLight(SCREEN_LIGHT_INFO & lightInfo)
 bool ControllerInterface::getScreenDesp(std::string & recvData)
 {
  
-	std::string sendData = makeSendData(CMD_GET_DESP,"");
  
-	bool result = this->getData(sendData,recvData);
+	bool result = this->getRecvDataByCmd(CMD_GET_DESP,recvData);
  
 	return result;
 }
@@ -201,18 +191,15 @@ bool ControllerInterface::setScreenColor(int color)
 	//send the description to screen
 	std::string data;
 	data.push_back((char)color);
-	std::string sendData = makeSendData(CMD_SET_YS,data);
-
-	bool result =this->sendCmd(sendData);
+	bool result =this->sendCmd(CMD_SET_YS,data);
 
 	return result;
 }
 int ControllerInterface::getScreenColor()
 {
-
-	std::string sendData = makeSendData(CMD_GET_YS,"");
+ 
 	std::string revData;
-	this->getData(sendData,revData);
+	this->getRecvDataByCmd(CMD_GET_YS,revData);
 
 	int color = -1;
     if(!revData.empty())
@@ -223,12 +210,77 @@ int ControllerInterface::getScreenColor()
 	
 	return color;
 }
-bool ControllerInterface::setScreenDisp(std::string & segment)
-{
-	
-	std::string sendData = makeSendData(CMD_SET_DESP,segment);
 
-	bool result =this->sendCmd(sendData);
+bool ControllerInterface::setScreenLength(int length)
+{
+
+
+	//send the description to screen
+	std::string data;
+	data.push_back((char)(length/256));
+	data.push_back((char)(length%256));
+	bool result =this->sendCmd(CMD_SET_SP,data);
+
+	return result;
+}
+int ControllerInterface::getScreenLength()
+{
+
+	std::string revData;
+	this->getRecvDataByCmd(CMD_GET_SP,revData);
+
+	int lenght = -1;
+	if(revData.length() == 2)
+	{
+		lenght = revData[1] +  revData[0];
+
+	}
+
+	return lenght;
+}
+
+bool ControllerInterface::setScreenDisp(SEGMENT_INFO segmentInfo[],int length)
+{
+ 
+	std::vector<std::string> segmentInfoList;
+
+	int packNum = 0;
+
+    std::string segmentInfoStr;
+	for(int i=0;i<length;i++)
+	{
+
+		SEGMENT_INFO segment = segmentInfo[i];
+		segmentInfoStr.push_back(segment.segNum);
+		segmentInfoStr.push_back(segment.roadNum);
+		segmentInfoStr.push_back(segment.color);
+		segmentInfoStr.push_back(segment.startAddr/256);
+		segmentInfoStr.push_back(segment.startAddr%256);
+		segmentInfoStr.push_back(segment.endAddr/256);
+		segmentInfoStr.push_back(segment.endAddr%256);
+		
+		if((length%50) == 0)
+		{
+		  std::string temp = std::string(segmentInfoStr);
+          segmentInfoList.push_back(temp);
+		  segmentInfoStr.clear();
+		}
+		
+	}
+	segmentInfoList.push_back(segmentInfoStr);
+   
+	std::vector<std::string>::iterator iter = segmentInfoList.begin();
+	bool result;
+	for(;iter != segmentInfoList.end();iter++)
+	{ 
+		bool result =this->sendCmd(CMD_SET_DISP,*iter);
+		if(!result)
+		{
+			LOG_ERROR("send one packet failed");
+			return result;
+		}
+	}
+
 	if(!result)
 	{
 		LOG_ERROR("send display data failed");
@@ -254,8 +306,8 @@ bool ControllerInterface::setScreenIpAddr(std::string & ipAddr)
        data.push_back(char(temp));
 	}
 
-	std::string sendData = makeSendData(CMD_SET_IP,data);
-	bool result =this->sendCmd(sendData);
+
+	bool result =this->sendCmd(CMD_SET_IP,data);
 
 	return result;
 
@@ -266,8 +318,8 @@ bool ControllerInterface::setSegmentColor(int segNum,int color)
 	std::string data;
 	data.push_back(segNum);
 	data.push_back(color);
-    std::string sendData = makeSendData(CMD_SET_LD,data);
-	bool result =this->sendCmd(sendData);
+ 
+	bool result =this->sendCmd(CMD_SET_LD,data);
 
 	return result;
 }
@@ -291,9 +343,8 @@ bool ControllerInterface::saveScreen(bool update,bool save)
 	  data.push_back((char)0);
 	}
 
-	std::string sendData = makeSendData(CMD_SET_UPDATE,data);
-
-	bool result =this->sendCmd(sendData);
+ 
+	bool result =this->sendCmd(CMD_SET_UPDATE,data);
 
 	return result;
 }
@@ -304,9 +355,7 @@ bool ControllerInterface::setScreenOn(void)
 	std::string data;
 	data.push_back(2);
 
-	std::string sendData = makeSendData(CMD_SET_DESP,data.c_str());
-
-	bool result =this->sendCmd(sendData);
+	bool result =this->sendCmd(CMD_SET_ON_OFF,data);
 
 	return result;
 
@@ -317,10 +366,8 @@ bool ControllerInterface::setScreenOff(void)
 
 	std::string data;
 	data.push_back(1);
-
-	std::string sendData = makeSendData(CMD_SET_DESP,data);
-
-	bool result =this->sendCmd(sendData);
+ 
+	bool result =this->sendCmd(CMD_SET_ON_OFF,data);
 
 	return result;
 
@@ -328,7 +375,7 @@ bool ControllerInterface::setScreenOff(void)
 }
 
 
-std::string ControllerInterface::makeSendData(std::string cmdCode,std::string  data)
+std::string ControllerInterface::makeSendData(std::string cmdCode,std::string data)
 {
    std::string  sendData;
  
@@ -351,8 +398,32 @@ std::string ControllerInterface::makeSendData(std::string cmdCode,std::string  d
    return sendData;
 }
 
-bool ControllerInterface::sendCmd(std::string & sendData)
+bool ControllerInterface::getRecvDataByCmd(std::string cmdCode,std::string & revData)
 {
+	LOG_INFO("get data by command code");
+	LOG_INFO(cmdCode.c_str());
+	std::string sendData = makeSendData(cmdCode,"");
+
+	std::string temp;
+	bool result = this->getData(sendData,temp);
+
+	for(int i=DATA_FIXED_LENGTH;i<temp.length();i++)
+	{
+        revData.push_back(temp[i]);
+	}
+
+	return result;
+
+}
+
+bool ControllerInterface::sendCmd(std::string cmdCode,std::string  data)
+{
+	LOG_INFO("set data by command code");
+	LOG_INFO(cmdCode.c_str());
+
+
+	std::string sendData = makeSendData(cmdCode,data);
+	
 	std::string revData;
 
 	bool result = getData(sendData,revData);
@@ -426,6 +497,8 @@ bool ControllerInterface::getData(std::string & sendData,std::string & revData)
 	 
 
 	result = CInstanceFactory::getInstance()->getDataProtocol().decode(rawData,revData);
+
+	
 
 	return result;
 }

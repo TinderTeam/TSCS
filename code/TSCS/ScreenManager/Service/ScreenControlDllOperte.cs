@@ -25,14 +25,16 @@ namespace ScreenManager.Service
     public struct SEGMENT_INFO
     {
         public int roadNum;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
-        public string roadName;
+        public int segNum;
+        public int color;
+        public int startAddr;
+        public int endAddr;   
     } 
 
     public class ScreenControlDllOperate
     {
-  
 
+        private static log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         [DllImport("ScreenController.dll", EntryPoint = "connectScreen")]
         private static extern bool connectScreen(string ipAddr);
         public static bool connectScreenByDLL(string ipAddr)
@@ -91,14 +93,18 @@ namespace ScreenManager.Service
 
         [DllImport("ScreenController.dll", EntryPoint = "setRoadInfo")]
         private static extern bool setRoadInfo(IntPtr roadInfo, int length);
-        public static bool setRoadInfoByDll(List<RoadModel> roadList)
+        [DllImport("ScreenController.dll", EntryPoint = "setScreenDisp")]
+        private static extern bool setScreenDisp(IntPtr segmentInfo, int length);
+        public static bool setRoadInfoByDll(ScreenModel screen)
         {
-            int roadNum = roadList.Count;
+            int roadNum = screen.roadList.Count;
 
-            ROAD_INFO[] infos = new ROAD_INFO[roadNum];
+            ROAD_INFO[] roadArr = new ROAD_INFO[roadNum];
             for (int i = 0; i < roadNum; i++)
             {
-                infos[i] = new ROAD_INFO();
+                roadArr[i] = new ROAD_INFO();
+                roadArr[i].roadName = screen.roadList[i].RoadName;
+                roadArr[i].roadNum = screen.roadList[i].RoadID;
             }
 
             IntPtr[] ptArr = new IntPtr[1];
@@ -109,6 +115,33 @@ namespace ScreenManager.Service
 
             bool result = setRoadInfo(pt, roadNum);
 
+            if (!result)
+            {
+                log.Error("set road name failed");
+            }
+            // set segment lis
+            List<SegmentModel> segmentList = screen.getSegmentList();
+            int segmentNum = segmentList.Count;
+
+
+            SEGMENT_INFO[] segInfoArr = new SEGMENT_INFO[segmentNum];
+            for (int i = 0; i < segmentNum; i++)
+            {
+                segInfoArr[i] = new SEGMENT_INFO();
+                segInfoArr[i].roadNum = screen.getRoadModelBySegmentId(segmentList[i].SegmentID).RoadID;
+                segInfoArr[i].color = segmentList[i].SegmentColor;
+                segInfoArr[i].segNum = segmentList[i].SegmentID;
+                segInfoArr[i].startAddr = segmentList[i].Address.Start;
+                segInfoArr[i].endAddr = segmentList[i].Address.End;
+
+            }
+            IntPtr[] segPtArr = new IntPtr[1];
+            ptArr[0] = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(SEGMENT_INFO)) * segmentNum); //分配包含两个元素的数组   
+            IntPtr segPt = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(SEGMENT_INFO)));
+            Marshal.Copy(segPtArr, 0, segPt, 1); //拷贝指针数组  
+
+
+            result = setScreenDisp(segPt, segmentNum);
 
             return result;
         }
@@ -151,11 +184,7 @@ namespace ScreenManager.Service
  
 
             bool result = getScreenLight(ref screenLight);
-
-            String screenName = getScreenNameByDll();
-
-            int color = getScreenColor();
-
+ 
             ScreenBasicInfoModel screenBaiscInfo = new ScreenBasicInfoModel();
             screenBaiscInfo.LightCtrl = screenLight.lightCtr;
             screenBaiscInfo.LightLevelA = screenLight.lightA;

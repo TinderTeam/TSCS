@@ -56,6 +56,7 @@ std::string StringUtil::convertToIntString(char * charArray,int length)
 		sprintf(buf, "%d", charArray[i]);
 		std::string temp = buf;
 		str.append(temp);
+		str.append(" ");
 
 	}
 	return str;

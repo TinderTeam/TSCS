@@ -9,6 +9,7 @@ using System.Windows.Forms;
 
 using ScreenManager.Form;
 using ScreenManager.Model;
+using ScreenManager.Service;
 namespace ScreenManager
 {
     public partial class MainForm : System.Windows.Forms.Form
@@ -46,6 +47,7 @@ namespace ScreenManager
             ScreenModel screenModel = screenList.getModelByIndex(item.Text);
             //TODO
 
+            screenModel = ServiceContext.getInstance().getScreenControl().getScreenInfo(screenModel.ScreenIP);
             
             //UpdateScreen
             sef.ScreenModel = screenModel;
@@ -65,10 +67,11 @@ namespace ScreenManager
         {
             String IPstart = this.txtIPStart.Text;
             String IPend = this.txtIPEnd.Text;
-            ScreenManager.Service.ScreenDataService service = new ScreenManager.Service.ScreenDataService();
+            screenList = ServiceContext.getInstance().getScreenControl().searchByIP(IPstart, IPend);
+            //ScreenManager.Service.ScreenDataService service = new ScreenManager.Service.ScreenDataService();
 
             //搜索屏幕
-            screenList=service.searchByIP(IPstart, IPend);
+            //screenList=service.searchByIP(IPstart, IPend);
             //加载屏幕列表
             this.reloadIPList();
         }
