@@ -97,29 +97,22 @@ namespace ScreenManager.Service
         private static extern bool setScreenDisp(IntPtr segmentInfo, int length);
         public static bool setRoadInfoByDll(ScreenModel screen)
         {
-            int roadNum = screen.roadList.Count;
+            bool result = setRoadNameList(screen);
 
-            ROAD_INFO[] roadArr = new ROAD_INFO[roadNum];
-            for (int i = 0; i < roadNum; i++)
-            {
-                roadArr[i] = new ROAD_INFO();
-                roadArr[i].roadName = screen.roadList[i].RoadName;
-                roadArr[i].roadNum = screen.roadList[i].RoadID;
-            }
-
-            IntPtr[] ptArr = new IntPtr[1];
-            ptArr[0] = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(ROAD_INFO)) * roadNum); //分配包含两个元素的数组   
-            IntPtr pt = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(ROAD_INFO)));
-            Marshal.Copy(ptArr, 0, pt, 1); //拷贝指针数组  
-
-
-            bool result = setRoadInfo(pt, roadNum);
 
             if (!result)
             {
                 log.Error("set road name failed");
             }
-            // set segment lis
+            // set segment list
+            result = setSegmentList(screen);
+
+
+            return result;
+        }
+
+        private static bool setSegmentList(ScreenModel screen)
+        {
             List<SegmentModel> segmentList = screen.getSegmentList();
             int segmentNum = segmentList.Count;
 
@@ -135,17 +128,54 @@ namespace ScreenManager.Service
                 segInfoArr[i].endAddr = segmentList[i].Address.End;
 
             }
-            IntPtr[] segPtArr = new IntPtr[1];
-            ptArr[0] = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(SEGMENT_INFO)) * segmentNum); //分配包含两个元素的数组   
-            IntPtr segPt = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(SEGMENT_INFO)));
-            Marshal.Copy(segPtArr, 0, segPt, 1); //拷贝指针数组  
 
+            //copy the data to the point
+            IntPtr segPt = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(SEGMENT_INFO)) * segmentNum);
+            long longSegPt = segPt.ToInt64();
 
-            result = setScreenDisp(segPt, segmentNum);
+            for (int i = 0; i < segInfoArr.Length; i++)
+            {
+                IntPtr RectPtr = new IntPtr(longSegPt);
+                Marshal.StructureToPtr(segInfoArr[i], RectPtr, false); // You do not need to erase struct in this case
+                longSegPt += Marshal.SizeOf(typeof(SEGMENT_INFO));
+            }
+
+            bool result = setScreenDisp(segPt, segmentNum);
+
+            Marshal.FreeHGlobal(segPt);
 
             return result;
         }
+        private static bool setRoadNameList(ScreenModel screen)
+        {
+            int roadNum = screen.roadList.Count;
 
+            ROAD_INFO[] roadArr = new ROAD_INFO[roadNum];
+            for (int i = 0; i < roadNum; i++)
+            {
+                roadArr[i] = new ROAD_INFO();
+                roadArr[i].roadName = screen.roadList[i].RoadName;
+                roadArr[i].roadNum = screen.roadList[i].RoadID;
+            }
+
+            //copy the data to the point
+            IntPtr roadPt = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(ROAD_INFO)) * roadNum);
+            long longRoadPt = roadPt.ToInt64();
+
+            for (int i = 0; i < roadArr.Length; i++)
+            {
+                IntPtr RectPtr = new IntPtr(longRoadPt);
+                Marshal.StructureToPtr(roadArr[i], RectPtr, false); // You do not need to erase struct in this case
+                longRoadPt += Marshal.SizeOf(typeof(ROAD_INFO));
+            }
+
+
+            bool result = setRoadInfo(roadPt, roadNum);
+
+            Marshal.FreeHGlobal(roadPt);
+
+            return result;
+        }
         [DllImport("ScreenController.dll", EntryPoint = "setScreenLight")]
         private static extern bool setScreenLight(ref SCREEN_LIGHT_INFO lightInfo);
         [DllImport("ScreenController.dll", EntryPoint = "setScreenName")]

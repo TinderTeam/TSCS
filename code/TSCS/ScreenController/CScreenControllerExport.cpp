@@ -58,7 +58,6 @@ CSCREENCONTROLLER_API char * getScreenName()
 	const int len = str.length();
 	char * name = new char[len+1];
 	strcpy(name,str.c_str());
-    name = "ÖÐ»ªÂ·";
 	return name;
 }
 
@@ -84,11 +83,7 @@ CSCREENCONTROLLER_API bool getRoadInfo(ROAD_INFO raodInfo[],int length)
 CSCREENCONTROLLER_API bool setRoadInfo(ROAD_INFO raodInfo[],int length)
 {
 	LOG_INFO("setRoadInfo");
-	for(int i=0;i<length;i++)
-	{
-		LOG_INFO(raodInfo[i].roadName);
-		LOG_INFO(raodInfo[i].roadNum);
-	}
+ 
 	bool result = CInstanceFactory::getInstance()->getController()->setRoadInfo(raodInfo,length);
 	return result;
 }
@@ -148,11 +143,23 @@ CSCREENCONTROLLER_API bool setScreenDisp(SEGMENT_INFO segmentInfo[],int length)
 	   LOG_INFO("setScreenDisp");
 	   for(int i=0;i<length;i++)
 	   {
-		   LOG_INFO(segmentInfo[i].color);
-		   LOG_INFO(segmentInfo[i].endAddr);
-		   LOG_INFO(segmentInfo[i].startAddr);
-		   LOG_INFO(segmentInfo[i].roadNum);
-		   LOG_INFO(segmentInfo[i].segNum);
+		   char buf[10];
+		   sprintf(buf, "%d", segmentInfo[i].roadNum);
+		   std::string temp = buf;
+		   LOG_INFO(temp.c_str());
+		   sprintf(buf, "%d", segmentInfo[i].segNum);
+		   temp = buf;
+		   LOG_INFO(temp.c_str());
+		   sprintf(buf, "%d", segmentInfo[i].color);
+		    temp = buf;
+		   LOG_INFO(temp.c_str());
+		   sprintf(buf, "%d", segmentInfo[i].startAddr);
+		   temp = buf;
+		   LOG_INFO(temp.c_str());
+		   sprintf(buf, "%d", segmentInfo[i].endAddr);
+		     temp = buf;
+		   LOG_INFO(temp.c_str());
+	 
 		   
 	   }
        bool result = CInstanceFactory::getInstance()->getController()->setScreenDisp(segmentInfo,length);
