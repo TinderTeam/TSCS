@@ -19,6 +19,11 @@ bool ControllerInterface::connectScreen(std::string & ipAddr)
 	LOG_INFO(ipAddr.c_str());
 
 	bool result = this->communicator.connectServer(ipAddr,SOCKET_PORT);
+	if(result)
+	{
+		std::string screenName;
+		result = this->getScreenName(screenName);
+	}
 	this->connected = result;
     return result;
 }
@@ -46,7 +51,8 @@ bool ControllerInterface::setScreenName(std::string & name)
 {
 	 
 	//get the description from screen
-	std::string str = getScreenDesp();
+	std::string str;
+	bool result  = getScreenDesp(str);
 
 	std::vector< std::string> nameList;
 
@@ -69,23 +75,30 @@ bool ControllerInterface::setScreenName(std::string & name)
 	//send the description to screen
 	std::string sendData = makeSendData(CMD_SET_DESP,desp);
  
-	bool result =this->sendCmd(sendData);
+	result =this->sendCmd(sendData);
 
 	return result;
 }
-std::string ControllerInterface::getScreenName()
+bool ControllerInterface::getScreenName(std::string & str)
 {
-	std::string str = getScreenDesp();
+	std::string temp;
+	bool result  = getScreenDesp(temp);
 
-	std::vector< std::string> nameList = StringUtil::split(str,std::string(SPLIT_FLAG));
+	if(!result)
+	{
+		return result;
+
+	}
+	std::vector< std::string> nameList = StringUtil::split(temp,std::string(SPLIT_FLAG));
 
 	str = nameList[0];
-	return str;
+	return result;
 }
 
 bool ControllerInterface::getRoadInfo(ROAD_INFO roadInfo[],int length)
 {
-	std::string str = getScreenDesp();
+	std::string str;
+	bool result = getScreenDesp(str);
 
 	std::vector< std::string> nameList = StringUtil::split(str,std::string(SPLIT_FLAG));
 
@@ -104,12 +117,13 @@ bool ControllerInterface::getRoadInfo(ROAD_INFO roadInfo[],int length)
 		}
        
 	}
-	return true;
+	return result;
 }
 
 bool ControllerInterface::setRoadInfo(ROAD_INFO roadInfo[],int length)
 {
-	std::string str = getScreenDesp();
+	std::string str;
+	bool result = getScreenDesp(str);
 
 	std::vector< std::string> nameList;
 	if(str.empty())
@@ -131,7 +145,7 @@ bool ControllerInterface::setRoadInfo(ROAD_INFO roadInfo[],int length)
 	//send the description to screen
 	std::string sendData = makeSendData(CMD_SET_DESP,desp);
 
-	bool result =this->sendCmd(sendData);
+	result =this->sendCmd(sendData);
 
 	return result;
 }
@@ -170,16 +184,14 @@ bool ControllerInterface::getScreenLight(SCREEN_LIGHT_INFO & lightInfo)
 	return result;
 }
 
-std::string ControllerInterface::getScreenDesp()
+bool ControllerInterface::getScreenDesp(std::string & recvData)
 {
  
 	std::string sendData = makeSendData(CMD_GET_DESP,"");
  
-
-	std::string revData;
-	bool result = this->getData(sendData,revData);
+	bool result = this->getData(sendData,recvData);
  
-	return revData;
+	return result;
 }
 
 bool ControllerInterface::setScreenColor(int color)
@@ -379,6 +391,11 @@ bool ControllerInterface::getData(std::string & sendData,std::string & revData)
 	}
 
 	//read data from socket
+
+	for(int i = 0;i<DATA_MAX_LENGTH;i++)
+	{
+        dataBuf[i] = 0;
+	}
 	
 	result = this->communicator.receiveData(dataBuf,DATA_MAX_LENGTH);
 
@@ -392,7 +409,19 @@ bool ControllerInterface::getData(std::string & sendData,std::string & revData)
 	std::string rawData;
 	for(int i=0;i<DATA_MAX_LENGTH;i++)
 	{
-			rawData.push_back(dataBuf[i]);
+		rawData.push_back(dataBuf[i]);
+		int index = rawData.find(DATA_END_FLAG);
+		if(index != -1)
+		{
+			break;
+		}
+	}
+
+	int index = rawData.find(DATA_END_FLAG);
+	if(index == -1)
+	{
+		LOG_ERROR("recive data is valid.");
+		return false;
 	}
 	 
 

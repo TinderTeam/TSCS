@@ -224,8 +224,7 @@ namespace ScreenManager.Form
             this.ScreenModel.ScreenColor = ScreenManager.Model.Constant.Constants.getIndexByStr(cmbScrnClr.Text);
             this.screenModel.ScreenName = txtScrnName.Text;
             this.screenModel.ScreenColorCtrl = cmbScrnClr.SelectedIndex;
-            ScreenManager.Service.ScreenControlInterface service = new ScreenManager.Service.ScreenControlImpl();
-            service.setScreenInfo(this.screenModel.BasicInfo);
+            ScreenManager.Service.ServiceContext.getInstance().getScreenControl().setScreenInfo(this.screenModel.BasicInfo);
             scrnInfoActivation(false);
         }
 
@@ -361,8 +360,7 @@ namespace ScreenManager.Form
         /// <param name="e"></param>
         private void btnSet_Click(object sender, EventArgs e)
         {
-            ScreenManager.Service.ScreenControlInterface service = new ScreenManager.Service.ScreenControlImpl();
-            service.setScreenSegment(this.ScreenModel);
+            ScreenManager.Service.ServiceContext.getInstance().getScreenControl().setScreenSegment(this.ScreenModel);
                    
         }
 
@@ -429,7 +427,7 @@ namespace ScreenManager.Form
             item.ForeColor = Color.White;
             sgmtInfoActivation(true);
             loadSelectedSegmentInfo(item);
-            this.roadListView.list[item.Index].PanelView.SgmtSelectedIndex = this.ScreenModel.getRoadById(this.ScreenModel.getSegmentList()[item.Index]);
+           // this.roadListView.list[item.Index].PanelView.SgmtSelectedIndex = this.ScreenModel.getRoadById(this.ScreenModel.getSegmentList()[item.Index]);
             this.roadListView.list[item.Index].PanelView.SgmtSelected = true;
             this.SelcetedItem = item;
             

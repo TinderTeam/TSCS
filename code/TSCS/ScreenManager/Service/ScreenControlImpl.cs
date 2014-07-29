@@ -15,12 +15,12 @@ namespace ScreenManager.Service
         public ScreenListModel searchByIP(string start, string end)
         {
             ScreenListModel screenList = new ScreenListModel();
-            if (IPAddrHandleUtil.isValid(start))
+            if (!IPAddrHandleUtil.isValid(start))
             {
                 log.Warn("the start ip address is invalid.the start is " + start);
                 return screenList;
             }
-            if (IPAddrHandleUtil.isValid(end))
+            if (!IPAddrHandleUtil.isValid(end))
             {
                 log.Warn("the start ip address is invalid.the start is " + end);
                 return screenList;
@@ -42,6 +42,7 @@ namespace ScreenManager.Service
                 }
                 else
                 {
+                    ScreenControlDllOperate.closeConnectByDll();
                     log.Error("can not find the screen with ip address ." + ipList[i]);
                 }
 
@@ -55,7 +56,7 @@ namespace ScreenManager.Service
         public ScreenModel getScreenInfo(String ip)
         {
             ScreenModel screen = new ScreenModel();
-            if (IPAddrHandleUtil.isValid(ip))
+            if (!IPAddrHandleUtil.isValid(ip))
             {
                 log.Error("the ip address is invalid.the ip address is "+ip);
                 return screen;
@@ -91,6 +92,7 @@ namespace ScreenManager.Service
         }
         public Boolean setScreenInfo(ScreenBasicInfoModel basicInfo)
         {
+            ScreenControlDllOperate.setScreenInfoByDll(basicInfo);
             return true;
         }
         public Boolean setScreenSegment(ScreenModel screenModel)

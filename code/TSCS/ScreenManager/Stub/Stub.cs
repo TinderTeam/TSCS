@@ -18,7 +18,7 @@ namespace ScreenManager.Stub
                
                 m.ScreenIP = "192.168.1." + i.ToString();
                 m.ScreenName = "Screen_" + i.ToString();
-                m.ScreenColor = i%3;
+                m.ScreenColor = i;
                 m.LightLevelA = i;
                 m.LightLevelB = i+1;
                 for (int j = 0; j < 10; j++)
@@ -34,9 +34,7 @@ namespace ScreenManager.Stub
         public static RoadModel getRoadStub(string id)
         {
 
-            String[] rolorArr = { ScreenManager.Model.Constant.Constants.RED_COLOR, 
-                                    ScreenManager.Model.Constant.Constants.GREEN_COLOR,
-                                    ScreenManager.Model.Constant.Constants.YELLOW_COLOR };
+            String[] rolorArr = { ScreenManager.Model.Constant.Constants.RED_COLOR, ScreenManager.Model.Constant.Constants.GREEN_COLOR, ScreenManager.Model.Constant.Constants.YELLOW_COLOR };
 
             RoadModel roadModel = new RoadModel();
             roadModel.BaseColor = ScreenManager.Model.Constant.Constants.DEFAULT_COLOR;

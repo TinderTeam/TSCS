@@ -42,14 +42,21 @@ CSCREENCONTROLLER_API void closeConnect()
 CSCREENCONTROLLER_API char * getScreenName()
 {
 
-	std::string str = CInstanceFactory::getInstance()->getController()->getScreenName();
+	std::string str;
+	bool result = CInstanceFactory::getInstance()->getController()->getScreenName(str);
 
-	char* chars;
+	
+    if(!result)
+	{
+		str = std::string("");
+       LOG_ERROR("can not get the screen name");
+	}
+
 	const int len = str.length();
-	chars = new char[len+1];
-	strcpy(chars,str.c_str());
+	char * name = new char[len+1];
+	strcpy(name,str.c_str());
 
-	return chars;
+	return name;
 }
 
 CSCREENCONTROLLER_API bool setScreenName(char * name)

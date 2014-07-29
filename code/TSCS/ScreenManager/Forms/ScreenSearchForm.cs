@@ -62,10 +62,13 @@ namespace ScreenManager
         {
             String IPstart = this.txtIPStart.Text;
             String IPend = this.txtIPEnd.Text;
-            ScreenManager.Service.ScreenDataService service = new ScreenManager.Service.ScreenDataService();
+
+            screenList = ScreenManager.Service.ServiceContext.getInstance().getScreenControl().searchByIP(IPstart, IPend);
 
             //搜索屏幕
-            screenList=service.searchByIP(IPstart, IPend);
+            //ScreenManager.Service.ScreenDataService service = new ScreenManager.Service.ScreenDataService();
+
+            //screenList=service.searchByIP(IPstart, IPend);
             //加载屏幕列表
             this.reloadIPList();
         }

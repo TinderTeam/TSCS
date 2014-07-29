@@ -26,7 +26,7 @@ namespace ScreenManager.Service.util
             for (long i = startIPValue; i <= endIPValue; i++)
             {
 
-                String nowIPStr = longToIP(startIPValue + i);
+                String nowIPStr = longToIP(i);
                 ipList.Add(nowIPStr);
             }
             return ipList;
@@ -42,9 +42,9 @@ namespace ScreenManager.Service.util
             int position3 = strIP.IndexOf(".", position2 + 1);
             //将每个.之间的字符串转换成整型
             ip[0] = Convert.ToInt32(strIP.Substring(0, position1));
-            ip[1] = Convert.ToInt32(strIP.Substring(position1 + 1, position2));
-            ip[2] = Convert.ToInt32(strIP.Substring(position2 + 1, position3));
-            ip[3] = Convert.ToInt32(strIP.Substring(position3 + 1));
+            ip[1] = Convert.ToInt32(strIP.Substring(position1 + 1, position2-position1-1));
+            ip[2] = Convert.ToInt32(strIP.Substring(position2 + 1, position3-position2-1));
+            ip[3] = Convert.ToInt32(strIP.Substring(position3 + 1,strIP.Length-position3-1));
             return (ip[0] << 24) + (ip[1] << 16) + (ip[2] << 8) + ip[3];
         }
 
@@ -56,9 +56,9 @@ namespace ScreenManager.Service.util
          sb.Append((longIP>>24).ToString());
          sb.Append(".");          
          //将高8位置0，然后右移16位
-         sb.Append(((longIP & 0x00FFFFFF) > 16).ToString());
+         sb.Append(((longIP & 0x00FFFFFF) >> 16).ToString());
          sb.Append(".");
-         sb.Append(((longIP & 0x0000FFFF) > 8).ToString());
+         sb.Append(((longIP & 0x0000FFFF) >> 8).ToString());
          sb.Append(".");
          sb.Append((longIP & 0x000000FF).ToString());
          return sb.ToString(); 

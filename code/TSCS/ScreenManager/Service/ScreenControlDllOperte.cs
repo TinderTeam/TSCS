@@ -44,11 +44,11 @@ namespace ScreenManager.Service
         private static extern IntPtr getScreenName();
         public static string getScreenNameByDll()
         {
- 
-            IntPtr intPtr = getScreenName();
 
-            string str = Marshal.PtrToStringAnsi(intPtr);
- 
+            IntPtr name =getScreenName();
+
+            string str = Marshal.PtrToStringAnsi(name);
+
             return str;
         }
 
@@ -135,14 +135,14 @@ namespace ScreenManager.Service
 
            result = setScreenName(screenBaiscInfo.ScreenName);
 
-           result = setScreenColor(1);
+           result = setScreenColor(screenBaiscInfo.ScreenColor);
 
            return result;
         }
 
-        [DllImport("ScreenController.dll", EntryPoint = "setScreenLight")]
+        [DllImport("ScreenController.dll", EntryPoint = "getScreenLight")]
         private static extern bool getScreenLight(ref SCREEN_LIGHT_INFO lightInfo);
-        [DllImport("ScreenController.dll", EntryPoint = "setScreenColor")]
+        [DllImport("ScreenController.dll", EntryPoint = "getScreenColor")]
         private static extern int getScreenColor();
         public static ScreenBasicInfoModel getScreenBasicInfoByDll()
         {
@@ -162,7 +162,7 @@ namespace ScreenManager.Service
             screenBaiscInfo.LightLevelB = screenLight.lightB;
 
             screenBaiscInfo.ScreenName = getScreenNameByDll();
-            screenBaiscInfo.ScreenColor = 1;
+            screenBaiscInfo.ScreenColor = getScreenColor();
 
             return screenBaiscInfo;
         }

@@ -18,7 +18,7 @@ public:
 
 	virtual bool initScreen(void);
 	virtual bool setScreenName(std::string & name);
-	virtual std::string getScreenName();
+	virtual bool getScreenName(std::string & name);
 	virtual bool setScreenColor(int name);
 	virtual int getScreenColor();
 
@@ -43,5 +43,5 @@ private:
 	bool sendCmd(std::string & sendData);
 	bool getData(std::string & sendData,std::string & revData);
 	std::string makeSendData(std::string cmdCode, std::string  data);
-	std::string  getScreenDesp();
+	bool getScreenDesp(std::string & name);
 };

@@ -13,7 +13,7 @@ CDataProtocol::~CDataProtocol(void)
 {
 }
 
-bool CDataProtocol::encode(std::string  rawData,std::string encodeData)
+bool CDataProtocol::encode(std::string & rawData,std::string & encodeData)
 {
  
 	for(int i=0;i<DATA_START_FLAG_LENGTH;i++)
@@ -37,20 +37,24 @@ bool CDataProtocol::encode(std::string  rawData,std::string encodeData)
 	return true;
 }
 
-bool CDataProtocol::decode(std::string rawData,std::string decodeData)
+bool CDataProtocol::decode(std::string & rawData,std::string & decodeData)
 {
 	int length = rawData.length() - DATA_START_FLAG_LENGTH - CRC_LENGTH - DATA_END_FLAG_LENGTH;
 
+	if(length <= 0)
+	{
+		return false;
+	}
 	for(int i=0;i<length;i++)
 	{
 
-		decodeData[i] = rawData[DATA_START_FLAG_LENGTH+i];
+		decodeData.push_back(rawData[DATA_START_FLAG_LENGTH+i]);
 	}
 
 	return true;
 }
 
-unsigned short CDataProtocol::calCRC16(std::string rawData)
+unsigned short CDataProtocol::calCRC16(std::string & rawData)
 {
 	unsigned short crc = (short) 0xFFFF; 
 	int i = 0;

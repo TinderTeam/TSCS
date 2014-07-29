@@ -5,7 +5,7 @@ using System.Text;
 using ScreenManager.Model;
 namespace ScreenManager.Service
 {
-    interface ScreenControlInterface
+    public interface ScreenControlInterface
     {
         /// <summary>
         /// get connected screen by ip segments;

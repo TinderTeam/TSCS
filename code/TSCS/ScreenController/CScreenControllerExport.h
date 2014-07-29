@@ -31,7 +31,7 @@ extern "C" CSCREENCONTROLLER_API void closeConnect(void);
 
 
 extern "C" CSCREENCONTROLLER_API bool setScreenName(char* name);
-extern "C" CSCREENCONTROLLER_API char* getScreenName();
+extern "C" CSCREENCONTROLLER_API char * getScreenName();
 
 extern "C" CSCREENCONTROLLER_API bool setRoadInfo(ROAD_INFO raodInfo[],int length);
 extern "C" CSCREENCONTROLLER_API bool getRoadInfo(ROAD_INFO raodInfo[],int length);
