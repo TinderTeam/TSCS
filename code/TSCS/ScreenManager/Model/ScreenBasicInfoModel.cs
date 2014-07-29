@@ -9,27 +9,23 @@ namespace ScreenManager.Model
     {
         private String screenIP;   
         private String macAddr;
+
         private String screenName = "未命名";
+        private int lightCtrl = 0;
         private int lightLeverA = 0;
         private int lightLeverB = 0;
         private String screenColor = Constant.Constants.DEFAULT_COLOR;
-        private int screenColorCtrl = 0;
 
-   
-
-
-
-
-
+ 
 
         private int screenLength = 150;
 
 
 
-        public int ScreenColorCtrl
+        public int LightCtrl
         {
-            get { return screenColorCtrl; }
-            set { screenColorCtrl = value; }
+            get { return lightCtrl; }
+            set { lightCtrl = value; }
         }
 
 

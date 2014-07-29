@@ -26,11 +26,10 @@ namespace ScreenManager.Service
                 return screenList;
             }
             List<String> ipList = IPAddrHandleUtil.getIPListFromIPSegment(start, end);
-
-            ScreenListModel screenList = new ScreenListModel();
+             
             for (int i = 0; i < ipList.Count; i++)
             {
-                bool result = ScreenControlDllOperate.connectScreenByDLL();
+                bool result = ScreenControlDllOperate.connectScreenByDLL(ipList[i]);
                 if (result)
                 {
                     String screenName = ScreenControlDllOperate.getScreenNameByDll();
@@ -67,7 +66,15 @@ namespace ScreenManager.Service
                 log.Error("can not connect to ip address.the ip address is" + ip);
                 return screen;
             }
-       
+
+            //
+            ScreenBasicInfoModel screenBasic = ScreenControlDllOperate.getScreenBasicInfoByDll();
+            screen.ScreenName = screenBasic.ScreenName;
+            screen.ScreenColor = screenBasic.ScreenColor;
+            screen.ScreenColorCtrl = screenBasic.LightCtrl;
+            screen.LightLevelA = screenBasic.LightLevelA;
+            screen.LightLevelB = screenBasic.LightLevelB;
+
             List<RoadModel> roadList =  ScreenControlDllOperate.getRoadInfoByDll();
             for (int i = 0; i<roadList.Count; i++)
             {

@@ -10,9 +10,9 @@ namespace ScreenManager.Service
     [StructLayout(LayoutKind.Sequential)]
     public struct SCREEN_LIGHT_INFO
     {
-	    int lightCtr;      
-	    int lightA;
-	    int lightB;
+	   public int lightCtr;
+       public int lightA;
+       public int lightB;
     }
     [StructLayout(LayoutKind.Sequential)]
     public struct ROAD_INFO
@@ -51,6 +51,8 @@ namespace ScreenManager.Service
  
             return str;
         }
+
+ 
 
         [DllImport("ScreenController.dll", EntryPoint = "getRoadInfo")]
         private static extern bool getRoadInfo(IntPtr roadInfo, int length);
@@ -113,16 +115,56 @@ namespace ScreenManager.Service
 
         [DllImport("ScreenController.dll", EntryPoint = "setScreenLight")]
         private static extern bool setScreenLight(ref SCREEN_LIGHT_INFO lightInfo);
+        [DllImport("ScreenController.dll", EntryPoint = "setScreenName")]
+        private static extern bool setScreenName(string ipAddr);
+        [DllImport("ScreenController.dll", EntryPoint = "setScreenColor")]
+        private static extern bool setScreenColor(int color);
         public static bool setScreenInfoByDll(ScreenBasicInfoModel screenBaiscInfo)
         {
+
+
+           SCREEN_LIGHT_INFO    screenLight = new SCREEN_LIGHT_INFO();
+
+           
+           screenLight.lightCtr = screenBaiscInfo.LightCtrl;
+           screenLight.lightA = screenBaiscInfo.LightLevelA;
+           screenLight.lightB = screenBaiscInfo.LightLevelB;
+
+
+           bool result = setScreenLight(ref screenLight);
+
+           result = setScreenName(screenBaiscInfo.ScreenName);
+
+           result = setScreenColor(1);
+
+           return result;
+        }
+
+        [DllImport("ScreenController.dll", EntryPoint = "setScreenLight")]
+        private static extern bool getScreenLight(ref SCREEN_LIGHT_INFO lightInfo);
+        [DllImport("ScreenController.dll", EntryPoint = "setScreenColor")]
+        private static extern int getScreenColor();
+        public static ScreenBasicInfoModel getScreenBasicInfoByDll()
+        {
+
+            SCREEN_LIGHT_INFO screenLight = new SCREEN_LIGHT_INFO();
  
 
-            SCREEN_LIGHT_INFO screenLight = SCREEN_LIGHT_INFO();
- 
-            bool result = setScreenInfo(screenLight);
+            bool result = getScreenLight(ref screenLight);
 
+            String screenName = getScreenNameByDll();
 
-            return result;
+            int color = getScreenColor();
+
+            ScreenBasicInfoModel screenBaiscInfo = new ScreenBasicInfoModel();
+            screenBaiscInfo.LightCtrl = screenLight.lightCtr;
+            screenBaiscInfo.LightLevelA = screenLight.lightA;
+            screenBaiscInfo.LightLevelB = screenLight.lightB;
+
+            screenBaiscInfo.ScreenName = getScreenNameByDll();
+            screenBaiscInfo.ScreenColor = "1";
+
+            return screenBaiscInfo;
         }
                 
         [DllImport("ScreenController.dll", EntryPoint = "setScreenOff")]
