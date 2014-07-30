@@ -29,7 +29,7 @@ namespace ScreenManager.Service
         /// </summary>
         /// <param name="screenModel"></param>
         /// <returns></returns>
-       Boolean setScreenBasicInfo(ScreenBasicInfoModel basicInfo);
+       Boolean setScreenInfo(ScreenBasicInfoModel basicInfo);
 
 
        /// <summary>
@@ -38,7 +38,7 @@ namespace ScreenManager.Service
        /// </summary>
        /// <param name="screenModel"></param>
        /// <returns></returns>
-       Boolean setScreenRoadInfo(ScreenModel screenModel);
+       Boolean setScreenSegment(ScreenModel screenModel);
 
         /// <summary>
         /// 
@@ -58,6 +58,12 @@ namespace ScreenManager.Service
         /// </summary>
         /// <returns></returns>
        Boolean openScreen();
+
+       /// <summary>
+       /// 
+       /// </summary>
+       /// <returns></returns>
+       Boolean initScreen();
 
         /// <summary>
         /// 

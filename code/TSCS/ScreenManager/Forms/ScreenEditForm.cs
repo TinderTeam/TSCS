@@ -84,7 +84,7 @@ namespace ScreenManager.Form
                 panelView.Name = "panelView"+i;
                 panelView.Size = new System.Drawing.Size(427, 17);
                 panelView.TabIndex = 2;
-                panelView.Paint += new System.Windows.Forms.PaintEventHandler(this.roadPanel_Paint);
+                //panelView.Paint += new System.Windows.Forms.PaintEventHandler(this.roadPanel_Paint);
                 panelView.MouseMove += new System.Windows.Forms.MouseEventHandler(this.mouseMove);
                 panelView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mouseDown);
                 panelView.MouseUp += new System.Windows.Forms.MouseEventHandler(this.mouseUp);
@@ -137,12 +137,16 @@ namespace ScreenManager.Form
                 this.lstVwSgmt.Items[this.SelcetedItem.Index].SubItems[2].Text = this.ScreenModel.getSegmentList()[this.SelcetedItem.Index].Address.Start.ToString();
                 this.lstVwSgmt.Items[this.SelcetedItem.Index].SubItems[1].Text = this.ScreenModel.getRoadModelBySegmentId(this.SelcetedItem.Index).RoadName;
                 this.lstVwSgmt.Items[this.SelcetedItem.Index].SubItems[0].Text = this.SelcetedItem.Index.ToString();
+                if (this.screenModel.getRoadModelBySegmentId(this.SelcetedItem.Index) != null)
+                {
+                    this.roadListView.list[this.screenModel.getRoadModelBySegmentId(this.SelcetedItem.Index).RoadID].PanelView.repaint();
+                }
             }
             else
             {
             }
-
-
+      
+            
         }
         /// <summary>
         /// 
@@ -205,7 +209,10 @@ namespace ScreenManager.Form
            loadSelectedSegmentInfo(this.SelcetedItem);
         }
 
-        
+
+       
+
+
 
         ///-------------Action
         ///
@@ -251,10 +258,20 @@ namespace ScreenManager.Form
           
 
             ScreenManager.Service.ScreenControlInterface service = new ScreenManager.Service.ScreenControlImpl();
-            service.setScreenBasicInfo(this.screenModel.BasicInfo);
-
-            scrnInfoActivation(false);
-            this.btnScrnEdit.Text = "修改";
+            bool reuslt= service.setScreenInfo(this.screenModel.BasicInfo);
+            if (!result)
+            {
+                //dailog
+                //log
+            }
+            else
+            {
+                //dailog
+                //log
+                scrnInfoActivation(false);
+                this.btnScrnEdit.Text = "修改";
+            }
+           
         }
 
 
@@ -284,7 +301,9 @@ namespace ScreenManager.Form
                 {
                     this.roadListView.list[this.ScreenModel.getRoadModelBySegmentId(this.SelcetedItem.Index).RoadID].PanelView.Segment = null;
                     this.ScreenModel.changeRoad(this.SelcetedItem.Index, cmb.SelectedIndex);
+                 
                     this.roadListView.list[this.ScreenModel.getRoadModelBySegmentId(this.SelcetedItem.Index).RoadID].PanelView.Segment = this.ScreenModel.getSegmentList()[this.SelcetedItem.Index];
+                    this.cmbRoad.Text = this.ScreenModel.getRoadModelBySegmentId(this.SelcetedItem.Index).RoadID + ":" + this.ScreenModel.getRoadModelBySegmentId(this.SelcetedItem.Index).RoadName;
                     refrashSgmtList();
                     refrashView();
                 }
@@ -301,8 +320,7 @@ namespace ScreenManager.Form
             if (this.selcetedItem != null)
             {
                 System.Windows.Forms.NumericUpDown num = (System.Windows.Forms.NumericUpDown)sender;
-                this.ScreenModel.getSegmentList()[selcetedItem.Index].Address.Start = System.Convert.ToInt16(num.Value);
-                refrashSgmtList();
+                this.ScreenModel.getSegmentList()[selcetedItem.Index].Address.Start = System.Convert.ToInt16(num.Value);       
                 refrashSelectedItem();
             }
             else
@@ -316,8 +334,7 @@ namespace ScreenManager.Form
             if (this.selcetedItem != null)
             {
                 System.Windows.Forms.NumericUpDown num = (System.Windows.Forms.NumericUpDown)sender;
-                this.ScreenModel.getSegmentList()[selcetedItem.Index].Address.End = System.Convert.ToInt16(num.Value);
-                refrashSgmtList();
+                this.ScreenModel.getSegmentList()[selcetedItem.Index].Address.End = System.Convert.ToInt16(num.Value);            
                 refrashSelectedItem();
             }
             else
@@ -396,9 +413,9 @@ namespace ScreenManager.Form
         /// <param name="e"></param>
         private void btnSet_Click(object sender, EventArgs e)
         {
-           
-            ScreenManager.Service.ServiceContext.getInstance().getScreenControl().setScreenRoadInfo(this.ScreenModel);
-           
+            ScreenManager.Service.ScreenControlInterface service = new ScreenManager.Service.ScreenControlImpl();
+            service.setScreenSegment(this.ScreenModel);
+                   
         }
 
         private void lstVwSgmt_MouseClick(object sender, MouseEventArgs e)
@@ -410,12 +427,17 @@ namespace ScreenManager.Form
                 if (this.selcetedItem == null)
                 {
                     selectItem(item);
+                    this.refrashSgmtInfo();
+                    this.refrashSelectedItem();
+                  
                 }
                 else if (this.selcetedItem.Equals(lv.SelectedItems[lv.SelectedItems.Count-1]))
                 {
                     // cancel
                     cancelSelectedItem(item);
+                    this.refrashSelectedItem();
                     lv.SelectedItems.Clear();
+                    this.SelcetedItem = null;
                     
                 }
                 else 
@@ -423,13 +445,17 @@ namespace ScreenManager.Form
                     // selected Other
                     cancelSelectedItem(this.selcetedItem);
                     lv.SelectedItems.Clear();
+                    
+                    this.refrashSelectedItem();
+                    this.refrashView();
                     selectItem(item);
-                }
 
+                }
+                /*
                 this.refrashSgmtInfo();
                 this.refrashSgmtList();
                 this.refrashView();
-
+                */
             }
 
         }
@@ -443,8 +469,10 @@ namespace ScreenManager.Form
 
         private void roadPanel_Paint(object sender, PaintEventArgs e)
         {
-             RoadPanel panelView =  (RoadPanel) sender;
-             panelView.repaint();
+           
+            RoadPanel panelView =  (RoadPanel) sender;
+            System.Console.WriteLine("加载panel事件触发" + panelView.Name); 
+            panelView.repaint();
 
         }
 
@@ -493,8 +521,7 @@ namespace ScreenManager.Form
             item.BackColor = Color.White;
             item.ForeColor = Color.Black;
             sgmtInfoActivation(false);
-            this.roadListView.cleanSelected();
-            this.SelcetedItem = null;
+            this.roadListView.cleanSelected();           
             loadSelectedSegmentInfo(null);
         }
 
@@ -509,7 +536,7 @@ namespace ScreenManager.Form
             ListViewItem l = this.SelcetedItem;
             this.SelcetedItem = null;
 
-            initRoadCmb();
+            //initRoadCmb();
 
 
             if (item== null)
@@ -792,6 +819,88 @@ namespace ScreenManager.Form
                 this.refrashSgmtInfo();
            
 
+        }
+
+        private void newMntm_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void exitMntm_Click(object sender, EventArgs e)
+        {
+            this.Close();
+
+        }
+
+        private void numStart_KeyUp(object sender, KeyEventArgs e)
+        {
+            numStart_ValueChanged(sender, e);
+        }
+
+        private void numEnd_KeyUp(object sender, KeyEventArgs e)
+        {
+            numEnd_ValueChanged(sender, e);
+        }
+
+        private void openScrnMntm_Click(object sender, EventArgs e)
+        {
+            
+            bool result= ServiceContext.getInstance().getScreenControl().openScreen();
+            if (!result)
+            {
+                //dailog
+                //log
+            }
+            else
+            {
+                //dailog
+                //log
+            }
+        }
+
+        private void initScrnMntm_Click(object sender, EventArgs e)
+        {
+            bool result = ServiceContext.getInstance().getScreenControl().initScreen();
+            if (!result)
+            {
+                //dailog
+                //log
+            }
+            else
+            {
+                //dailog
+                //log
+            }
+        }
+
+        private void saveScrnMntm_Click(object sender, EventArgs e)
+        {
+            bool result = ServiceContext.getInstance().getScreenControl().saveScreen();
+            if (!result)
+            {
+                //dailog
+                //log
+            }
+            else
+            {
+                //dailog
+                //log
+            }
+        }
+
+        private void closeScrnMntm_Click(object sender, EventArgs e)
+        {
+            bool result = ServiceContext.getInstance().getScreenControl().closeScreen();
+            if (!result)
+            {
+                //dailog
+                //log
+            }
+            else
+            {
+                //dailog
+                //log
+            }
         }
 
   
