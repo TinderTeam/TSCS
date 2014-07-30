@@ -22,7 +22,7 @@ namespace ScreenManager.Model
         }
 
 
-        public void changeRoad(int segmentIndex, int roadIndex)
+        public SegmentModel changeRoad(int segmentIndex, int roadIndex)
         {
             RoadModel roadModel = getRoadModelBySegmentId(segmentIndex);
 
@@ -40,6 +40,7 @@ namespace ScreenManager.Model
             //remove
             roadModel.SegmentList.Remove(roadModel.getSegmentModelByID(segmentIndex));
             this.getSegmentList();
+            return sm;
             
         }
 

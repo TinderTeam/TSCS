@@ -258,7 +258,7 @@ namespace ScreenManager.Form
           
 
             ScreenManager.Service.ScreenControlInterface service = new ScreenManager.Service.ScreenControlImpl();
-            bool reuslt= service.setScreenInfo(this.screenModel.BasicInfo);
+            bool result= service.setScreenInfo(this.screenModel.BasicInfo);
             if (!result)
             {
                 //dailog
@@ -300,11 +300,17 @@ namespace ScreenManager.Form
                 if (this.ScreenModel.getRoadModelBySegmentId(this.SelcetedItem.Index).RoadID != cmb.SelectedIndex)
                 {
                     this.roadListView.list[this.ScreenModel.getRoadModelBySegmentId(this.SelcetedItem.Index).RoadID].PanelView.Segment = null;
-                    this.ScreenModel.changeRoad(this.SelcetedItem.Index, cmb.SelectedIndex);
-                 
+                    SegmentModel sgmtModel=this.ScreenModel.changeRoad(this.SelcetedItem.Index, cmb.SelectedIndex);                
                     this.roadListView.list[this.ScreenModel.getRoadModelBySegmentId(this.SelcetedItem.Index).RoadID].PanelView.Segment = this.ScreenModel.getSegmentList()[this.SelcetedItem.Index];
                     this.cmbRoad.Text = this.ScreenModel.getRoadModelBySegmentId(this.SelcetedItem.Index).RoadID + ":" + this.ScreenModel.getRoadModelBySegmentId(this.SelcetedItem.Index).RoadName;
+
+
+                    cancelSelectedItem(this.selcetedItem);
+                    this.lstVwSgmt.SelectedItems.Clear();
+                    selectItem( this.lstVwSgmt.Items[sgmtModel.SegmentID]);
+
                     refrashSgmtList();
+                 
                     refrashView();
                 }
                
@@ -445,11 +451,9 @@ namespace ScreenManager.Form
                     // selected Other
                     cancelSelectedItem(this.selcetedItem);
                     lv.SelectedItems.Clear();
-                    
+                    selectItem(item);
                     this.refrashSelectedItem();
                     this.refrashView();
-                    selectItem(item);
-
                 }
                 /*
                 this.refrashSgmtInfo();
