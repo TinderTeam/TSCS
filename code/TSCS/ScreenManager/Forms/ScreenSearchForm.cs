@@ -12,7 +12,7 @@ using ScreenManager.Model;
 using ScreenManager.Service;
 namespace ScreenManager
 {
-    public partial class MainForm : System.Windows.Forms.Form
+    public partial class ScreenSearchForm : System.Windows.Forms.Form
     {
 
 
@@ -22,7 +22,7 @@ namespace ScreenManager
         public ScreenListModel screenList ;
 
     
-        public MainForm(ScreenEditForm s)
+        public ScreenSearchForm(ScreenEditForm s)
         {
             sef = s;
             InitializeComponent();
@@ -42,19 +42,13 @@ namespace ScreenManager
             System.Windows.Forms.ListViewItem item = view.SelectedItems[0];
 
             //Load Selected Screen
-
-
             ScreenModel screenModel = screenList.getModelByIndex(item.Text);
-            //TODO
-
-            
+            //TODO         
             //UpdateScreen
-            sef.ScreenModel = screenModel;
+            sef.loadScreen(screenModel);
             sef.refrashScrn();
             sef.Show();
             this.Close();
-
-
         }
 
         /// <summary>
@@ -69,6 +63,7 @@ namespace ScreenManager
             ScreenManager.Service.ScreenDataService service = new ScreenManager.Service.ScreenDataService();
 
             //搜索屏幕
+
             screenList=service.searchByIP(IPstart, IPend);
             //加载屏幕列表
             this.reloadIPList();

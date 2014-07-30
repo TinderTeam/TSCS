@@ -11,7 +11,7 @@ using ScreenManager.Model;
 
 namespace ScreenManager
 {
-    partial class MainForm
+    partial class ScreenSearchForm
     {
 
 
@@ -49,7 +49,7 @@ namespace ScreenManager
   
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ScreenSearchForm));
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.label1 = new System.Windows.Forms.Label();
             this.txtIPStart = new System.Windows.Forms.TextBox();
@@ -186,7 +186,9 @@ namespace ScreenManager
                 mainItem.SubItems.Add(ipItem);
                 ItemList[i] = mainItem;
                 //   this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {mainItem});
+
             }
+            this.listViewScrn.Items.Clear();
             this.listViewScrn.Items.AddRange(ItemList);
         }
 

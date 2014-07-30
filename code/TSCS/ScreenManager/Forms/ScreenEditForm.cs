@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Xml.Serialization;
+using System.Xml;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -9,19 +11,21 @@ using System.Windows.Forms;
 using ScreenManager.Model;
 using ScreenManager.Model.UI;
 using ScreenManager.Service;
+
 namespace ScreenManager.Form
 {
     public partial class ScreenEditForm : System.Windows.Forms.Form
     {
-
+        private static log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType); 
 
         private ScreenModel screenModel;
         private RoadListView roadListView;
         private ListViewItem selcetedItem;
 
+
+
         public ScreenEditForm()
-        {
-           
+        {         
             InitializeComponent();         
             initComponentsContent();
             loadScreen(new ScreenModel());
@@ -110,24 +114,21 @@ namespace ScreenManager.Form
         public void loadScreen(ScreenModel m)
         {
             screenModel = m;
+            cancelSelectedItem(null);
+            this.SelcetedItem = null;
             refrashScrn();
         }
 
-        ///------------ UI Control
-        /// 
-        
-        /// <summary>
-        /// 
-        /// </summary>
 
+        /*
+         Screen refrash function
+         */
         public void refrashScrn() {
             refrashScrnInfo();
             refrashView();
             refrashSgmtList();
             refrashSgmtInfo();
         }
-
-
         public void refrashSelectedItem(){
 
             if (this.SelcetedItem!= null)
@@ -148,9 +149,6 @@ namespace ScreenManager.Form
       
             
         }
-        /// <summary>
-        /// 
-        /// </summary>
         public void refrashScrnInfo() {
             this.txtIPAdrs.Text = screenModel.ScreenIP;
             this.txtScrnName.Text = screenModel.ScreenName;
@@ -159,7 +157,6 @@ namespace ScreenManager.Form
             this.txtNumB.Value = screenModel.LightLevelB;
             this.cmbLightCtrl.Text = ScreenManager.Model.Constant.Constants.lightCtrlArray[screenModel.ScreenLightCtrl];
         }
-
         public void refrashView()
         {
             for (int i = 0; i < roadListView.list.Count; i++)
@@ -170,7 +167,6 @@ namespace ScreenManager.Form
                 roadListView.list[i].PanelView.repaint();
             }
         }
-
         public void refrashSgmtList() {
 
             int selectedID=-1;
@@ -203,7 +199,6 @@ namespace ScreenManager.Form
             }
           
         }
-
         public void refrashSgmtInfo(){
 
            loadSelectedSegmentInfo(this.SelcetedItem);
@@ -211,25 +206,16 @@ namespace ScreenManager.Form
 
 
        
-
-
-
-        ///-------------Action
-        ///
-
-
-        /// <summary>
-        /// edit screen button click action
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /*
+         Button Action
+         */
         private void btnScrnEdit_Click(object sender, EventArgs e)
         {
             if (this.btnScrnEdit.Text.Equals("修改"))
             {
                 scrnInfoActivation(true);
                 this.btnScrnEdit.Text= "取消";
+                this.btnScrnSet.Enabled = true;
             }
             else {
 
@@ -237,18 +223,19 @@ namespace ScreenManager.Form
                 txtNumB.Value = this.ScreenModel.LightLevelB;
                 cmbScrnClr.Text = ScreenManager.Model.Constant.Constants.colorArray[this.ScreenModel.ScreenColor];
                txtScrnName.Text= this.screenModel.ScreenName ;
-               cmbLightCtrl.Text = ScreenManager.Model.Constant.Constants.lightCtrlArray[this.screenModel.ScreenLightCtrl];
-             
-          
+               cmbLightCtrl.Text = ScreenManager.Model.Constant.Constants.lightCtrlArray[this.screenModel.ScreenLightCtrl];   
+
                 scrnInfoActivation(false);
                 this.btnScrnEdit.Text = "修改";
+                this.btnScrnSet.Enabled = false;
             }
            
 
         }
-
         private void btnScrnSet_Click(object sender, EventArgs e)
         {
+            log.Info("Set screen model. ");
+
             this.ScreenModel.LightLevelA = System.Convert.ToInt16(txtNumA.Value);
             this.ScreenModel.LightLevelB = System.Convert.ToInt16(txtNumB.Value);
             this.ScreenModel.ScreenColor = ScreenManager.Model.Constant.Constants.getIndexByStr(cmbScrnClr.Text);
@@ -270,13 +257,56 @@ namespace ScreenManager.Form
                 //log
                 scrnInfoActivation(false);
                 this.btnScrnEdit.Text = "修改";
+                this.btnScrnSet.Enabled = false;
             }
            
         }
+        private void btnAddSgmt_Click(object sender, EventArgs e)
+        {
+            this.ScreenModel.createSegment();
 
+            refrashSgmtList();
+            refrashView();
+            refrashSgmtInfo();
+        }
+        private void btnDltSgmt_Click(object sender, EventArgs e)
+        {
 
+            if (this.selcetedItem != null)
+            {
 
+                this.ScreenModel.deleteByIndex(this.selcetedItem.Index);
+                cancelSelectedItem(this.selcetedItem);
+                refrashSgmtList();
+                refrashView();
+                refrashSgmtInfo();
 
+            }
+            else
+            {
+                ;
+            }
+
+        }
+        private void btnDefault_Click(object sender, EventArgs e)
+        {
+            this.SelcetedItem = null;
+            this.ScreenModel.initRoadList();
+            this.refrashSgmtInfo();
+            this.refrashSgmtList();
+            this.refrashView();
+
+        }
+        private void btnSet_Click(object sender, EventArgs e)
+        {
+            ScreenManager.Service.ScreenControlInterface service = new ScreenManager.Service.ScreenControlImpl();
+            service.setScreenSegment(this.ScreenModel);
+
+        }
+
+        /*
+         Component Change Action
+         */
         /// <summary>
         /// edit road name
         /// </summary>
@@ -290,7 +320,6 @@ namespace ScreenManager.Form
             refrashSgmtList();
             refrashSgmtInfo();
         }
-
         private void cmbRoad_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (this.selcetedItem != null)
@@ -320,7 +349,6 @@ namespace ScreenManager.Form
 
             }
         }
-
         private void numStart_ValueChanged(object sender, EventArgs e)
         {
             if (this.selcetedItem != null)
@@ -334,7 +362,6 @@ namespace ScreenManager.Form
 
             }
         }
-
         private void numEnd_ValueChanged(object sender, EventArgs e)
         {
             if (this.selcetedItem != null)
@@ -348,7 +375,6 @@ namespace ScreenManager.Form
 
             }
         }
-
         private void cmbRdClr_SelectedIndexChanged(object sender, EventArgs e)
         {
 
@@ -369,61 +395,6 @@ namespace ScreenManager.Form
                 ;
             }
         }
-
-        private void btnAddSgmt_Click(object sender, EventArgs e)
-        {
-             this.ScreenModel.createSegment();
-
-             refrashSgmtList();
-             refrashView();
-             refrashSgmtInfo();
-        }
-
-        private void btnDltSgmt_Click(object sender, EventArgs e)
-        {
-    
-            if (this.selcetedItem != null)
-            {
-              
-                this.ScreenModel.deleteByIndex(this.selcetedItem.Index);
-                cancelSelectedItem(this.selcetedItem);
-                refrashSgmtList();
-                refrashView();
-                refrashSgmtInfo();
-
-            }
-            else
-            {
-                ;
-            }
-        
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnDefault_Click(object sender, EventArgs e)
-        {
-            this.SelcetedItem = null;
-            this.ScreenModel.initRoadList();
-            this.refrashSgmtInfo();
-            this.refrashSgmtList();
-            this.refrashView();
-
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnSet_Click(object sender, EventArgs e)
-        {
-            ScreenManager.Service.ScreenControlInterface service = new ScreenManager.Service.ScreenControlImpl();
-            service.setScreenSegment(this.ScreenModel);
-                   
-        }
-
         private void lstVwSgmt_MouseClick(object sender, MouseEventArgs e)
         {
             ListView lv = (ListView)sender;
@@ -463,23 +434,18 @@ namespace ScreenManager.Form
             }
 
         }
-
-
-        public ScreenModel ScreenModel
+        private void numStart_KeyUp(object sender, KeyEventArgs e)
         {
-            get { return screenModel; }
-            set { screenModel = value; }
+            numStart_ValueChanged(sender, e);
+        }
+        private void numEnd_KeyUp(object sender, KeyEventArgs e)
+        {
+            numEnd_ValueChanged(sender, e);
         }
 
-        private void roadPanel_Paint(object sender, PaintEventArgs e)
-        {
-           
-            RoadPanel panelView =  (RoadPanel) sender;
-            System.Console.WriteLine("加载panel事件触发" + panelView.Name); 
-            panelView.repaint();
-
-        }
-
+        /*
+         MenuItem
+         */
         /// <summary>
         /// search screen by ip segment
         /// </summary>
@@ -487,131 +453,161 @@ namespace ScreenManager.Form
         /// <param name="e"></param>
         private void searchScrnMntm_Click(object sender, EventArgs e)
         {
-            MainForm mainForm = new MainForm(this);
-            mainForm.Show();
+            ScreenSearchForm screenSearchForm = new ScreenSearchForm(this);
+            screenSearchForm.Show();
         }
-
-
-        /// <summary>
-        /// selcted
-        /// </summary>
-        /// <param name="item"></param>
-        private void selectItem(ListViewItem item)
+        private void newMntm_Click(object sender, EventArgs e)
         {
-            item.BackColor = Color.Blue;
-            item.ForeColor = Color.White;
-            sgmtInfoActivation(true);
-            loadSelectedSegmentInfo(item);
 
-            RoadModel road = this.ScreenModel.getRoadModelBySegmentId(item.Index);
-            if (road ==null)
+            this.loadScreen(new ScreenModel());
+        }
+        private void exitMntm_Click(object sender, EventArgs e)
+        {
+            this.Close();
+
+        }
+        private void openScrnMntm_Click(object sender, EventArgs e)
+        {
+
+            bool result = ServiceContext.getInstance().getScreenControl().openScreen();
+            if (!result)
             {
-
+                MessageBox.Show("打开屏幕失败");
+                //log
             }
             else
             {
-                this.roadListView.list[this.ScreenModel.getRoadModelBySegmentId(item.Index).RoadID].PanelView.Segment = this.ScreenModel.getSegmentList()[item.Index];
-
+                MessageBox.Show("打开屏幕成功");
+                //log
             }
-            
-  
-            this.SelcetedItem = item;
+        }
+        private void initScrnMntm_Click(object sender, EventArgs e)
+        {
+            bool result = ServiceContext.getInstance().getScreenControl().initScreen();
+            if (!result)
+            {
+                MessageBox.Show("初始化屏幕失败");
+                //log
+            }
+            else
+            {
+                MessageBox.Show("初始化屏幕成功");
+                //log
+            }
+        }
+        private void saveScrnMntm_Click(object sender, EventArgs e)
+        {
+            bool result = ServiceContext.getInstance().getScreenControl().saveScreen();
+
+
+            if (!result)
+            {
+                MessageBox.Show("保存屏幕失败");
+                //log
+            }
+            else
+            {
+                MessageBox.Show("保存屏幕成功");
+                //log
+            }
+        }
+        private void closeScrnMntm_Click(object sender, EventArgs e)
+        {
+            bool result = ServiceContext.getInstance().getScreenControl().closeScreen();
+            if (!result)
+            {
+                //dailog
+
+                MessageBox.Show("关闭屏幕失败");
+            }
+            else
+            {
+                MessageBox.Show("关闭屏幕成功");
+                //log
+            }
+        }
+        private void EditIPMntm_Click(object sender, EventArgs e)
+        {
+
+            ScreenManager.Forms.PasswordForm pf = new ScreenManager.Forms.PasswordForm();
+            ScreenManager.Forms.ipMacForm ipMacForm = new ScreenManager.Forms.ipMacForm(this.screenModel.ScreenIP);
+
+            if (pf.ShowDialog() == DialogResult.OK)
+            {
+                ipMacForm.ShowDialog();
+            }
+            else
+            {
+                ;
+            }
 
         }
-
-
-        private void cancelSelectedItem(ListViewItem item)
+        private void scrnLengthMntm_Click(object sender, EventArgs e)
         {
-            item.BackColor = Color.White;
-            item.ForeColor = Color.Black;
-            sgmtInfoActivation(false);
-            this.roadListView.cleanSelected();           
-            loadSelectedSegmentInfo(null);
+            ScreenManager.Forms.PasswordForm pf = new ScreenManager.Forms.PasswordForm();
+            ScreenManager.Forms.ScreenLengthForm sf = new ScreenManager.Forms.ScreenLengthForm(this.ScreenModel.ScreenIP);
+
+            if (pf.ShowDialog() == DialogResult.OK)
+            {
+                sf.ShowDialog();
+            }
+            else
+            {
+                ;
+            }
         }
-
-        /// <summary>
-        /// 
-        /// 
-        /// </summary>
-        /// <param name="item"></param>
-        private void loadSelectedSegmentInfo(ListViewItem item)
+        private void openMntm_Click(object sender, EventArgs e)
         {
+            OpenFileDialog fileDialog = new OpenFileDialog();
 
-            ListViewItem l = this.SelcetedItem;
-            this.SelcetedItem = null;
+            fileDialog.InitialDirectory = "C://";
 
-            //initRoadCmb();
+            fileDialog.Filter = "TrafficScreen files(*.ts)|All files (*.*)";
 
+            fileDialog.FilterIndex = 1;
 
-            if (item== null)
+            fileDialog.RestoreDirectory = true;
+
+            if (fileDialog.ShowDialog() == DialogResult.OK)
+
             {
 
-                this.txtSgmtName.Text = "";
-                this.cmbRoad.Text = "";
-                this.numStart.Value = 0;
-                this.numEnd.Value =0;
-                this.cmbRdClr.Text  ="";
+               System.Console.WriteLine(fileDialog.FileName);
+
             }
-            else {
-                
-                
-                
-                this.txtSgmtName.Text = item.SubItems[0].Text;            
-                this.cmbRoad.Text = item.SubItems[1].Text;
-                this.numStart.Value = System.Convert.ToInt16(item.SubItems[2].Text);
-                this.numEnd.Value = System.Convert.ToInt16(item.SubItems[3].Text);
-                this.cmbRdClr.Text = item.SubItems[4].Text;
-            }
-            this.SelcetedItem = l;
-    
+
         }
-
-        private void initRoadCmb()
+        private void saveMntm_Click(object sender, EventArgs e)
         {
+            OpenFileDialog fileDialog = new OpenFileDialog();
 
-            List<String> roadNameList = new List<String>();
+            fileDialog.InitialDirectory = "C://";
 
-            this.cmbRoad.Items.Clear();
+            fileDialog.Filter = "TrafficScreen files(*.ts)|All files (*.*)";
 
-            for (int i = 0; i < 10; i++)
+            fileDialog.FilterIndex = 1;
+
+            fileDialog.RestoreDirectory = true;
+
+            if (fileDialog.ShowDialog() == DialogResult.OK)
             {
-                roadNameList.Add(i.ToString()+":"+ScreenModel.roadList[i].RoadName);
+                XmlDocument xml = new XmlDocument();
+                XmlSerializer serializer = new XmlSerializer(typeof(int));
+                //生成一个新节点
+                XmlElement node = xml.CreateElement("ScreenModel");
+                //为指定节点的新建属性并赋值
+                // node.SetAttribute("Object",serializer.Serialize(Console.Out, i); );
+
+                System.Console.WriteLine(fileDialog.FileName);
+
             }
-            this.cmbRoad.Items.AddRange(roadNameList.ToArray());
-          
         }
 
-     
 
-
-        private void scrnInfoActivation(Boolean b)
-        {
-            txtNumA.Enabled=b;
-            txtNumB.Enabled=b;
-            cmbScrnClr.Enabled=b;
-            txtScrnName.Enabled=b;
-            cmbScrnClr.Enabled=b;
-            cmbLightCtrl.Enabled = b;
-        }
-
-        private void sgmtInfoActivation(Boolean b)
-        {
-            cmbRoad.Enabled = b;
-            numStart.Enabled = b;
-            numEnd.Enabled = b;
-            cmbRdClr.Enabled = b;
-            btnDltSgmt.Enabled = b;
        
-          
-        }
-
-        public ListViewItem SelcetedItem
-        {
-            get { return selcetedItem; }
-            set { selcetedItem = value; }
-        }
-
-
+        /*
+         MouseAcrtion
+         */
         private void mouseDown(object sender, MouseEventArgs e)
         {
             ScreenManager.Model.UI.RoadPanel panel = (ScreenManager.Model.UI.RoadPanel)sender;
@@ -641,7 +637,6 @@ namespace ScreenManager.Form
                 ;
             }
         }
-
         private void mouseUp(object sender, MouseEventArgs e)
         {
 
@@ -660,8 +655,6 @@ namespace ScreenManager.Form
                 ;
             }
         }
-
-
         private void mouseMove(object sender, MouseEventArgs e)
         {
             ScreenManager.Model.UI.RoadPanel panel = (ScreenManager.Model.UI.RoadPanel)sender;
@@ -749,6 +742,76 @@ namespace ScreenManager.Form
                    
         }
 
+      
+        /*
+         Operate Function 
+         */
+        private void selectItem(ListViewItem item)
+        {
+            item.BackColor = Color.Blue;
+            item.ForeColor = Color.White;
+            sgmtInfoActivation(true);
+            loadSelectedSegmentInfo(item);
+
+            RoadModel road = this.ScreenModel.getRoadModelBySegmentId(item.Index);
+            if (road == null)
+            {
+
+            }
+            else
+            {
+                this.roadListView.list[this.ScreenModel.getRoadModelBySegmentId(item.Index).RoadID].PanelView.Segment = this.ScreenModel.getSegmentList()[item.Index];
+
+            }
+
+
+            this.SelcetedItem = item;
+
+        }
+        private void cancelSelectedItem(ListViewItem item)
+        {
+            if (item != null)
+            {
+                item.BackColor = Color.White;
+                item.ForeColor = Color.Black;
+            }
+          
+            sgmtInfoActivation(false);
+            this.roadListView.cleanSelected();
+            loadSelectedSegmentInfo(null);
+        }
+        private void loadSelectedSegmentInfo(ListViewItem item)
+        {
+
+            ListViewItem l = this.SelcetedItem;
+            this.SelcetedItem = null;
+
+            //initRoadCmb();
+
+
+            if (item == null)
+            {
+
+                this.txtSgmtName.Text = "";
+                this.cmbRoad.Text = "";
+                this.numStart.Value = 0;
+                this.numEnd.Value = 0;
+                this.cmbRdClr.Text = "";
+            }
+            else
+            {
+
+
+
+                this.txtSgmtName.Text = item.SubItems[0].Text;
+                this.cmbRoad.Text = item.SubItems[1].Text;
+                this.numStart.Value = System.Convert.ToInt16(item.SubItems[2].Text);
+                this.numEnd.Value = System.Convert.ToInt16(item.SubItems[3].Text);
+                this.cmbRdClr.Text = item.SubItems[4].Text;
+            }
+            this.SelcetedItem = l;
+
+        }
         private void endMarkMove(MouseEventArgs e, ScreenManager.Model.UI.RoadPanel panel)
         {
             int offset;
@@ -760,31 +823,30 @@ namespace ScreenManager.Form
             //endMove;
 
             offset = e.X - panel.EndMarkPosition;
-            
+
             offsetP = (double)offset / (double)length;
 
             roadOffset = (int)(offsetP * (double)roadLength);
- 
-                if (adrs.End + roadOffset < adrs.Start)
-                {
-                    adrs.Start = adrs.End;
-                    panel.MarkDrag = "start";
-                }
-                else if (adrs.End + roadOffset > roadLength)
-                {
-                    adrs.End = roadLength;
-                }
-                else
-                {
-                    adrs.End = adrs.End + roadOffset;
-                }
 
-                panel.Refresh();
-                this.refrashSelectedItem();
-                this.refrashSgmtInfo();
-            
+            if (adrs.End + roadOffset < adrs.Start)
+            {
+                adrs.Start = adrs.End;
+                panel.MarkDrag = "start";
+            }
+            else if (adrs.End + roadOffset > roadLength)
+            {
+                adrs.End = roadLength;
+            }
+            else
+            {
+                adrs.End = adrs.End + roadOffset;
+            }
+
+            panel.Refresh();
+            this.refrashSelectedItem();
+            this.refrashSgmtInfo();
+
         }
-
         private void startMarkMove(MouseEventArgs e, ScreenManager.Model.UI.RoadPanel panel)
         {
 
@@ -801,115 +863,80 @@ namespace ScreenManager.Form
 
             //设置起始值拖拽结果
 
-           
-                if (adrs.Start + roadOffset < 0)
-                {
-                    //最小
 
-                    adrs.Start = 0;
-                }
-                else if (adrs.Start + roadOffset > adrs.End)
-                {
-                    adrs.End = adrs.Start;
-                    panel.MarkDrag = "end";
-                }
-                else
-                {
-                    adrs.Start = adrs.Start + roadOffset;
-                }
-
-                panel.Refresh();
-                this.refrashSelectedItem();
-                this.refrashSgmtInfo();
-           
-
-        }
-
-        private void newMntm_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void exitMntm_Click(object sender, EventArgs e)
-        {
-            this.Close();
-
-        }
-
-        private void numStart_KeyUp(object sender, KeyEventArgs e)
-        {
-            numStart_ValueChanged(sender, e);
-        }
-
-        private void numEnd_KeyUp(object sender, KeyEventArgs e)
-        {
-            numEnd_ValueChanged(sender, e);
-        }
-
-        private void openScrnMntm_Click(object sender, EventArgs e)
-        {
-            
-            bool result= ServiceContext.getInstance().getScreenControl().openScreen();
-            if (!result)
+            if (adrs.Start + roadOffset < 0)
             {
-                //dailog
-                //log
+                //最小
+
+                adrs.Start = 0;
+            }
+            else if (adrs.Start + roadOffset > adrs.End)
+            {
+                adrs.End = adrs.Start;
+                panel.MarkDrag = "end";
             }
             else
             {
-                //dailog
-                //log
+                adrs.Start = adrs.Start + roadOffset;
             }
-        }
 
-        private void initScrnMntm_Click(object sender, EventArgs e)
+            panel.Refresh();
+            this.refrashSelectedItem();
+            this.refrashSgmtInfo();
+
+
+        }
+        private void initRoadCmb()
         {
-            bool result = ServiceContext.getInstance().getScreenControl().initScreen();
-            if (!result)
-            {
-                //dailog
-                //log
-            }
-            else
-            {
-                //dailog
-                //log
-            }
-        }
 
-        private void saveScrnMntm_Click(object sender, EventArgs e)
+            List<String> roadNameList = new List<String>();
+
+            this.cmbRoad.Items.Clear();
+
+            for (int i = 0; i < 10; i++)
+            {
+                roadNameList.Add(i.ToString() + ":" + ScreenModel.roadList[i].RoadName);
+            }
+            this.cmbRoad.Items.AddRange(roadNameList.ToArray());
+
+        }
+        private void scrnInfoActivation(Boolean b)
         {
-            bool result = ServiceContext.getInstance().getScreenControl().saveScreen();
-            if (!result)
-            {
-                //dailog
-                //log
-            }
-            else
-            {
-                //dailog
-                //log
-            }
+            txtNumA.Enabled = b;
+            txtNumB.Enabled = b;
+            cmbScrnClr.Enabled = b;
+            txtScrnName.Enabled = b;
+            cmbScrnClr.Enabled = b;
+            cmbLightCtrl.Enabled = b;
         }
-
-        private void closeScrnMntm_Click(object sender, EventArgs e)
+        private void sgmtInfoActivation(Boolean b)
         {
-            bool result = ServiceContext.getInstance().getScreenControl().closeScreen();
-            if (!result)
-            {
-                //dailog
-                //log
-            }
-            else
-            {
-                //dailog
-                //log
-            }
+            cmbRoad.Enabled = b;
+            numStart.Enabled = b;
+            numEnd.Enabled = b;
+            cmbRdClr.Enabled = b;
+            btnDltSgmt.Enabled = b;
+
+
         }
 
-  
+        /*
+         Get and set 
+         */
+        public ScreenModel ScreenModel
+        {
+            get { return screenModel; }
+            set { screenModel = value; }
+        }
+        public ListViewItem SelcetedItem
+        {
+            get { return selcetedItem; }
+            set { selcetedItem = value; }
+        }
 
-      
+
+
+
 
 
     }

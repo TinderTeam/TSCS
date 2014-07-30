@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem("");
-            System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ScreenEditForm));
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileMnlst = new System.Windows.Forms.ToolStripMenuItem();
@@ -45,6 +45,7 @@
             this.saveScrnMntm = new System.Windows.Forms.ToolStripMenuItem();
             this.closeScrnMntm = new System.Windows.Forms.ToolStripMenuItem();
             this.scrnLengthMntm = new System.Windows.Forms.ToolStripMenuItem();
+            this.EditIPMntm = new System.Windows.Forms.ToolStripMenuItem();
             this.helpMnlst = new System.Windows.Forms.ToolStripMenuItem();
             this.helpMntm = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutMntm = new System.Windows.Forms.ToolStripMenuItem();
@@ -196,26 +197,28 @@
             // newMntm
             // 
             this.newMntm.Name = "newMntm";
-            this.newMntm.Size = new System.Drawing.Size(109, 22);
+            this.newMntm.Size = new System.Drawing.Size(152, 22);
             this.newMntm.Text = "新建";
             this.newMntm.Click += new System.EventHandler(this.newMntm_Click);
             // 
             // openMntm
             // 
             this.openMntm.Name = "openMntm";
-            this.openMntm.Size = new System.Drawing.Size(109, 22);
+            this.openMntm.Size = new System.Drawing.Size(152, 22);
             this.openMntm.Text = "打开...";
+            this.openMntm.Click += new System.EventHandler(this.openMntm_Click);
             // 
             // saveMntm
             // 
             this.saveMntm.Name = "saveMntm";
-            this.saveMntm.Size = new System.Drawing.Size(109, 22);
+            this.saveMntm.Size = new System.Drawing.Size(152, 22);
             this.saveMntm.Text = "保存...";
+            this.saveMntm.Click += new System.EventHandler(this.saveMntm_Click);
             // 
             // exitMntm
             // 
             this.exitMntm.Name = "exitMntm";
-            this.exitMntm.Size = new System.Drawing.Size(109, 22);
+            this.exitMntm.Size = new System.Drawing.Size(152, 22);
             this.exitMntm.Text = "退出";
             this.exitMntm.Click += new System.EventHandler(this.exitMntm_Click);
             // 
@@ -224,7 +227,8 @@
             this.functionMnlst.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.searchScrnMntm,
             this.scrnCtrlMnLst,
-            this.scrnLengthMntm});
+            this.scrnLengthMntm,
+            this.EditIPMntm});
             this.functionMnlst.Name = "functionMnlst";
             this.functionMnlst.Size = new System.Drawing.Size(44, 21);
             this.functionMnlst.Text = "功能";
@@ -232,7 +236,7 @@
             // searchScrnMntm
             // 
             this.searchScrnMntm.Name = "searchScrnMntm";
-            this.searchScrnMntm.Size = new System.Drawing.Size(148, 22);
+            this.searchScrnMntm.Size = new System.Drawing.Size(168, 22);
             this.searchScrnMntm.Text = "搜索屏幕";
             this.searchScrnMntm.Click += new System.EventHandler(this.searchScrnMntm_Click);
             // 
@@ -244,42 +248,50 @@
             this.saveScrnMntm,
             this.closeScrnMntm});
             this.scrnCtrlMnLst.Name = "scrnCtrlMnLst";
-            this.scrnCtrlMnLst.Size = new System.Drawing.Size(152, 22);
+            this.scrnCtrlMnLst.Size = new System.Drawing.Size(168, 22);
             this.scrnCtrlMnLst.Text = "屏幕控制";
             // 
             // openScrnMntm
             // 
             this.openScrnMntm.Name = "openScrnMntm";
-            this.openScrnMntm.Size = new System.Drawing.Size(152, 22);
+            this.openScrnMntm.Size = new System.Drawing.Size(136, 22);
             this.openScrnMntm.Text = "打开屏幕";
             this.openScrnMntm.Click += new System.EventHandler(this.openScrnMntm_Click);
             // 
             // initScrnMntm
             // 
             this.initScrnMntm.Name = "initScrnMntm";
-            this.initScrnMntm.Size = new System.Drawing.Size(152, 22);
+            this.initScrnMntm.Size = new System.Drawing.Size(136, 22);
             this.initScrnMntm.Text = "初始化屏幕";
             this.initScrnMntm.Click += new System.EventHandler(this.initScrnMntm_Click);
             // 
             // saveScrnMntm
             // 
             this.saveScrnMntm.Name = "saveScrnMntm";
-            this.saveScrnMntm.Size = new System.Drawing.Size(152, 22);
+            this.saveScrnMntm.Size = new System.Drawing.Size(136, 22);
             this.saveScrnMntm.Text = "保存屏幕";
             this.saveScrnMntm.Click += new System.EventHandler(this.saveScrnMntm_Click);
             // 
             // closeScrnMntm
             // 
             this.closeScrnMntm.Name = "closeScrnMntm";
-            this.closeScrnMntm.Size = new System.Drawing.Size(152, 22);
+            this.closeScrnMntm.Size = new System.Drawing.Size(136, 22);
             this.closeScrnMntm.Text = "关闭屏幕";
             this.closeScrnMntm.Click += new System.EventHandler(this.closeScrnMntm_Click);
             // 
             // scrnLengthMntm
             // 
             this.scrnLengthMntm.Name = "scrnLengthMntm";
-            this.scrnLengthMntm.Size = new System.Drawing.Size(148, 22);
+            this.scrnLengthMntm.Size = new System.Drawing.Size(168, 22);
             this.scrnLengthMntm.Text = "屏幕长度配置";
+            this.scrnLengthMntm.Click += new System.EventHandler(this.scrnLengthMntm_Click);
+            // 
+            // EditIPMntm
+            // 
+            this.EditIPMntm.Name = "EditIPMntm";
+            this.EditIPMntm.Size = new System.Drawing.Size(168, 22);
+            this.EditIPMntm.Text = "修改IP/MAC地址";
+            this.EditIPMntm.Click += new System.EventHandler(this.EditIPMntm_Click);
             // 
             // helpMnlst
             // 
@@ -426,8 +438,8 @@
             this.lstVwSgmt.GridLines = true;
             this.lstVwSgmt.HideSelection = false;
             this.lstVwSgmt.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem9,
-            listViewItem10});
+            listViewItem3,
+            listViewItem4});
             this.lstVwSgmt.Location = new System.Drawing.Point(3, 3);
             this.lstVwSgmt.Name = "lstVwSgmt";
             this.lstVwSgmt.Size = new System.Drawing.Size(258, 313);
@@ -854,6 +866,7 @@
             // 
             // btnScrnSet
             // 
+            this.btnScrnSet.Enabled = false;
             this.btnScrnSet.Location = new System.Drawing.Point(82, 3);
             this.btnScrnSet.Name = "btnScrnSet";
             this.btnScrnSet.Size = new System.Drawing.Size(74, 23);
@@ -1389,5 +1402,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.Label lblctrl;
         private System.Windows.Forms.ComboBox cmbLightCtrl;
+        private System.Windows.Forms.ToolStripMenuItem EditIPMntm;
     }
 }
