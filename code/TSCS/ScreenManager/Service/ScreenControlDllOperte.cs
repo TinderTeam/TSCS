@@ -74,9 +74,16 @@ namespace ScreenManager.Service
             Marshal.Copy(ptArr, 0, pt, 1); //拷贝指针数组  
 
 
-            getRoadInfo(pt, roadNum);
-
             List<RoadModel> roadList = new List<RoadModel>();
+            bool result = getRoadInfo(pt, roadNum);
+
+            if (!result)
+            {
+                log.Error("get road info failed");
+                return roadList;
+            }
+
+   
             for (int i = 0; i < roadNum; i++)
             {
                 infos[i] = (ROAD_INFO)Marshal.PtrToStructure((IntPtr)(pt.ToInt32() + i * Marshal.SizeOf(typeof(ROAD_INFO))), typeof(ROAD_INFO));
@@ -186,6 +193,13 @@ namespace ScreenManager.Service
         {
 
 
+            bool result = setScreenName(screenBaiscInfo.ScreenName);
+
+            if (!result)
+            {
+                log.Error("set screen name failed");
+            }
+
            SCREEN_LIGHT_INFO    screenLight = new SCREEN_LIGHT_INFO();
 
            
@@ -194,9 +208,12 @@ namespace ScreenManager.Service
            screenLight.lightB = screenBaiscInfo.LightLevelB;
 
 
-           bool result = setScreenLight(ref screenLight);
+           result = setScreenLight(ref screenLight);
+           if (!result)
+           {
+               log.Error("set screen light failed");
+           }
 
-           result = setScreenName(screenBaiscInfo.ScreenName);
 
            result = setScreenColor(screenBaiscInfo.ScreenColor);
 
@@ -214,6 +231,11 @@ namespace ScreenManager.Service
  
 
             bool result = getScreenLight(ref screenLight);
+
+            if (!result)
+            {
+                return null;
+            }
  
             ScreenBasicInfoModel screenBaiscInfo = new ScreenBasicInfoModel();
             screenBaiscInfo.LightCtrl = screenLight.lightCtr;
@@ -221,8 +243,13 @@ namespace ScreenManager.Service
             screenBaiscInfo.LightLevelB = screenLight.lightB;
 
             screenBaiscInfo.ScreenName = getScreenNameByDll();
-            screenBaiscInfo.ScreenColor = getScreenColor();
 
+            int color = getScreenColor();
+            if (-1 != color)
+            {
+                  screenBaiscInfo.ScreenColor = color;
+            }
+ 
             return screenBaiscInfo;
         }
                 

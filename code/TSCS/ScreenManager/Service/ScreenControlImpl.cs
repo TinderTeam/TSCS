@@ -4,15 +4,19 @@ using System.Linq;
 using System.Text;
 using ScreenManager.Model;
 using ScreenManager.Service.util;
-using log4net; 
+using log4net;
+using System.Windows.Forms;
+using System.Threading;
 
 namespace ScreenManager.Service
 {
     public class ScreenControlImpl : ScreenControlInterface
     {
-        private static log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType); 
+        private static log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        public ScreenListModel searchByIP(string start, string end)
+        private string connectedScreen = "";
+  
+        public  ScreenListModel searchByIP(string start, string end,ProgressBar bar)
         {
             ScreenListModel screenList = new ScreenListModel();
             if (!IPAddrHandleUtil.isValid(start))
@@ -26,7 +30,13 @@ namespace ScreenManager.Service
                 return screenList;
             }
             List<String> ipList = IPAddrHandleUtil.getIPListFromIPSegment(start, end);
-             
+
+
+            PingThread thread = new PingThread();
+            ipList = thread.PingWorker(ipList, bar);
+
+            bar.Value = 0;
+ 
             for (int i = 0; i < ipList.Count; i++)
             {
                 bool result = ScreenControlDllOperate.connectScreenByDLL(ipList[i]);
@@ -62,26 +72,34 @@ namespace ScreenManager.Service
                 return screen;
             }
             bool result = ScreenControlDllOperate.connectScreenByDLL(ip);
+
             if (!result)
             {
                 log.Error("can not connect to ip address.the ip address is" + ip);
                 return screen;
             }
-
+           
+            this.connectedScreen = ip;
             //
             ScreenBasicInfoModel screenBasic = ScreenControlDllOperate.getScreenBasicInfoByDll();
-            screen.ScreenName = screenBasic.ScreenName;
-            screen.ScreenColor = screenBasic.ScreenColor;
-            screen.ScreenLightCtrl = screenBasic.LightCtrl;
-            screen.LightLevelA = screenBasic.LightLevelA;
-            screen.LightLevelB = screenBasic.LightLevelB;
 
-            List<RoadModel> roadList =  ScreenControlDllOperate.getRoadInfoByDll();
-            for (int i = 0; i<roadList.Count; i++)
+            if (null != screenBasic)
             {
-                screen.setRoadNameWithId(roadList[i].RoadID, roadList[i].RoadName);
-            }
+                screen.ScreenIP = ip;
+                screen.ScreenName = screenBasic.ScreenName;
+                screen.ScreenColor = screenBasic.ScreenColor;
+                screen.ScreenLightCtrl = screenBasic.LightCtrl;
+                screen.LightLevelA = screenBasic.LightLevelA;
+                screen.LightLevelB = screenBasic.LightLevelB;
+
+                List<RoadModel> roadList = ScreenControlDllOperate.getRoadInfoByDll();
+                for (int i = 0; i < roadList.Count; i++)
+                {
+                    screen.setRoadNameWithId(roadList[i].RoadID, roadList[i].RoadName);
+                }
             
+            }
+
 
             return screen;
         }
@@ -90,26 +108,32 @@ namespace ScreenManager.Service
         {
             return true;
         }
-        public Boolean setScreenInfo(ScreenBasicInfoModel basicInfo)
+  
+        public Boolean setScreenBasicInfo(ScreenBasicInfoModel basicInfo)
         {
-            ScreenControlDllOperate.setScreenInfoByDll(basicInfo);
-            return true;
+ 
+            Boolean result = ScreenControlDllOperate.setScreenInfoByDll(basicInfo);
+            return result;
         }
-        public Boolean setScreenSegment(ScreenModel screenModel)
+        public Boolean setScreenRoadInfo(ScreenModel screenModel)
         {
-            return true;
+            Boolean result = ScreenControlDllOperate.setRoadInfoByDll(screenModel);
+            return result;
         }
         public Boolean closeScreen()
         {
-            return ScreenControlDllOperate.setScreenOffByDll();
+            Boolean result = ScreenControlDllOperate.setScreenOffByDll();
+            return result;
         }
         public Boolean saveScreen() 
         {
-            return ScreenControlDllOperate.saveScreenByDll();
+            Boolean result = ScreenControlDllOperate.saveScreenByDll();
+            return result;
         }
         public Boolean openScreen()
         {
-            return ScreenControlDllOperate.setScreenOnByDll();
+            Boolean result =  ScreenControlDllOperate.setScreenOnByDll();
+            return result;
         }
         public Boolean initScreen()
         {

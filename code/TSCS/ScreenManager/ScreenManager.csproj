@@ -113,6 +113,7 @@
     <Compile Include="Forms\ScreenEditForm.Designer.cs">
       <DependentUpon>ScreenEditForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\SetCmdThread.cs" />
     <Compile Include="Model\Constants\Constants.cs" />
     <Compile Include="Model\RoadModel.cs" />
     <Compile Include="Model\ScreenBasicInfoModel.cs" />
@@ -181,6 +182,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Service\PingThread.cs" />
     <Compile Include="Service\ServiceContext.cs" />
     <Compile Include="Service\ScreenControlDllOperte.cs" />
     <Compile Include="Service\ScreenControlImpl.cs" />
@@ -188,6 +190,7 @@
     <Compile Include="Service\ScreenDataService.cs" />
     <Compile Include="Service\util\IPAddrHandleUtil.cs" />
     <Compile Include="Stub\Stub.cs" />
+    <Compile Include="Util\CmdConstants.cs" />
     <Compile Include="Util\SysConfig.cs" />
   </ItemGroup>
   <ItemGroup>

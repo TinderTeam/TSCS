@@ -19,11 +19,12 @@ bool ControllerInterface::connectScreen(std::string & ipAddr)
 	LOG_INFO(ipAddr.c_str());
 
 	bool result = this->communicator.connectServer(ipAddr,SOCKET_PORT);
-	if(result)
+
+	if(!result)
 	{
-		std::string screenName;
-		result = this->getScreenName(screenName);
+		LOG_ERROR("connect failed");
 	}
+ 
 	this->connected = result;
     return result;
 }

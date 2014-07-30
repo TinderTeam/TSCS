@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
-using ScreenManager.Form;
+using ScreenManager.Forms;
 using ScreenManager.Model;
 using ScreenManager.Util;
 using ScreenManager.Service;
@@ -17,7 +17,7 @@ namespace ScreenManager
     {
 
 
-        public ScreenManager.Form.ScreenEditForm  sef;
+        public ScreenManager.Forms.ScreenEditForm  sef;
      
         //屏幕列表
         public ScreenListModel screenList ;
@@ -60,6 +60,7 @@ namespace ScreenManager
             //Load Selected Screen
             ScreenModel screenModel = screenList.getModelByIndex(item.Text);
             //TODO         
+            screenModel = ServiceContext.getInstance().getScreenControl().getScreenInfo(screenModel.ScreenIP);
             //UpdateScreen
             sef.loadScreen(screenModel);
             sef.refrashScrn();
@@ -74,13 +75,19 @@ namespace ScreenManager
         /// <param name="e"></param>
         private void searchIP(object sender, EventArgs e)
         {
+            this.btnSearchIP.Enabled = false;
             String IPstart = this.txtIPStart.Text;
             String IPend = this.txtIPEnd.Text;
-            ScreenManager.Service.ScreenDataService service = new ScreenManager.Service.ScreenDataService();
+            screenList = ServiceContext.getInstance().getScreenControl().searchByIP(IPstart, IPend,this.psBar);
+            //ScreenManager.Service.ScreenDataService service = new ScreenManager.Service.ScreenDataService();
+            if (screenList.List.Count == 0)
+            {
+                MessageBox.Show("没有搜索到屏幕");
 
+            }
+            this.btnSearchIP.Enabled = true;
             //搜索屏幕
-
-            screenList=service.searchByIP(IPstart, IPend);
+            //screenList=service.searchByIP(IPstart, IPend);
             //加载屏幕列表
             this.reloadIPList();
         }

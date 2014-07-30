@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 using ScreenManager.Model;
 namespace ScreenManager.Service
 {
@@ -13,7 +14,7 @@ namespace ScreenManager.Service
         /// <param name="start"></param>
         /// <param name="end"></param>
         /// <returns></returns>
-       ScreenListModel searchByIP(string start, string end);
+       ScreenListModel searchByIP(string start, string end ,ProgressBar bar);
 
         /// <summary
         /// modify screen ip address
@@ -29,7 +30,7 @@ namespace ScreenManager.Service
         /// </summary>
         /// <param name="screenModel"></param>
         /// <returns></returns>
-       Boolean setScreenInfo(ScreenBasicInfoModel basicInfo);
+       Boolean setScreenBasicInfo(ScreenBasicInfoModel basicInfo);
 
 
        /// <summary>
@@ -38,7 +39,7 @@ namespace ScreenManager.Service
        /// </summary>
        /// <param name="screenModel"></param>
        /// <returns></returns>
-       Boolean setScreenSegment(ScreenModel screenModel);
+       Boolean setScreenRoadInfo(ScreenModel screenModel);
 
         /// <summary>
         /// 
@@ -64,7 +65,6 @@ namespace ScreenManager.Service
        /// </summary>
        /// <returns></returns>
        Boolean initScreen();
-
         /// <summary>
         /// 
         /// </summary>
