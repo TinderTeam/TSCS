@@ -12,8 +12,9 @@ using System.Windows.Forms;
 using ScreenManager.Model;
 using ScreenManager.Model.UI;
 using ScreenManager.Service;
-
-namespace ScreenManager.Form
+using ScreenManager.Util;
+using ScreenManager.Forms;
+namespace ScreenManager.Forms
 {
     public partial class ScreenEditForm : System.Windows.Forms.Form
     {
@@ -236,7 +237,7 @@ namespace ScreenManager.Form
         private void btnScrnSet_Click(object sender, EventArgs e)
         {
             log.Info("Set screen model. ");
-
+            this.btnScrnSet.Enabled = false;
             this.ScreenModel.LightLevelA = System.Convert.ToInt16(txtNumA.Value);
             this.ScreenModel.LightLevelB = System.Convert.ToInt16(txtNumB.Value);
             this.ScreenModel.ScreenColor = ScreenManager.Model.Constant.Constants.getIndexByStr(cmbScrnClr.Text);
@@ -245,17 +246,19 @@ namespace ScreenManager.Form
 
           
 
-            ScreenManager.Service.ScreenControlInterface service = new ScreenManager.Service.ScreenControlImpl();
-            bool result= service.setScreenInfo(this.screenModel.BasicInfo);
+            bool result = ScreenManager.Service.ServiceContext.getInstance().getScreenControl().setScreenBasicInfo(this.screenModel.BasicInfo);
+ 
             if (!result)
             {
-                //dailog
+                MessageBox.Show("操作失败");
+                this.btnScrnSet.Enabled = true;
                 //log
             }
             else
             {
                 //dailog
                 //log
+                MessageBox.Show("操作成功");
                 scrnInfoActivation(false);
                 this.btnScrnEdit.Text = "修改";
                 this.btnScrnSet.Enabled = false;
@@ -300,11 +303,25 @@ namespace ScreenManager.Form
         }
         private void btnSet_Click(object sender, EventArgs e)
         {
-            ScreenManager.Service.ScreenControlInterface service = new ScreenManager.Service.ScreenControlImpl();
-            service.setScreenSegment(this.ScreenModel);
+            this.btnSet.Enabled = false;
+            bool result = ScreenManager.Service.ServiceContext.getInstance().getScreenControl().setScreenRoadInfo(this.ScreenModel);
 
+            if (!result)
+            {
+                MessageBox.Show("操作失败");
+
+
+                //log
+            }
+            else
+            {
+                //dailog
+
+                //log
+                MessageBox.Show("操作成功");
+            }
+            this.btnSet.Enabled = true;
         }
-
         /*
          Component Change Action
          */
@@ -469,63 +486,27 @@ namespace ScreenManager.Form
         }
         private void openScrnMntm_Click(object sender, EventArgs e)
         {
-
-            bool result = ServiceContext.getInstance().getScreenControl().openScreen();
-            if (!result)
-            {
-                MessageBox.Show("打开屏幕失败");
-                //log
-            }
-            else
-            {
-                MessageBox.Show("打开屏幕成功");
-                //log
-            }
+            SetCmdThread setCmd = new SetCmdThread();
+            setCmd.setCmd(CmdConstants.OPEN_SCREEN);
+ 
         }
+
+        
+        
         private void initScrnMntm_Click(object sender, EventArgs e)
         {
-            bool result = ServiceContext.getInstance().getScreenControl().initScreen();
-            if (!result)
-            {
-                MessageBox.Show("初始化屏幕失败");
-                //log
-            }
-            else
-            {
-                MessageBox.Show("初始化屏幕成功");
-                //log
-            }
+            SetCmdThread setCmd = new SetCmdThread();
+            setCmd.setCmd(CmdConstants.INIT_SCREEN);
         }
         private void saveScrnMntm_Click(object sender, EventArgs e)
         {
-            bool result = ServiceContext.getInstance().getScreenControl().saveScreen();
-
-
-            if (!result)
-            {
-                MessageBox.Show("保存屏幕失败");
-                //log
-            }
-            else
-            {
-                MessageBox.Show("保存屏幕成功");
-                //log
-            }
+            SetCmdThread setCmd = new SetCmdThread();
+            setCmd.setCmd(CmdConstants.SAVE_SCREEN);
         }
         private void closeScrnMntm_Click(object sender, EventArgs e)
         {
-            bool result = ServiceContext.getInstance().getScreenControl().closeScreen();
-            if (!result)
-            {
-                //dailog
-
-                MessageBox.Show("关闭屏幕失败");
-            }
-            else
-            {
-                MessageBox.Show("关闭屏幕成功");
-                //log
-            }
+            SetCmdThread setCmd = new SetCmdThread();
+            setCmd.setCmd(CmdConstants.CLOSE_SCREEN);
         }
         private void EditIPMntm_Click(object sender, EventArgs e)
         {

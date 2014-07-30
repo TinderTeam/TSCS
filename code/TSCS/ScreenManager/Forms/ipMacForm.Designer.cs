@@ -38,7 +38,7 @@
             // 
             // btnSure
             // 
-            this.btnSure.Location = new System.Drawing.Point(297, 177);
+            this.btnSure.Location = new System.Drawing.Point(216, 177);
             this.btnSure.Name = "btnSure";
             this.btnSure.Size = new System.Drawing.Size(75, 23);
             this.btnSure.TabIndex = 0;
@@ -49,7 +49,7 @@
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(216, 177);
+            this.btnCancel.Location = new System.Drawing.Point(297, 177);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 1;
@@ -89,13 +89,13 @@
             this.textBox2.Size = new System.Drawing.Size(360, 21);
             this.textBox2.TabIndex = 5;
             // 
-            // ipNacForm
+            // ipMacForm
             // 
             this.AcceptButton = this.btnSure;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(384, 212);
+            this.ClientSize = new System.Drawing.Size(392, 216);
             this.ControlBox = false;
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.label2);
@@ -105,7 +105,7 @@
             this.Controls.Add(this.btnSure);
             this.MaximumSize = new System.Drawing.Size(400, 250);
             this.MinimumSize = new System.Drawing.Size(400, 250);
-            this.Name = "ipNacForm";
+            this.Name = "ipMacForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;

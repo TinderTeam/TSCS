@@ -28,8 +28,7 @@ namespace ScreenManager.Forms
             }else{
                 MessageBox.Show("操作失败");
             }
-            
-          
+  
             
         }
 
