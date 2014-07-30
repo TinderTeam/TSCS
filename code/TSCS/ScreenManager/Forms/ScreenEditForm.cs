@@ -6,6 +6,7 @@ using System.Xml.Serialization;
 using System.Xml;
 using System.Drawing;
 using System.Linq;
+using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using ScreenManager.Model;
@@ -591,14 +592,14 @@ namespace ScreenManager.Form
 
             if (fileDialog.ShowDialog() == DialogResult.OK)
             {
-                XmlDocument xml = new XmlDocument();
-                XmlSerializer serializer = new XmlSerializer(typeof(int));
-                //生成一个新节点
-                XmlElement node = xml.CreateElement("ScreenModel");
-                //为指定节点的新建属性并赋值
-                // node.SetAttribute("Object",serializer.Serialize(Console.Out, i); );
 
-                System.Console.WriteLine(fileDialog.FileName);
+                XmlSerializer serializer = new XmlSerializer(typeof(int));          
+                Stream writer = new FileStream(fileDialog.FileName, FileMode.Create);
+                // Serialize the object, and close the TextWriter
+                serializer.Serialize(writer, this.ScreenModel);
+                writer.Close();
+
+                System.Console.WriteLine();
 
             }
         }

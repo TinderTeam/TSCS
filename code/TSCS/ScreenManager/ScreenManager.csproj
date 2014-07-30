@@ -188,6 +188,7 @@
     <Compile Include="Service\ScreenDataService.cs" />
     <Compile Include="Service\util\IPAddrHandleUtil.cs" />
     <Compile Include="Stub\Stub.cs" />
+    <Compile Include="Util\SysConfig.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\config.xml" />

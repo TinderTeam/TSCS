@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
+using ScreenManager.Util;
 
 namespace ScreenManager.Forms
 {
@@ -21,7 +22,7 @@ namespace ScreenManager.Forms
         private void btnSure_Click(object sender, EventArgs e)
         {
             XmlDocument xml = new XmlDocument();
-            xml.Load("../../Resources/config.xml");
+            xml.Load(SysConfig.getSystemPath() + "/config.xml");
             //指定一个节点
             XmlNode sysNode = xml.SelectSingleNode("/root/sys");
             string pswd = sysNode.Attributes["pswd"].Value;

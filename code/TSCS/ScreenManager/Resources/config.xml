@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <root>
-	<sys
-	pswd="1234"
-	></sys>
+	<sys pswd="1234"></sys>
+	<ip start="192.168.0.1" end="192.168.0.255"></ip>
 </root>

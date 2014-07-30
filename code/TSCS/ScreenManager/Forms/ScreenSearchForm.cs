@@ -6,9 +6,10 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-
+using System.Xml;
 using ScreenManager.Form;
 using ScreenManager.Model;
+using ScreenManager.Util;
 using ScreenManager.Service;
 namespace ScreenManager
 {
@@ -26,10 +27,25 @@ namespace ScreenManager
         {
             sef = s;
             InitializeComponent();
+            InitContent();
         }
     
 
      
+        private void InitContent(){
+
+            XmlDocument xml = new XmlDocument();
+
+
+            xml.Load(SysConfig.getSystemPath()+"/config.xml");
+            //指定一个节点
+            XmlNode sysNode = xml.SelectSingleNode("/root/ip");
+            this.txtIPStart.Text = sysNode.Attributes["start"].Value;
+            this.txtIPEnd.Text = sysNode.Attributes["end"].Value;
+
+        }
+
+
         /// <summary>
         /// 加载选中的屏幕
         /// </summary>
