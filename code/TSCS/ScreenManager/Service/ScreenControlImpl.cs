@@ -14,10 +14,11 @@ namespace ScreenManager.Service
     {
         private static log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        private string connectedScreen = "";
+        private string connectedIP = "";
   
         public  ScreenListModel searchByIP(string start, string end,ProgressBar bar)
         {
+            log.Info("search ip ");
             ScreenListModel screenList = new ScreenListModel();
             if (!IPAddrHandleUtil.isValid(start))
             {
@@ -32,13 +33,13 @@ namespace ScreenManager.Service
             List<String> ipList = IPAddrHandleUtil.getIPListFromIPSegment(start, end);
 
 
-            PingThread thread = new PingThread();
-            ipList = thread.PingWorker(ipList, bar);
+            PingThread ping = new PingThread();
+            ipList = ping.PingWorker(ipList, bar);
 
-            bar.Value = 0;
  
             for (int i = 0; i < ipList.Count; i++)
             {
+                
                 bool result = ScreenControlDllOperate.connectScreenByDLL(ipList[i]);
                 if (result)
                 {
@@ -55,13 +56,26 @@ namespace ScreenManager.Service
                     ScreenControlDllOperate.closeConnectByDll();
                     log.Error("can not find the screen with ip address ." + ipList[i]);
                 }
+                bar.Value += 20 * (i + 1) / ipList.Count;
 
             }
+
+            bar.Value = 0;
             return screenList;
         }
         public Boolean setScreenLength(int length)
         {
-            return true;
+            Boolean result = ScreenControlDllOperate.setScreenLengthByDll(length);
+            if (!result)
+            {
+                log.Warn("set failed try again");
+                result = ScreenControlDllOperate.connectScreenByDLL(this.connectedIP);
+                if (result)
+                {
+                    result = ScreenControlDllOperate.setScreenLengthByDll(length);
+                }
+            }
+            return result;
         }
         public ScreenModel getScreenInfo(String ip)
         {
@@ -79,8 +93,8 @@ namespace ScreenManager.Service
                 return screen;
             }
            
-            this.connectedScreen = ip;
-            //
+            this.connectedIP = ip;
+         
             ScreenBasicInfoModel screenBasic = ScreenControlDllOperate.getScreenBasicInfoByDll();
 
             if (null != screenBasic)
@@ -91,6 +105,7 @@ namespace ScreenManager.Service
                 screen.ScreenLightCtrl = screenBasic.LightCtrl;
                 screen.LightLevelA = screenBasic.LightLevelA;
                 screen.LightLevelB = screenBasic.LightLevelB;
+                screen.BasicInfo.ScreenLength = screenBasic.ScreenLength;
 
                 List<RoadModel> roadList = ScreenControlDllOperate.getRoadInfoByDll();
                 for (int i = 0; i < roadList.Count; i++)
@@ -104,40 +119,109 @@ namespace ScreenManager.Service
             return screen;
         }
 
-        public Boolean modifyScreenIP(string oldIPAddr, string newIPAddr)
+        public Boolean modifyScreenIP(string ipAddr,string macAddr)
         {
-            return true;
+            if (!IPAddrHandleUtil.isValid(ipAddr))
+            {
+                log.Error("the ip address is invalid.the ip is " + ipAddr);
+                return false;
+            }
+            Boolean result = ScreenControlDllOperate.setScreenIpAddrByDLL(ipAddr, macAddr);
+            if (!result)
+            {
+                log.Warn("set failed try again");
+                result = ScreenControlDllOperate.connectScreenByDLL(this.connectedIP);
+                if (result)
+                {
+                    result = ScreenControlDllOperate.setScreenIpAddrByDLL(ipAddr, macAddr);
+                }
+            }
+            return result;
         }
   
         public Boolean setScreenBasicInfo(ScreenBasicInfoModel basicInfo)
         {
  
             Boolean result = ScreenControlDllOperate.setScreenInfoByDll(basicInfo);
+            if (!result)
+            {
+                log.Warn("set failed try again");
+                result = ScreenControlDllOperate.connectScreenByDLL(this.connectedIP);
+                if (result)
+                {
+                    result = ScreenControlDllOperate.setScreenInfoByDll(basicInfo);
+                }
+            }
             return result;
         }
         public Boolean setScreenRoadInfo(ScreenModel screenModel)
         {
             Boolean result = ScreenControlDllOperate.setRoadInfoByDll(screenModel);
+            if (!result)
+            {
+                log.Warn("set failed try again");
+                result = ScreenControlDllOperate.connectScreenByDLL(this.connectedIP);
+                if (result)
+                {
+                    result = ScreenControlDllOperate.setRoadInfoByDll(screenModel);
+                }
+            }
             return result;
         }
         public Boolean closeScreen()
         {
             Boolean result = ScreenControlDllOperate.setScreenOffByDll();
+            if (!result)
+            {
+                log.Warn("set failed try again");
+                result = ScreenControlDllOperate.connectScreenByDLL(this.connectedIP);
+                if (result)
+                {
+                    result = ScreenControlDllOperate.setScreenOffByDll();
+                }
+            }
             return result;
         }
         public Boolean saveScreen() 
         {
             Boolean result = ScreenControlDllOperate.saveScreenByDll();
+            if (!result)
+            {
+                result = ScreenControlDllOperate.connectScreenByDLL(this.connectedIP);
+                if (result)
+                {
+                    result = ScreenControlDllOperate.saveScreenByDll();
+                }
+            }
             return result;
         }
         public Boolean openScreen()
         {
             Boolean result =  ScreenControlDllOperate.setScreenOnByDll();
+            if (!result)
+            {
+                log.Warn("set failed try again");
+                result = ScreenControlDllOperate.connectScreenByDLL(this.connectedIP);
+                if (result)
+                {
+                    result = ScreenControlDllOperate.setScreenOnByDll();
+                }
+            }
             return result;
         }
         public Boolean initScreen()
         {
-            return ScreenControlDllOperate.setScreenOnByDll();
+            Boolean result = ScreenControlDllOperate.initScreenByDll();
+            if (!result)
+            {
+                log.Warn("set failed try again");
+                result = ScreenControlDllOperate.connectScreenByDLL(this.connectedIP);
+                if (result)
+                {
+                    result = ScreenControlDllOperate.initScreenByDll();
+                }
+            }
+            return result;
         }
     }
 }

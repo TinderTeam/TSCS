@@ -15,6 +15,7 @@ ControllerInterface::~ControllerInterface(void)
 bool ControllerInterface::connectScreen(std::string & ipAddr)
 {
 	
+	LOG_INFO("");
 	LOG_INFO("connect to screen,the ip address is: ");
 	LOG_INFO(ipAddr.c_str());
 
@@ -271,7 +272,7 @@ bool ControllerInterface::setScreenDisp(SEGMENT_INFO segmentInfo[],int length)
 	segmentInfoList.push_back(segmentInfoStr);
    
 	std::vector<std::string>::iterator iter = segmentInfoList.begin();
-	bool result;
+	bool result = false;
 	for(;iter != segmentInfoList.end();iter++)
 	{ 
 		bool result =this->sendCmd(CMD_SET_DISP,*iter);
@@ -294,19 +295,26 @@ bool ControllerInterface::setScreenDisp(SEGMENT_INFO segmentInfo[],int length)
 
 }
 
-bool ControllerInterface::setScreenIpAddr(std::string & ipAddr)
+bool ControllerInterface::setScreenIpAddr(std::string & ipAddr,std::string & macAddr)
 {
 	std::vector< std::string>  ipList = StringUtil::split(ipAddr,std::string(IP_SPLIT_FLAG));
 
 	std::vector<std::string>::iterator iter = ipList.begin();
 	
 	std::string data;
-	for(;iter != ipList.begin();iter++)
+	for(iter = ipList.begin();iter != ipList.end();iter++)
 	{
 	   int temp = atoi(iter->c_str());
        data.push_back(char(temp));
 	}
+	std::vector< std::string>  macList = StringUtil::split(macAddr,std::string(MAC_SPLIT_FLAG));
 
+	
+	for(iter = macList.begin();iter != macList.end();iter++)
+	{ 
+		long lTemp = strtol(iter->c_str(), NULL, 16); 
+		data.push_back(char(lTemp));
+	}
 
 	bool result =this->sendCmd(CMD_SET_IP,data);
 

@@ -141,36 +141,21 @@ CSCREENCONTROLLER_API bool setScreenLength(int length)
 CSCREENCONTROLLER_API bool setScreenDisp(SEGMENT_INFO segmentInfo[],int length)
 {
 	   LOG_INFO("setScreenDisp");
-	   for(int i=0;i<length;i++)
-	   {
-		   char buf[10];
-		   sprintf(buf, "%d", segmentInfo[i].roadNum);
-		   std::string temp = buf;
-		   LOG_INFO(temp.c_str());
-		   sprintf(buf, "%d", segmentInfo[i].segNum);
-		   temp = buf;
-		   LOG_INFO(temp.c_str());
-		   sprintf(buf, "%d", segmentInfo[i].color);
-		    temp = buf;
-		   LOG_INFO(temp.c_str());
-		   sprintf(buf, "%d", segmentInfo[i].startAddr);
-		   temp = buf;
-		   LOG_INFO(temp.c_str());
-		   sprintf(buf, "%d", segmentInfo[i].endAddr);
-		     temp = buf;
-		   LOG_INFO(temp.c_str());
-	 
-		   
-	   }
+ 
        bool result = CInstanceFactory::getInstance()->getController()->setScreenDisp(segmentInfo,length);
 	   return result;
 }
 
 
-CSCREENCONTROLLER_API bool setScreenIpAddr(char * ipAddr)
+CSCREENCONTROLLER_API bool setScreenIpAddr(char * ipAddr,char * macAddr)
 {
 	LOG_INFO("setScreenIpAddr");
-	bool result = CInstanceFactory::getInstance()->getController()->setScreenIpAddr(std::string(ipAddr));
+	if(NULL == ipAddr || NULL == macAddr)
+	{
+		LOG_ERROR("null point of screen ip Address or mac Address ");
+		return false;
+	}
+	bool result = CInstanceFactory::getInstance()->getController()->setScreenIpAddr(std::string(ipAddr),std::string(macAddr));
 	return result;
 }
 

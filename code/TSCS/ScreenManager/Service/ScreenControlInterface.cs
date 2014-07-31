@@ -22,7 +22,8 @@ namespace ScreenManager.Service
         /// <param name="oldIpAddr"></param>
         /// <param name="newIPAddr"></param>
         /// <returns></returns>
-       Boolean modifyScreenIP(string oldIPAddr, string newIPAddr);
+        /// 
+       Boolean modifyScreenIP(string ipAddr, string macAddr);
 
         /// <summary>
         /// set screen infomation

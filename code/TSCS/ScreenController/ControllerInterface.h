@@ -32,7 +32,7 @@ public:
 	virtual bool setScreenOff(void);
 	virtual bool saveScreen(bool update,bool save);
 
-	virtual bool setScreenIpAddr(std::string & ipAddr);
+	virtual bool setScreenIpAddr(std::string & ipAddr,std::string & macAddr);
 	virtual bool setSegmentColor(int segNum,int color);
 
 	virtual bool setRoadInfo(ROAD_INFO raodInfo[],int length);

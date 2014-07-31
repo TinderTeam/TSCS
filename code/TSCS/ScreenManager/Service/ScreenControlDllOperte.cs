@@ -42,6 +42,13 @@ namespace ScreenManager.Service
             return connectScreen(ipAddr);
         }
 
+        [DllImport("ScreenController.dll", EntryPoint = "setScreenIpAddr")]
+        private static extern bool setScreenIpAddr(string ipAddr, string macAddr);
+        public static bool setScreenIpAddrByDLL(string ipAddr,string macAddr)
+        {
+            return setScreenIpAddr(ipAddr,macAddr);
+        }
+
         [DllImport("ScreenController.dll", EntryPoint = "getScreenName")]
         private static extern IntPtr getScreenName();
         public static string getScreenNameByDll()
@@ -110,6 +117,7 @@ namespace ScreenManager.Service
             if (!result)
             {
                 log.Error("set road name failed");
+                return result;
             }
             // set segment list
             result = setSegmentList(screen);
@@ -198,6 +206,7 @@ namespace ScreenManager.Service
             if (!result)
             {
                 log.Error("set screen name failed");
+                return result;
             }
 
            SCREEN_LIGHT_INFO    screenLight = new SCREEN_LIGHT_INFO();
@@ -212,6 +221,7 @@ namespace ScreenManager.Service
            if (!result)
            {
                log.Error("set screen light failed");
+               return result;
            }
 
 
@@ -224,6 +234,8 @@ namespace ScreenManager.Service
         private static extern bool getScreenLight(ref SCREEN_LIGHT_INFO lightInfo);
         [DllImport("ScreenController.dll", EntryPoint = "getScreenColor")]
         private static extern int getScreenColor();
+        [DllImport("ScreenController.dll", EntryPoint = "getScreenLength")]
+        private static extern int getScreenLength();
         public static ScreenBasicInfoModel getScreenBasicInfoByDll()
         {
 
@@ -242,15 +254,29 @@ namespace ScreenManager.Service
             screenBaiscInfo.LightLevelA = screenLight.lightA;
             screenBaiscInfo.LightLevelB = screenLight.lightB;
 
-            screenBaiscInfo.ScreenName = getScreenNameByDll();
+  
+            screenBaiscInfo.ScreenLength = getScreenLength();
 
             int color = getScreenColor();
             if (-1 != color)
             {
                   screenBaiscInfo.ScreenColor = color;
             }
- 
+            else
+            {
+                log.Error("get color failed");
+                return screenBaiscInfo;
+            }
+
+            screenBaiscInfo.ScreenName = getScreenNameByDll();
             return screenBaiscInfo;
+        }
+
+        [DllImport("ScreenController.dll", EntryPoint = "setScreenLength")]
+        private static extern bool setScreenLength(int length);
+        public static bool setScreenLengthByDll(int length)
+        {
+            return setScreenLength(length);
         }
                 
         [DllImport("ScreenController.dll", EntryPoint = "setScreenOff")]
@@ -272,6 +298,13 @@ namespace ScreenManager.Service
         public static bool saveScreenByDll()
         {
             return saveScreen();
+        }
+
+        [DllImport("ScreenController.dll", EntryPoint = "initScreen")]
+        private static extern bool initScreen();
+        public static bool initScreenByDll()
+        {
+            return initScreen();
         }
 
         [DllImport("ScreenController.dll", EntryPoint = "closeConnect")]

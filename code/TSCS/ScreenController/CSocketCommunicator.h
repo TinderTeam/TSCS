@@ -4,7 +4,7 @@
 #include <Winsock2.h>
 #pragma comment(lib, "ws2_32.lib")
 
-#define TIME_OUT 5000 // data receive time out second
+#define TIME_OUT 3000 // data receive time out second
 class CSocketCommunicator
 {
 public:

@@ -11,7 +11,7 @@
 #define CMD_SET_DISP "DISP-" //设置显示屏显示命令
 #define CMD_GET_DISP "GDISP"
 
-#define CMD_SET_UPDATE "DIS--"  //设置IP地址
+#define CMD_SET_UPDATE "DIS--"  //显示存储命令
 
 
 #define CMD_SET_YS "SETYS"  //单独设置整屏颜色:
@@ -32,6 +32,7 @@
 
 #define SPLIT_FLAG  ";"
 #define IP_SPLIT_FLAG  "."
+#define MAC_SPLIT_FLAG  "-"
 
 #define DATA_BYTES_NUM_LENGTH 2
 #define RESERVE_LENGTH 4

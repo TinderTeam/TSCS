@@ -47,7 +47,7 @@ extern "C" CSCREENCONTROLLER_API int getScreenLength();
 extern "C" CSCREENCONTROLLER_API bool setScreenDisp(SEGMENT_INFO segmentInfo[],int length);
 extern "C" CSCREENCONTROLLER_API int getScreenDisp();
 
-extern "C" CSCREENCONTROLLER_API bool setScreenIpAddr(char * ipAddr);
+extern "C" CSCREENCONTROLLER_API bool setScreenIpAddr(char * ipAddr,char * macAddr);
 
 
 extern "C" CSCREENCONTROLLER_API bool setScreenOn();

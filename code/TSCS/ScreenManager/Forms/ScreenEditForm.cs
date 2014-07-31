@@ -138,7 +138,7 @@ namespace ScreenManager.Forms
                 this.lstVwSgmt.Items[this.SelcetedItem.Index].SubItems[4].Text = ScreenManager.Model.Constant.Constants.colorArray[this.ScreenModel.getSegmentList()[this.SelcetedItem.Index].SegmentColor];
                 this.lstVwSgmt.Items[this.SelcetedItem.Index].SubItems[3].Text = this.ScreenModel.getSegmentList()[this.SelcetedItem.Index].Address.End.ToString();
                 this.lstVwSgmt.Items[this.SelcetedItem.Index].SubItems[2].Text = this.ScreenModel.getSegmentList()[this.SelcetedItem.Index].Address.Start.ToString();
-                this.lstVwSgmt.Items[this.SelcetedItem.Index].SubItems[1].Text = this.ScreenModel.getRoadModelBySegmentId(this.SelcetedItem.Index).RoadName;
+                this.lstVwSgmt.Items[this.SelcetedItem.Index].SubItems[1].Text = this.ScreenModel.getRoadModelBySegmentId(this.SelcetedItem.Index).RoadID+":"+this.ScreenModel.getRoadModelBySegmentId(this.SelcetedItem.Index).RoadName;
                 this.lstVwSgmt.Items[this.SelcetedItem.Index].SubItems[0].Text = this.SelcetedItem.Index.ToString();
                 if (this.screenModel.getRoadModelBySegmentId(this.SelcetedItem.Index) != null)
                 {
@@ -183,7 +183,7 @@ namespace ScreenManager.Forms
               
                     String[] itemString = new String[5];
                     itemString[0]= screenModel.getSegmentList()[i].SegmentID.ToString();
-                    itemString[1] = screenModel.getRoadModelBySegmentId(screenModel.getSegmentList()[i].SegmentID).RoadName;
+                    itemString[1] = screenModel.getRoadModelBySegmentId(screenModel.getSegmentList()[i].SegmentID).RoadID+":"+screenModel.getRoadModelBySegmentId(screenModel.getSegmentList()[i].SegmentID).RoadName;
                     itemString[2] = screenModel.getSegmentList()[i].Address.Start.ToString();
                     itemString[3] = screenModel.getSegmentList()[i].Address.End.ToString();
                     itemString[4]= ScreenManager.Model.Constant.Constants.colorArray[screenModel.getSegmentList()[i].SegmentColor];
@@ -335,6 +335,7 @@ namespace ScreenManager.Forms
             TextBox txt = (TextBox)sender;
             int index = roadListView.getIndexByTextBox(txt);
             screenModel.roadList[index].RoadName = txt.Text;
+            initRoadCmb();
             refrashSgmtList();
             refrashSgmtInfo();
         }

@@ -75,6 +75,9 @@ namespace ScreenManager
         /// <param name="e"></param>
         private void searchIP(object sender, EventArgs e)
         {
+            
+            log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+            log.Info("search button");
             this.btnSearchIP.Enabled = false;
             String IPstart = this.txtIPStart.Text;
             String IPend = this.txtIPEnd.Text;

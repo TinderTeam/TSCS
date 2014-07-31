@@ -52,7 +52,7 @@ namespace ScreenManager.Service
                     log.Info("connect finish.");
                     break;
                 }
-                bar.Value = 100 * count / ipList.Count;
+                bar.Value = 80 * count / ipList.Count;
                 Thread.Sleep(100);
             }
 
@@ -95,6 +95,7 @@ namespace ScreenManager.Service
                     {
                         log.Error("the ip address can not connect success. the ip address is :" + ipAddr);
                     }
+                   
                 }
                 else
                 {
@@ -144,6 +145,10 @@ namespace ScreenManager.Service
             catch
             {
                 log.Error("connect socket failed");
+            }
+            finally
+            {
+                clientSocket.Close();
             }
             return result;
         }

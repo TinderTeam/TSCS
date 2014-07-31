@@ -20,7 +20,7 @@ namespace ScreenManager.Forms
 
         private void btnSure_Click(object sender, EventArgs e)
         {
-            bool result = Service.ServiceContext.getInstance().getScreenControl().modifyScreenIP(oldIp, this.textBox1.Text);
+            bool result = Service.ServiceContext.getInstance().getScreenControl().modifyScreenIP(this.textBox1.Text,this.textBox2.Text);
             if (result)
             {
                 MessageBox.Show("操作成功");
