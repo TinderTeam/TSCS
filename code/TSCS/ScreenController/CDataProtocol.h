@@ -14,5 +14,7 @@ public:
 	bool encode(std::string & rawData,std::string & encodeData);
 	bool decode(std::string & rawData,std::string & decodeData);
 	unsigned short calCRC16(std::string & rawData);
+	unsigned short CRC16(const char *pBuffer, int length);
+	int   calcByte(int crc, char b);
 
 };

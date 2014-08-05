@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using ScreenManager.Form;
+using ScreenManager.Forms;
 namespace ScreenManager
 {
     static class Program

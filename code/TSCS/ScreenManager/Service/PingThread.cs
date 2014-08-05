@@ -21,7 +21,7 @@ namespace ScreenManager.Service
 
         private static int count = 0;
         private static List<String> succussList = new List<String>();
-        object objLock = new object();
+        private static object objLock = new object();
         public PingThread()
         {
              
@@ -30,8 +30,12 @@ namespace ScreenManager.Service
         public List<String>  PingWorker(List<String> ipList,ProgressBar bar)
         {
 
-            count = 0;
-            succussList.Clear();
+
+            lock (objLock)
+            {
+                count = 0;
+                succussList.Clear();
+            }
 
             PingThread thread = new PingThread();
 
@@ -46,20 +50,28 @@ namespace ScreenManager.Service
             log.Info("the sum ip address is " + ipList.Count);
             while (true)
             {
+                
+                lock (objLock)
+               {
+                   if (count == ipList.Count)
+                   {
+                       log.Info("connect finish.");
+                       break;
+                   }
+                   bar.Value = 80 * count / ipList.Count;
+               }
 
-                if (count == ipList.Count)
-                {
-                    log.Info("connect finish.");
-                    break;
-                }
-                bar.Value = 80 * count / ipList.Count;
                 Thread.Sleep(100);
             }
 
-            log.Info("connect success ip count is " + succussList.Count);
-            for (int i = 0; i < succussList.Count; i++)
+            lock (objLock)
             {
-                log.Info("success ip is "+succussList[i]);
+                log.Info("connect success ip count is " + succussList.Count);
+                for (int i = 0; i < succussList.Count; i++)
+                {
+                    log.Info("success ip is " + succussList[i]);
+                }
+
             }
 
             return succussList;
@@ -83,18 +95,20 @@ namespace ScreenManager.Service
                 if (reply.Status == IPStatus.Success)
                 {
 
-                    //TcpClient tcp = new TcpClient();
-                    //tcp.Connect(ipAddr, port);
-                    bool socket = connectSocket(ipAddr);
-                    //if (tcp.Connected)
-                    if (socket)
+                    TcpClient tcp = new TcpClient();
+                    tcp.Connect(ipAddr, port);
+                   // bool socket = connectSocket(ipAddr);
+                    if (tcp.Connected)
+                    //if (socket)
                     {
                         result = true;
+                        tcp.Close();
                     }
                     else
                     {
                         log.Error("the ip address can not connect success. the ip address is :" + ipAddr);
                     }
+
                    
                 }
                 else
@@ -110,7 +124,7 @@ namespace ScreenManager.Service
             catch (Exception ex)
             {
 
-                log.Error("the ip address can not connect success. the ip address is :" + ipAddr);
+                log.Error("the ip address can not connect success. the ip address is :" + ipAddr,ex);
             }
             
 
