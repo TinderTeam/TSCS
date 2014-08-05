@@ -39,55 +39,25 @@ namespace ScreenManager.Service
         private static extern bool connectScreen(string ipAddr);
         public static bool connectScreenByDLL(string ipAddr)
         {
-            log.Info("now open the connect");
-            bool result = false;
-            try
-            {
-                result = connectScreen(ipAddr);
-            }
-            catch (System.Exception ex)
-            {
-                log.Error("call dll exception",ex);
-            }
-            
-            return result;
+            return connectScreen(ipAddr);
         }
 
         [DllImport("ScreenController.dll", EntryPoint = "setScreenIpAddr")]
         private static extern bool setScreenIpAddr(string ipAddr, string macAddr);
         public static bool setScreenIpAddrByDLL(string ipAddr,string macAddr)
         {
-            bool result = false;
-            try
-            {
-                result = setScreenIpAddr(ipAddr, macAddr);
-            }
-            catch(System.Exception ex)
-            {
-                 log.Error("call dll exception",ex);
-            }
-            return result;
+            return setScreenIpAddr(ipAddr,macAddr);
         }
 
         [DllImport("ScreenController.dll", EntryPoint = "getScreenName")]
         private static extern IntPtr getScreenName();
         public static string getScreenNameByDll()
         {
-            IntPtr name;
-            string str = "";
 
-            try
-            {
-                name = getScreenName();
-                str = Marshal.PtrToStringAnsi(name);
-            }
-            catch (System.Exception ex)
-            {
-                log.Error("call dll exception", ex);
-            }
+            IntPtr name =getScreenName();
 
-            log.Info("get screen name is " + str);
- 
+            string str = Marshal.PtrToStringAnsi(name);
+
             return str;
         }
 
@@ -97,71 +67,39 @@ namespace ScreenManager.Service
         private static extern bool getRoadInfo(IntPtr roadInfo, int length);
         public static List<RoadModel> getRoadInfoByDll()
         {
+            int roadNum = 10;
+
+            ROAD_INFO[] infos = new ROAD_INFO[roadNum];
+            for (int i = 0; i < roadNum; i++)
+            {
+                infos[i] = new ROAD_INFO();
+            }
+
+            IntPtr[] ptArr = new IntPtr[1];
+            ptArr[0] = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(ROAD_INFO)) * roadNum); //分配包含两个元素的数组   
+            IntPtr pt = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(ROAD_INFO)));
+            Marshal.Copy(ptArr, 0, pt, 1); //拷贝指针数组  
+
+
             List<RoadModel> roadList = new List<RoadModel>();
-            try
+            bool result = getRoadInfo(pt, roadNum);
+
+            if (!result)
             {
-                int roadNum = 10;
-
-                ROAD_INFO[] infos = new ROAD_INFO[roadNum];
-                for (int i = 0; i < roadNum; i++)
-                {
-                    infos[i] = new ROAD_INFO();
-                }
-
-              /*  IntPtr[] ptArr = new IntPtr[1];
-                ptArr[0] = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(ROAD_INFO)) * roadNum); //分配包含两个元素的数组   
-                IntPtr pt = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(ROAD_INFO)));
-                Marshal.Copy(ptArr, 0, pt, 1); //拷贝指针数组  
-
-
-
-                bool result = getRoadInfo(pt, roadNum);
-
-                if (!result)
-                {
-                    log.Error("get road info failed");
-                    return roadList;
-                }
-
-
-                for (int i = 0; i < roadNum; i++)
-                {
-                    infos[i] = (ROAD_INFO)Marshal.PtrToStructure((IntPtr)(pt.ToInt32() + i * Marshal.SizeOf(typeof(ROAD_INFO))), typeof(ROAD_INFO));
-                    RoadModel road = new RoadModel();
-                    road.RoadID = infos[i].roadNum;
-                    road.RoadName = infos[i].roadName;
-                    roadList.Add(road);
-                }*/
-
-                IntPtr roadPt = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(ROAD_INFO)) * roadNum);
-                long longSegPt = roadPt.ToInt64();
-
-                for (int i = 0; i < infos.Length; i++)
-                {
-                    IntPtr RectPtr = new IntPtr(longSegPt);
-                    Marshal.StructureToPtr(infos[i], RectPtr, false); // You do not need to erase struct in this case
-                    longSegPt += Marshal.SizeOf(typeof(ROAD_INFO));
-                }
-
-                bool result = getRoadInfo(roadPt, roadNum);
-
-                for (int i = 0; i < roadNum; i++)
-                {
-                    infos[i] = (ROAD_INFO)Marshal.PtrToStructure((IntPtr)(roadPt.ToInt32() + i * Marshal.SizeOf(typeof(ROAD_INFO))), typeof(ROAD_INFO));
-                    RoadModel road = new RoadModel();
-                    road.RoadID = infos[i].roadNum;
-                    road.RoadName = infos[i].roadName;
-                    roadList.Add(road);
-                }
-
-                Marshal.FreeHGlobal(roadPt);
-
+                log.Error("get road info failed");
+                return roadList;
             }
-            catch (System.Exception ex)
+
+   
+            for (int i = 0; i < roadNum; i++)
             {
-                log.Error("call dll exception", ex);
-            }
-           
+                infos[i] = (ROAD_INFO)Marshal.PtrToStructure((IntPtr)(pt.ToInt32() + i * Marshal.SizeOf(typeof(ROAD_INFO))), typeof(ROAD_INFO));
+                RoadModel road = new RoadModel();
+                road.RoadID = infos[i].roadNum;
+                road.RoadName = infos[i].roadName;
+                roadList.Add(road);
+            }  
+
            
 
             return roadList;
@@ -173,26 +111,16 @@ namespace ScreenManager.Service
         private static extern bool setScreenDisp(IntPtr segmentInfo, int length);
         public static bool setRoadInfoByDll(ScreenModel screen)
         {
-            log.Info("set road information." + screen);
-            bool result = false;
-            try
+            bool result = setRoadNameList(screen);
+
+
+            if (!result)
             {
-                result  = setRoadNameList(screen);
-
-
-                if (!result)
-                {
-                    log.Error("set road name failed");
-                    return result;
-                }
-                // set segment list
-                result = setSegmentList(screen);
-
+                log.Error("set road name failed");
+                return result;
             }
-            catch (System.Exception ex)
-            {
-                log.Error("call dll exception", ex);
-            }
+            // set segment list
+            result = setSegmentList(screen);
 
 
             return result;
@@ -271,41 +199,33 @@ namespace ScreenManager.Service
         private static extern bool setScreenColor(int color);
         public static bool setScreenInfoByDll(ScreenBasicInfoModel screenBaiscInfo)
         {
-             bool result = false;
-            try
+
+
+            bool result = setScreenName(screenBaiscInfo.ScreenName);
+
+            if (!result)
             {
-                result = setScreenName(screenBaiscInfo.ScreenName);
-
-                if (!result)
-                {
-                    log.Error("set screen name failed");
-                    return result;
-                }
-
-                SCREEN_LIGHT_INFO screenLight = new SCREEN_LIGHT_INFO();
-
-
-                screenLight.lightCtr = screenBaiscInfo.LightCtrl;
-                screenLight.lightA = screenBaiscInfo.LightLevelA;
-                screenLight.lightB = screenBaiscInfo.LightLevelB;
-
-
-                result = setScreenLight(ref screenLight);
-                if (!result)
-                {
-                    log.Error("set screen light failed");
-                    return result;
-                }
-
-
-                result = setScreenColor(screenBaiscInfo.ScreenColor);
-            }
-            catch (System.Exception ex)
-            {
-                log.Error("call dll exception", ex);
+                log.Error("set screen name failed");
+                return result;
             }
 
+           SCREEN_LIGHT_INFO    screenLight = new SCREEN_LIGHT_INFO();
 
+           
+           screenLight.lightCtr = screenBaiscInfo.LightCtrl;
+           screenLight.lightA = screenBaiscInfo.LightLevelA;
+           screenLight.lightB = screenBaiscInfo.LightLevelB;
+
+
+           result = setScreenLight(ref screenLight);
+           if (!result)
+           {
+               log.Error("set screen light failed");
+               return result;
+           }
+
+
+           result = setScreenColor(screenBaiscInfo.ScreenColor);
 
            return result;
         }
@@ -318,52 +238,37 @@ namespace ScreenManager.Service
         private static extern int getScreenLength();
         public static ScreenBasicInfoModel getScreenBasicInfoByDll()
         {
-            ScreenBasicInfoModel screenBaiscInfo = new ScreenBasicInfoModel();
-            bool result = false;
-            try
+
+            SCREEN_LIGHT_INFO screenLight = new SCREEN_LIGHT_INFO();
+ 
+
+            bool result = getScreenLight(ref screenLight);
+
+            if (!result)
             {
-                SCREEN_LIGHT_INFO screenLight = new SCREEN_LIGHT_INFO();
-               
+                return null;
+            }
+ 
+            ScreenBasicInfoModel screenBaiscInfo = new ScreenBasicInfoModel();
+            screenBaiscInfo.LightCtrl = screenLight.lightCtr;
+            screenBaiscInfo.LightLevelA = screenLight.lightA;
+            screenBaiscInfo.LightLevelB = screenLight.lightB;
 
+  
+            screenBaiscInfo.ScreenLength = getScreenLength();
 
-                result = getScreenLight(ref screenLight);
-
-                if (!result)
-                {
-                    log.Error("get screen light failed");
-                    return screenBaiscInfo;
-                }
-
-
-                screenBaiscInfo.LightCtrl = screenLight.lightCtr;
-                screenBaiscInfo.LightLevelA = screenLight.lightA;
-                screenBaiscInfo.LightLevelB = screenLight.lightB;
-
-
-
-
-                int color = getScreenColor();
-                if (-1 != color)
-                {
-                    screenBaiscInfo.ScreenColor = color;
-                }
-                else
-                {
-                    log.Error("get color failed");
-                    return screenBaiscInfo;
-                }
-
-                screenBaiscInfo.ScreenName = getScreenNameByDll();
-
-                screenBaiscInfo.ScreenLength = getScreenLength();
-               
+            int color = getScreenColor();
+            if (-1 != color)
+            {
+                  screenBaiscInfo.ScreenColor = color;
+            }
+            else
+            {
+                log.Error("get color failed");
                 return screenBaiscInfo;
             }
-            catch (System.Exception ex)
-            {
-                log.Error("call dll exception", ex);
-            }
 
+            screenBaiscInfo.ScreenName = getScreenNameByDll();
             return screenBaiscInfo;
         }
 
@@ -371,97 +276,42 @@ namespace ScreenManager.Service
         private static extern bool setScreenLength(int length);
         public static bool setScreenLengthByDll(int length)
         {
-            bool result = false;
-            try
-            {
-               result = setScreenLength(length);
-            }
-            catch (System.Exception ex)
-            {
-               log.Error("call dll exception", ex);
-            }
-            return result;
+            return setScreenLength(length);
         }
                 
         [DllImport("ScreenController.dll", EntryPoint = "setScreenOff")]
         private static extern bool setScreenOff();
         public static bool setScreenOffByDll()
         {
-            bool result = false;
-            try
-            {
-               result = setScreenOff();
-            }
-            catch (System.Exception ex)
-            {
-               log.Error("call dll exception", ex);
-            }
-            return result;
+            return setScreenOff();
         }
 
         [DllImport("ScreenController.dll", EntryPoint = "setScreenOn")]
         private static extern bool setScreenOn();
         public static bool setScreenOnByDll()
         {
-            bool result = false;
-            try
-            {
-                result = setScreenOn();
-            }
-            catch (System.Exception ex)
-            {
-                log.Error("call dll exception", ex);
-            }
-            return result;
+            return setScreenOn();
         }
 
         [DllImport("ScreenController.dll", EntryPoint = "saveScreen")]
         private static extern bool saveScreen();
         public static bool saveScreenByDll()
         {
-            bool result = false;
-            try
-            {
-                result =  saveScreen();
-            }
-            catch (System.Exception ex)
-            {
-                log.Error("call dll exception", ex);
-            }
-            return result;
+            return saveScreen();
         }
 
         [DllImport("ScreenController.dll", EntryPoint = "initScreen")]
         private static extern bool initScreen();
         public static bool initScreenByDll()
         {
-            bool result = false;
-            try
-            {
-                result = initScreen();
-            }
-            catch (System.Exception ex)
-            {
-                log.Error("call dll exception", ex);
-            }
-            return result; 
+            return initScreen();
         }
 
         [DllImport("ScreenController.dll", EntryPoint = "closeConnect")]
         private static extern bool closeConnect();
         public static bool closeConnectByDll()
         {
-            log.Info("now close the connect");
-            bool result = false;
-            try
-            {
-                result = closeConnect();
-            }
-            catch (System.Exception ex)
-            {
-                log.Error("call dll exception", ex);
-            }
-            return result; 
+            return closeConnect();
         }
     }
 }

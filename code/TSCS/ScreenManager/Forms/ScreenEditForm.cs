@@ -172,10 +172,8 @@ namespace ScreenManager.Forms
         public void refrashSgmtList() {
 
             int selectedID=-1;
-            if (this.selcetedItem != null)
-            {
+            if (this.selcetedItem != null) {
                 selectedID=this.selcetedItem.Index;
-                this.SelcetedItem = null;
             }
             
 
@@ -197,18 +195,10 @@ namespace ScreenManager.Forms
             }
 
 
-            if (selectedID >= this.lstVwSgmt.Items.Count)
-            {
-                selectedID = this.lstVwSgmt.Items.Count - 1;
-            }    
-
-            if (selectedID >= 0)
+            if (selectedID !=-1)
             {
                 selectItem(this.lstVwSgmt.Items[selectedID]);
             }
-      
-           
-          
           
         }
         public void refrashSgmtInfo(){
@@ -252,7 +242,7 @@ namespace ScreenManager.Forms
             this.ScreenModel.LightLevelB = System.Convert.ToInt16(txtNumB.Value);
             this.ScreenModel.ScreenColor = ScreenManager.Model.Constant.Constants.getIndexByStr(cmbScrnClr.Text);
             this.screenModel.ScreenName = txtScrnName.Text;
-            this.screenModel.ScreenLightCtrl = cmbLightCtrl.SelectedIndex;
+            this.screenModel.ScreenLightCtrl = cmbScrnClr.SelectedIndex;
 
           
 
@@ -523,7 +513,7 @@ namespace ScreenManager.Forms
         {
 
             ScreenManager.Forms.PasswordForm pf = new ScreenManager.Forms.PasswordForm();
-            ScreenManager.Forms.ipMacForm ipMacForm = new ScreenManager.Forms.ipMacForm(this.screenModel);
+            ScreenManager.Forms.ipMacForm ipMacForm = new ScreenManager.Forms.ipMacForm(this.screenModel.ScreenIP);
 
             if (pf.ShowDialog() == DialogResult.OK)
             {
@@ -538,7 +528,7 @@ namespace ScreenManager.Forms
         private void scrnLengthMntm_Click(object sender, EventArgs e)
         {
             ScreenManager.Forms.PasswordForm pf = new ScreenManager.Forms.PasswordForm();
-            ScreenManager.Forms.ScreenLengthForm sf = new ScreenManager.Forms.ScreenLengthForm(this.ScreenModel);
+            ScreenManager.Forms.ScreenLengthForm sf = new ScreenManager.Forms.ScreenLengthForm(this.ScreenModel.ScreenIP);
 
             if (pf.ShowDialog() == DialogResult.OK)
             {
@@ -763,7 +753,6 @@ namespace ScreenManager.Forms
         }
         private void cancelSelectedItem(ListViewItem item)
         {
-
             if (item != null)
             {
                 item.BackColor = Color.White;

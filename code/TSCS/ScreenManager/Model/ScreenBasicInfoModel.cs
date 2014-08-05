@@ -74,7 +74,5 @@ namespace ScreenManager.Model
             get { return screenIP; }
             set { screenIP = value; }
         }
-
-
     }
 }

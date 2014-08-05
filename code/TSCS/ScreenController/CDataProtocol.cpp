@@ -23,7 +23,7 @@ bool CDataProtocol::encode(std::string & rawData,std::string & encodeData)
 
     encodeData.append(rawData);
 
-	unsigned short crcCode = CRC16(rawData.c_str(),rawData.length());
+	unsigned short crcCode = calCRC16(rawData);
 
 	encodeData.push_back((char)(crcCode/256));
 	encodeData.push_back((char)(crcCode%256));
@@ -56,26 +56,11 @@ bool CDataProtocol::decode(std::string & rawData,std::string & decodeData)
 
 unsigned short CDataProtocol::calCRC16(std::string & rawData)
 {
-	//unsigned short crc = (short) 0xFFFF; 
-	unsigned short shift = (short) 0xFFFF; 
-	unsigned short val = (short) 0xFFFF; 
-	unsigned short data = (short) 0xFFFF; 
+	unsigned short crc = (short) 0xFFFF; 
 	int i = 0;
 
-	
-	for(i=0;i<rawData.length();i++) {
-		if((i % 8) == 0)
-			data = (rawData[i])<<8;
-		val = shift ^ data;
-		shift = shift<<1;
-		data = data <<1;
-		if(val&0x8000)
-			shift = shift ^ 0x1021;
-	}
-	/*
 	while (i < rawData.length())
 	{
-		
 		for (int j = 0; j < 8; j++)
 		{
 			bool c15 = ((crc >> 15 & 1) == 1);
@@ -84,40 +69,7 @@ unsigned short CDataProtocol::calCRC16(std::string & rawData)
 			if (c15 ^ bit)
 				crc ^= 0x1021; 
 		}
-
-	 
-	}*/
-	return shift;
-}
-
-int  CDataProtocol::calcByte(int crc, char b)
-{
-	int i;
-	crc = crc ^ (int)b << 8;
-
-	for ( i = 0; i < 8; i++)
-	{
-		if ((crc & 0x8000) == 0x8000)
-			crc = crc << 1 ^ 0x1021;
-		else
-			crc = crc << 1;
+		i++;
 	}
-
-	return crc & 0xffff;
-}
-
-//count crc-16, length in byte
-unsigned short  CDataProtocol::CRC16(const char *pBuffer, int length)
-{
-	unsigned short wCRC16=0;
-	int i;
-	if (( pBuffer==0 )||( length==0 ))
-	{
-		return 0;
-	}
-	for ( i = 0; i < length; i++)
-	{
-		wCRC16 = calcByte(wCRC16, pBuffer[i]);
-	}
-	return wCRC16;
+	return crc;
 }

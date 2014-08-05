@@ -231,14 +231,14 @@ int ControllerInterface::getScreenLength()
 	std::string revData;
 	this->getRecvDataByCmd(CMD_GET_SP,revData);
 
-	int length = -1;
+	int lenght = -1;
 	if(revData.length() == 2)
 	{
-		length = ((unsigned char)(revData[0]))*256 +  (unsigned char)revData[1];
+		lenght = revData[1] +  revData[0];
 
 	}
 
-	return length;
+	return lenght;
 }
 
 bool ControllerInterface::setScreenDisp(SEGMENT_INFO segmentInfo[],int length)

@@ -19,7 +19,6 @@ using namespace log4cplus::helpers;
 #define LOG_WARN(p) if(NULL != p && *p != 0)LOG4CPLUS_WARN(Log::getLogger(), p)  
 #define LOG_ERROR(p) if(NULL != p && *p != 0)LOG4CPLUS_ERROR(Log::getLogger(), p)  
 
-
 // 日志控制类，全局共用一个日志  
 class Log  
 {  

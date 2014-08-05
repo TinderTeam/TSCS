@@ -32,7 +32,7 @@ bool Log::open_log()
 	{
 		fileName.push_back(fileNameStr[i]);
 	}
-	SharedAppenderPtr append(new RollingFileAppender(fileName,5*1024*1024,10));  
+	SharedAppenderPtr append(new RollingFileAppender(fileName,5*1024,10));  
  
 	/* step 2: Instantiate a layout object */  
 	std::string pattern = "%D{[%m/%d/%y  %H:%M:%S]} %p - %m [%l] %n"; 
