@@ -203,12 +203,11 @@ namespace ScreenManager.Forms
             }    
 
             if (selectedID >= 0)
-            {
-                selectItem(this.lstVwSgmt.Items[selectedID]);
+                {
+                    selectItem(this.lstVwSgmt.Items[selectedID]);
+                }
+        
             }
-      
-           
-          
           
         }
         public void refrashSgmtInfo(){
@@ -291,6 +290,7 @@ namespace ScreenManager.Forms
 
                 this.ScreenModel.deleteByIndex(this.selcetedItem.Index);
                 cancelSelectedItem(this.selcetedItem);
+                this.selcetedItem = null;
                 refrashSgmtList();
                 refrashView();
                 refrashSgmtInfo();
@@ -304,6 +304,7 @@ namespace ScreenManager.Forms
         }
         private void btnDefault_Click(object sender, EventArgs e)
         {
+            this.cancelSelectedItem(this.SelcetedItem);
             this.SelcetedItem = null;
             this.ScreenModel.initRoadList();
             this.refrashSgmtInfo();
@@ -444,6 +445,8 @@ namespace ScreenManager.Forms
                     this.refrashSelectedItem();
                     lv.SelectedItems.Clear();
                     this.SelcetedItem = null;
+                    this.refrashSelectedItem();
+
                     
                 }
                 else 
@@ -523,7 +526,7 @@ namespace ScreenManager.Forms
         {
 
             ScreenManager.Forms.PasswordForm pf = new ScreenManager.Forms.PasswordForm();
-            ScreenManager.Forms.ipMacForm ipMacForm = new ScreenManager.Forms.ipMacForm(this.screenModel);
+          ScreenManager.Forms.ipMacForm ipMacForm = new ScreenManager.Forms.ipMacForm(this.screenModel);
 
             if (pf.ShowDialog() == DialogResult.OK)
             {
@@ -555,7 +558,7 @@ namespace ScreenManager.Forms
 
             fileDialog.InitialDirectory = "C://";
 
-            fileDialog.Filter = "TrafficScreen files(*.ts)|All files (*.*)";
+            fileDialog.Filter = "TrafficScreen files(*.ts)|*.ts|所有文件(*.*)|*.*";
 
             fileDialog.FilterIndex = 1;
 
@@ -564,19 +567,30 @@ namespace ScreenManager.Forms
             if (fileDialog.ShowDialog() == DialogResult.OK)
 
             {
+                XmlSerializer formatter = new XmlSerializer(typeof(List<RoadModel>));
+                System.Console.WriteLine(fileDialog.FileName);
+                StreamReader sr = new StreamReader(fileDialog.FileName);
+                List<RoadModel> s = (List<RoadModel>)formatter.Deserialize(sr);
+                sr.Close();
+                this.SelcetedItem = null;
+                this.ScreenModel = new ScreenModel();
 
-               System.Console.WriteLine(fileDialog.FileName);
+                this.ScreenModel.roadList = s;
+                this.refrashScrn();
+
+             
 
             }
 
         }
         private void saveMntm_Click(object sender, EventArgs e)
         {
-            OpenFileDialog fileDialog = new OpenFileDialog();
+
+            SaveFileDialog fileDialog = new SaveFileDialog();
 
             fileDialog.InitialDirectory = "C://";
 
-            fileDialog.Filter = "TrafficScreen files(*.ts)|All files (*.*)";
+            fileDialog.Filter = "TrafficScreen files(*.ts)|*.ts|所有文件(*.*)|*.*";
 
             fileDialog.FilterIndex = 1;
 
@@ -585,13 +599,10 @@ namespace ScreenManager.Forms
             if (fileDialog.ShowDialog() == DialogResult.OK)
             {
 
-                XmlSerializer serializer = new XmlSerializer(typeof(int));          
+                XmlSerializer serializer = new XmlSerializer(typeof(List<RoadModel>));          
                 Stream writer = new FileStream(fileDialog.FileName, FileMode.Create);
                 // Serialize the object, and close the TextWriter
-                serializer.Serialize(writer, this.ScreenModel);
-                writer.Close();
-
-                System.Console.WriteLine();
+                serializer.Serialize(writer, this.ScreenModel.roadList);
 
             }
         }

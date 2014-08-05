@@ -7,12 +7,15 @@ namespace ScreenManager.Model
 {
    public  class RoadModel
     {
-        String baseColor=Constants.DEFAULT_COLOR;
-        String rodeName;
-        int roadID;
-        int roadLenght=150;
+        private  String baseColor=Constants.DEFAULT_COLOR;
+        private String rodeName;
+        private int roadID;
+        private int roadLenght = 150;
 
-        List<SegmentModel> segmentList = new List<SegmentModel>();
+        private List<SegmentModel> segmentList = new List<SegmentModel>();
+
+
+
 
         public void deleteByIndex(String index)
         {
@@ -54,7 +57,7 @@ namespace ScreenManager.Model
             set { roadLenght = value; }
         }
 
-        internal List<SegmentModel> SegmentList
+        public List<SegmentModel> SegmentList
         {
             get { return segmentList; }
             set { segmentList = value; }

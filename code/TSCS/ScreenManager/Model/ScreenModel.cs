@@ -11,7 +11,7 @@ namespace ScreenManager.Model
 
         private ScreenBasicInfoModel basicInfo = new ScreenBasicInfoModel();
   
-        public List<RoadModel> roadList = new List<RoadModel>();
+        public  List<RoadModel> roadList = new List<RoadModel>();
 
 
         public ScreenModel()
