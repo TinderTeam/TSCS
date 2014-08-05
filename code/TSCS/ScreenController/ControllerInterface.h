@@ -22,12 +22,12 @@ public:
 	virtual bool setScreenName(std::string & name);
 	virtual bool getScreenName(std::string & name);
 	virtual bool setScreenColor(int color);
-	virtual int getScreenColor();
+	virtual int  getScreenColor();
 
 	virtual bool setScreenLength(int length);
 	virtual int getScreenLength();
 
-	virtual bool setScreenDisp(SEGMENT_INFO segmentInfo[],int length);
+	virtual bool setScreenDisp(SEGMENT_INFO segmentInfo[],int length,int screenColor);
     virtual bool setScreenOn(void);
 	virtual bool setScreenOff(void);
 	virtual bool saveScreen(bool update,bool save);

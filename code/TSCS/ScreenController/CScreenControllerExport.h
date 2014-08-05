@@ -44,7 +44,7 @@ extern "C" CSCREENCONTROLLER_API int getScreenColor();
 extern "C" CSCREENCONTROLLER_API bool setScreenLength(int length);
 extern "C" CSCREENCONTROLLER_API int getScreenLength();
 
-extern "C" CSCREENCONTROLLER_API bool setScreenDisp(SEGMENT_INFO segmentInfo[],int length);
+extern "C" CSCREENCONTROLLER_API bool setScreenDisp(SEGMENT_INFO segmentInfo[],int length,int screenColor);
 extern "C" CSCREENCONTROLLER_API int getScreenDisp();
 
 extern "C" CSCREENCONTROLLER_API bool setScreenIpAddr(char * ipAddr,char * macAddr);

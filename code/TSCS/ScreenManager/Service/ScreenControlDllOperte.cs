@@ -170,7 +170,7 @@ namespace ScreenManager.Service
         [DllImport("ScreenController.dll", EntryPoint = "setRoadInfo")]
         private static extern bool setRoadInfo(IntPtr roadInfo, int length);
         [DllImport("ScreenController.dll", EntryPoint = "setScreenDisp")]
-        private static extern bool setScreenDisp(IntPtr segmentInfo, int length);
+        private static extern bool setScreenDisp(IntPtr segmentInfo, int length,int screenColor);
         public static bool setRoadInfoByDll(ScreenModel screen)
         {
             log.Info("set road information." + screen);
@@ -227,7 +227,7 @@ namespace ScreenManager.Service
                 longSegPt += Marshal.SizeOf(typeof(SEGMENT_INFO));
             }
 
-            bool result = setScreenDisp(segPt, segmentNum);
+            bool result = setScreenDisp(segPt, segmentNum,screen.ScreenColor);
 
             Marshal.FreeHGlobal(segPt);
 

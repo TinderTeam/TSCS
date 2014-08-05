@@ -248,41 +248,61 @@ int ControllerInterface::getScreenLength()
 	return length;
 }
 
-bool ControllerInterface::setScreenDisp(SEGMENT_INFO segmentInfo[],int length)
+bool ControllerInterface::setScreenDisp(SEGMENT_INFO segmentInfo[],int length,int screenColor)
 {
  
 	std::vector<std::string> segmentInfoList;
 
-	int packNum = 0;
 
-    std::string segmentInfoStr;
-	for(int i=0;i<length;i++)
+
+	int packSize = 50;
+
+	int packNum = length/packSize;
+
+	for(int i=0;i<packNum;i++)
 	{
+        std::string segmentInfoStr;
+		
+		segmentInfoStr.push_back(screenColor);
+		segmentInfoStr.push_back(50);
 
-		SEGMENT_INFO segment = segmentInfo[i];
-		segmentInfoStr.push_back(segment.segNum);
-		segmentInfoStr.push_back(segment.roadNum);
-		segmentInfoStr.push_back(segment.color);
-		segmentInfoStr.push_back(segment.startAddr/256);
-		segmentInfoStr.push_back(segment.startAddr%256);
-		segmentInfoStr.push_back(segment.endAddr/256);
-		segmentInfoStr.push_back(segment.endAddr%256);
-		
-		if((length%50) == 0)
+		for(int j=0;j<packSize;j++)
 		{
-		  std::string temp = std::string(segmentInfoStr);
-          segmentInfoList.push_back(temp);
-		  segmentInfoStr.clear();
+			SEGMENT_INFO segment = segmentInfo[i*packSize+j];
+			segmentInfoStr.push_back(segment.segNum);
+			segmentInfoStr.push_back(segment.roadNum);
+			segmentInfoStr.push_back(segment.color);
+			segmentInfoStr.push_back(segment.startAddr/256);
+			segmentInfoStr.push_back(segment.startAddr%256);
+			segmentInfoStr.push_back(segment.endAddr/256);
+			segmentInfoStr.push_back(segment.endAddr%256);
 		}
-		
+		segmentInfoList.push_back(segmentInfoStr);
 	}
-	segmentInfoList.push_back(segmentInfoStr);
+
+	{
+	    std::string segmentInfoStr;
+		segmentInfoStr.push_back(screenColor);
+		segmentInfoStr.push_back(length-packNum*packSize);
+		for(int i=packNum*50;i<length;i++)
+		{
+			SEGMENT_INFO segment = segmentInfo[i];
+			segmentInfoStr.push_back(segment.segNum);
+			segmentInfoStr.push_back(segment.roadNum);
+			segmentInfoStr.push_back(segment.color);
+			segmentInfoStr.push_back(segment.startAddr/256);
+			segmentInfoStr.push_back(segment.startAddr%256);
+			segmentInfoStr.push_back(segment.endAddr/256);
+			segmentInfoStr.push_back(segment.endAddr%256);
+		}
+		segmentInfoList.push_back(segmentInfoStr);
+	}
    
 	std::vector<std::string>::iterator iter = segmentInfoList.begin();
 	bool result = false;
 	for(;iter != segmentInfoList.end();iter++)
 	{ 
-		bool result =this->sendCmd(CMD_SET_DISP,*iter);
+		result =this->sendCmd(CMD_SET_DISP,*iter);
 		if(!result)
 		{
 			LOG_ERROR("send one packet failed");
