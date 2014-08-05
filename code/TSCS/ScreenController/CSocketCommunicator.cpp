@@ -57,7 +57,7 @@ bool CSocketCommunicator::sendData(char* data,int length)
 {
 	LOG_INFO("send data is:");
 	LOG_INFO(StringUtil::convertToIntString(data,length).c_str());
-	int err = send(this->sockClient,data,length+1,0);
+	int err = send(this->sockClient,data,length,0);
 	if(err < 0)
 	{
 		return false;
