@@ -38,7 +38,7 @@
             // 
             // btnSure
             // 
-            this.btnSure.Location = new System.Drawing.Point(297, 177);
+            this.btnSure.Location = new System.Drawing.Point(216, 177);
             this.btnSure.Name = "btnSure";
             this.btnSure.Size = new System.Drawing.Size(75, 23);
             this.btnSure.TabIndex = 0;
@@ -49,7 +49,7 @@
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(216, 177);
+            this.btnCancel.Location = new System.Drawing.Point(297, 177);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 1;
@@ -86,11 +86,13 @@
             // textBox2
             // 
             this.textBox2.Location = new System.Drawing.Point(12, 106);
+            this.textBox2.MaxLength = 17;
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(360, 21);
             this.textBox2.TabIndex = 5;
             this.textBox2.Text = "00-00-00-00-00-00";
-            this.textBox2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox2_KeyPress);
+
+            this.textBox2.KeyUp += new System.Windows.Forms.KeyEventHandler(this.textBox2_KeyUp);
             // 
             // ipMacForm
             // 
@@ -114,6 +116,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "修改IP Mac地址";
             this.TopMost = true;
+            this.Load += new System.EventHandler(this.ipMacForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

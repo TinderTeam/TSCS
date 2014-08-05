@@ -26,17 +26,20 @@ namespace ScreenManager.Model.Constant
         public static String GREEN_COLOR ="绿色";
         public static String YELLOW_COLOR = "黄色";
         public static String ALL_COLOR = "全亮";
-        public static String RESERVED_5 = "保留";
-        public static String RESERVED_6 = "保留";
-        public static String RESERVED_7 = "保留";
-        public static String RESERVED_8 = "保留";
-        public static String RESERVED_9 = "保留";
-        public static String RESERVED_10 = "保留";
-        public static String RESERVED_11 = "保留";
-        public static String RESERVED_12 = "保留";
-        public static String RESERVED_13 = "保留";
-        public static String RESERVED_14 = "保留";
-        public static String RESERVED_15 = "保留";
+
+        public static String RESERVED_5 = "预留1";
+        public static String RESERVED_6 = "预留2";
+        public static String RESERVED_7 = "预留3";
+        public static String RESERVED_8 = "预留4";
+        public static String RESERVED_9 = "预留5";
+        public static String RESERVED_10 = "预留6";
+        public static String RESERVED_11 = "预留7";
+        public static String RESERVED_12 = "预留8";
+        public static String RESERVED_13 = "预留9";
+        public static String RESERVED_14 = "预留10";
+        public static String RESERVED_15 = "预留11";
+    
+
 
         public static int getIndexByStr(string str)
         {

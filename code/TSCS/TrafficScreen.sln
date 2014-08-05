@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScreenManager", "ScreenManager\ScreenManager.csproj", "{0042A620-38A3-430B-8B6A-DFC0DD03C8FC}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ScreenController", "ScreenController\ScreenController.vcproj", "{9159D063-4CB9-4F07-8064-01B47003CF54}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,16 +24,6 @@ Global
 		{0042A620-38A3-430B-8B6A-DFC0DD03C8FC}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{0042A620-38A3-430B-8B6A-DFC0DD03C8FC}.Release|Win32.ActiveCfg = Release|Any CPU
 		{0042A620-38A3-430B-8B6A-DFC0DD03C8FC}.Release|Win32.Build.0 = Release|Any CPU
-		{9159D063-4CB9-4F07-8064-01B47003CF54}.Debug|Any CPU.ActiveCfg = Debug|Win32
-		{9159D063-4CB9-4F07-8064-01B47003CF54}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
-		{9159D063-4CB9-4F07-8064-01B47003CF54}.Debug|Mixed Platforms.Build.0 = Debug|Win32
-		{9159D063-4CB9-4F07-8064-01B47003CF54}.Debug|Win32.ActiveCfg = Debug|Win32
-		{9159D063-4CB9-4F07-8064-01B47003CF54}.Debug|Win32.Build.0 = Debug|Win32
-		{9159D063-4CB9-4F07-8064-01B47003CF54}.Release|Any CPU.ActiveCfg = Release|Win32
-		{9159D063-4CB9-4F07-8064-01B47003CF54}.Release|Mixed Platforms.ActiveCfg = Release|Win32
-		{9159D063-4CB9-4F07-8064-01B47003CF54}.Release|Mixed Platforms.Build.0 = Release|Win32
-		{9159D063-4CB9-4F07-8064-01B47003CF54}.Release|Win32.ActiveCfg = Release|Win32
-		{9159D063-4CB9-4F07-8064-01B47003CF54}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

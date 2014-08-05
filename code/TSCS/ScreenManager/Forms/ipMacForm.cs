@@ -43,12 +43,24 @@ namespace ScreenManager.Forms
             this.DialogResult = DialogResult.Cancel;
         }
 
-        private void textBox2_KeyPress(object sender, KeyPressEventArgs e)
+        
+        private void ipMacForm_Load(object sender, EventArgs e)
         {
-            if((this.textBox2.Text.Length % 3) ==2){
-                this.textBox2.Text=this.textBox2.Text+"-";
-            }
+
         }
+
+        private void textBox2_KeyUp(object sender, KeyEventArgs e)
+        {
+
+            if ((this.textBox2.Text.Length <17) && (this.textBox2.Text.Length % 3) == 2)
+            {
+                this.textBox2.Text = this.textBox2.Text + "-";
+                this.textBox2.Select(textBox2.Text.Length, 0);
+            }
+         
+        }
+
+
        
 
 

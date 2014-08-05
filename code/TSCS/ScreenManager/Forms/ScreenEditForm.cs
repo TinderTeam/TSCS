@@ -208,8 +208,7 @@ namespace ScreenManager.Forms
                 }
         
             }
-          
-        }
+   
         public void refrashSgmtInfo(){
 
            loadSelectedSegmentInfo(this.SelcetedItem);

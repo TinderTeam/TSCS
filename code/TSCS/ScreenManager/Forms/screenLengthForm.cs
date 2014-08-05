@@ -14,7 +14,7 @@ namespace ScreenManager.Forms
     {
 
         private ScreenModel screen;
-        String  ip;
+      
         public ScreenLengthForm(ScreenModel screen)
         {
  

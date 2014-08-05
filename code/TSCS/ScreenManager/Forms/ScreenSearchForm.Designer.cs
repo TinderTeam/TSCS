@@ -62,6 +62,8 @@ namespace ScreenManager
             this.ip = new System.Windows.Forms.ColumnHeader();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.psBar = new System.Windows.Forms.ProgressBar();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -137,11 +139,23 @@ namespace ScreenManager
             resources.ApplyResources(this.psBar, "psBar");
             this.psBar.Name = "psBar";
             // 
+            // label3
+            // 
+            resources.ApplyResources(this.label3, "label3");
+            this.label3.Name = "label3";
+            // 
+            // label4
+            // 
+            resources.ApplyResources(this.label4, "label4");
+            this.label4.Name = "label4";
+            // 
             // ScreenSearchForm
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoValidate = System.Windows.Forms.AutoValidate.Disable;
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.psBar);
             this.Controls.Add(this.btnSearchIP);
             this.Controls.Add(this.listViewScrn);
@@ -215,6 +229,8 @@ namespace ScreenManager
         private System.Windows.Forms.ColumnHeader name;
         private System.Windows.Forms.ColumnHeader ip;
         private ProgressBar psBar;
+        private Label label3;
+        private Label label4;
     }
 }
 
