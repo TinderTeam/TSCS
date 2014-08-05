@@ -42,13 +42,6 @@ namespace ScreenManager.Forms
         {
             this.DialogResult = DialogResult.Cancel;
         }
-
-        private void textBox2_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if((this.textBox2.Text.Length % 3) ==2){
-                this.textBox2.Text=this.textBox2.Text+"-";
-            }
-        }
        
 
 
