@@ -550,56 +550,29 @@ namespace ScreenManager.Forms
         }
         private void openMntm_Click(object sender, EventArgs e)
         {
-            OpenFileDialog fileDialog = new OpenFileDialog();
 
-            fileDialog.InitialDirectory = "C://";
+                ScreenManager.Dao.RoadDao roadDao = new ScreenManager.Dao.RoadDao();
 
-            fileDialog.Filter = "TrafficScreen files(*.ts)|*.ts|所有文件(*.*)|*.*";
-
-            fileDialog.FilterIndex = 1;
-
-            fileDialog.RestoreDirectory = true;
-
-            if (fileDialog.ShowDialog() == DialogResult.OK)
-
-            {
-                XmlSerializer formatter = new XmlSerializer(typeof(List<RoadModel>));
-                System.Console.WriteLine(fileDialog.FileName);
-                StreamReader sr = new StreamReader(fileDialog.FileName);
-                List<RoadModel> s = (List<RoadModel>)formatter.Deserialize(sr);
-                sr.Close();
-                this.SelcetedItem = null;
-                this.ScreenModel = new ScreenModel();
-
-                this.ScreenModel.roadList = s;
-                this.refrashScrn();
-
-             
-
-            }
+                 List<RoadModel> s= roadDao.loadByFile();
+                 if (s != null)
+                 {
+                     this.SelcetedItem = null;
+                     this.ScreenModel = new ScreenModel();
+                     this.ScreenModel.roadList = s;
+                     this.refrashScrn();
+                 }
+                 else
+                 {
+                  //   MessageBox.Show("打开文件错误");
+                 }
 
         }
         private void saveMntm_Click(object sender, EventArgs e)
         {
-
-            SaveFileDialog fileDialog = new SaveFileDialog();
-
-            fileDialog.InitialDirectory = "C://";
-
-            fileDialog.Filter = "TrafficScreen files(*.ts)|*.ts|所有文件(*.*)|*.*";
-
-            fileDialog.FilterIndex = 1;
-
-            fileDialog.RestoreDirectory = true;
-
-            if (fileDialog.ShowDialog() == DialogResult.OK)
+            ScreenManager.Dao.RoadDao roadDao = new ScreenManager.Dao.RoadDao();
+            if (!roadDao.saveAsFile(this.ScreenModel.roadList))
             {
-
-                XmlSerializer serializer = new XmlSerializer(typeof(List<RoadModel>));          
-                Stream writer = new FileStream(fileDialog.FileName, FileMode.Create);
-                // Serialize the object, and close the TextWriter
-                serializer.Serialize(writer, this.ScreenModel.roadList);
-
+              //  MessageBox.Show("保存文件错误");
             }
         }
 

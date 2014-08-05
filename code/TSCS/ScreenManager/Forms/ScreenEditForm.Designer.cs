@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("");
-            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ScreenEditForm));
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileMnlst = new System.Windows.Forms.ToolStripMenuItem();
@@ -51,6 +51,9 @@
             this.aboutMntm = new System.Windows.Forms.ToolStripMenuItem();
             this.formTablePanel = new System.Windows.Forms.TableLayoutPanel();
             this.groupScreenView = new System.Windows.Forms.GroupBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.paintPanel = new System.Windows.Forms.TableLayoutPanel();
             this.textRoad = new System.Windows.Forms.TextBox();
             this.indexLBL = new System.Windows.Forms.Label();
@@ -126,9 +129,6 @@
             this.tableLayoutPanel14 = new System.Windows.Forms.TableLayoutPanel();
             this.numericUpDown11 = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown12 = new System.Windows.Forms.NumericUpDown();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
             this.menuStrip.SuspendLayout();
             this.formTablePanel.SuspendLayout();
             this.groupScreenView.SuspendLayout();
@@ -348,6 +348,33 @@
             this.groupScreenView.TabStop = false;
             this.groupScreenView.Text = "图示";
             // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(278, 30);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(65, 12);
+            this.label9.TabIndex = 3;
+            this.label9.Text = "路段示意图";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(53, 30);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(41, 12);
+            this.label8.TabIndex = 2;
+            this.label8.Text = "道路名";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(9, 30);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(29, 12);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "序号";
+            // 
             // paintPanel
             // 
             this.paintPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
@@ -444,8 +471,8 @@
             this.lstVwSgmt.GridLines = true;
             this.lstVwSgmt.HideSelection = false;
             this.lstVwSgmt.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem3,
-            listViewItem4});
+            listViewItem1,
+            listViewItem2});
             this.lstVwSgmt.Location = new System.Drawing.Point(3, 3);
             this.lstVwSgmt.Name = "lstVwSgmt";
             this.lstVwSgmt.Size = new System.Drawing.Size(260, 313);
@@ -1241,33 +1268,6 @@
             this.numericUpDown12.Name = "numericUpDown12";
             this.numericUpDown12.Size = new System.Drawing.Size(94, 21);
             this.numericUpDown12.TabIndex = 0;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 30);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(29, 12);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "序号";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(53, 30);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(41, 12);
-            this.label8.TabIndex = 2;
-            this.label8.Text = "道路名";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(278, 30);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(65, 12);
-            this.label9.TabIndex = 3;
-            this.label9.Text = "路段示意图";
             // 
             // ScreenEditForm
             // 
