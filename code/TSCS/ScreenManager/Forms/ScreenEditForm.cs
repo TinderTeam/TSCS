@@ -289,7 +289,6 @@ namespace ScreenManager.Forms
 
                 this.ScreenModel.deleteByIndex(this.selcetedItem.Index);
                 cancelSelectedItem(this.selcetedItem);
-                this.selcetedItem = null;
                 refrashSgmtList();
                 refrashView();
                 refrashSgmtInfo();
@@ -444,8 +443,6 @@ namespace ScreenManager.Forms
                     this.refrashSelectedItem();
                     lv.SelectedItems.Clear();
                     this.SelcetedItem = null;
-                    this.refrashSelectedItem();
-
                     
                 }
                 else 

@@ -53,7 +53,8 @@ bool ControllerInterface::setScreenName(std::string & name)
 
 	std::vector< std::string> nameList;
 
-	if(str.empty())
+	nameList = StringUtil::split(str,std::string(SPLIT_FLAG));
+	if(nameList.size() == 0)
 	{
 
 		LOG_INFO("the screen name is empty");
@@ -63,7 +64,7 @@ bool ControllerInterface::setScreenName(std::string & name)
 	else
 	{
 		//modify the description 
-		nameList = StringUtil::split(str,std::string(SPLIT_FLAG));
+
 		nameList[0] = name;
 	
 	}
@@ -87,8 +88,14 @@ bool ControllerInterface::getScreenName(std::string & str)
 
 	}
 	std::vector< std::string> nameList = StringUtil::split(temp,std::string(SPLIT_FLAG));
-
-	str = nameList[0];
+    if(nameList.size() > 0)
+	{
+		str = nameList[0];
+	}
+	else
+	{
+		str = "";
+	}
 	return result;
 }
 

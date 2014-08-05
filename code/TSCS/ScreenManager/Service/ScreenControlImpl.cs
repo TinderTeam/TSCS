@@ -57,7 +57,7 @@ namespace ScreenManager.Service
                     ScreenControlDllOperate.closeConnectByDll();
                     log.Error("can not find the screen with ip address ." + ipList[i]);
                 }
-                bar.Value += 20 * (i + 1) / ipList.Count;
+                bar.Value += 20 / ipList.Count;
 
             }
 
