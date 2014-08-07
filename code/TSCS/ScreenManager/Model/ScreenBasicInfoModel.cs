@@ -15,11 +15,16 @@ namespace ScreenManager.Model
         private int lightLeverA = 0;
         private int lightLeverB = 0;
         private int screenColor = 0;
-
+        private int screenStatus = 0;
  
 
         private int screenLength = 150;
 
+        public int ScreenStatus
+        {
+            get { return screenStatus; }
+            set { screenStatus = value; }
+        }
 
 
         public int LightCtrl

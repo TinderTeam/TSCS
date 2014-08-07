@@ -10,8 +10,10 @@ namespace ScreenManager.Model
 
 
         private ScreenBasicInfoModel basicInfo = new ScreenBasicInfoModel();
-  
-        public  List<RoadModel> roadList = new List<RoadModel>();
+
+        private List<RoadModel> roadList = new List<RoadModel>();
+
+      
 
 
         public ScreenModel()
@@ -30,6 +32,9 @@ namespace ScreenManager.Model
             sm.SegmentName = this.getSegmentList()[segmentIndex].SegmentName;
             sm.SegmentColor = this.getSegmentList()[segmentIndex].SegmentColor;
             sm.Address = new SegmentAddress();
+
+
+
             sm.Address.Start = this.getSegmentList()[segmentIndex].Address.Start;
             sm.Address.End = this.getSegmentList()[segmentIndex].Address.End;
        
@@ -66,7 +71,7 @@ namespace ScreenManager.Model
             {
                 RoadModel rm = new RoadModel();
                 rm.RoadID = i;
-                rm.BaseColor = Constant.Constants.DEFAULT_COLOR;
+                rm.BaseColor = this.ScreenColor;
                 rm.RoadLenght = this.basicInfo.ScreenLength;
                 rm.RoadName = "";
                 roadList.Add(rm);
@@ -198,5 +203,46 @@ namespace ScreenManager.Model
             get { return this.basicInfo.LightCtrl; }
             set { this.basicInfo.LightCtrl = value; }
         }
+
+
+        public string getRoadNameString()
+        {
+            String str="";
+            for (int i = 0; i < this.roadList.Count; i++)
+            {
+                if (i == 0)
+                {
+                    str = this.roadList[i].RoadName;
+                }
+                else
+                {
+                    str = str + ";" + this.roadList[i].RoadName;
+                }
+             
+            }
+            return str;
+        }
+
+        public List<RoadModel> RoadList
+        {
+            get { return roadList; }
+            set 
+            { 
+              
+                roadList = value;
+                roadLengthCheck();
+            }
+        }
+
+       private void  roadLengthCheck(){
+           for (int i = 0; i < this.RoadList.Count; i++)
+           {
+               if (RoadList[i].RoadLenght>this.ScreenLong)
+               {
+                   RoadList[i].RoadLenght = this.ScreenLong;
+               }
+           }
+       }
+
     }
 }

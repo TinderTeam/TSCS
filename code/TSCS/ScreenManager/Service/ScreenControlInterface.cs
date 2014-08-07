@@ -80,6 +80,10 @@ namespace ScreenManager.Service
         /// <returns></returns>
        ScreenModel getScreenInfo(String ip);
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+       Boolean getScreenOpenStatus();
     }
 }

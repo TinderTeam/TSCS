@@ -14,10 +14,10 @@ namespace ScreenManager.Model
 
  
 
-       public ScreenModel getModelByIndex(String id)
+       public ScreenModel getModelByIndex(int id)
        {
       
-           return List[Convert.ToInt16(id)];
+           return List[id];
        }
 
        public List<ScreenModel> List

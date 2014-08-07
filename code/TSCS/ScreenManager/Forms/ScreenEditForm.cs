@@ -14,6 +14,7 @@ using ScreenManager.Model.UI;
 using ScreenManager.Service;
 using ScreenManager.Util;
 using ScreenManager.Forms;
+using ScreenManager.Forms.basicConfig;
 namespace ScreenManager.Forms
 {
     public partial class ScreenEditForm : System.Windows.Forms.Form
@@ -24,7 +25,7 @@ namespace ScreenManager.Forms
         private RoadListView roadListView;
         private ListViewItem selcetedItem;
 
-
+ 
 
         public ScreenEditForm()
         {         
@@ -41,10 +42,8 @@ namespace ScreenManager.Forms
         public void initComponentsContent()
         {
 
-            this.cmbLightCtrl.Items.Clear();
-            this.cmbScrnClr.Items.AddRange(Model.Constant.Constants.colorArray);
-            this.cmbLightCtrl.Items.AddRange(Model.Constant.Constants.lightCtrlArray);
             this.cmbRdClr.Items.AddRange(Model.Constant.Constants.colorArray);
+            this.cmbRdClr2.Items.AddRange(Model.Constant.Constants.colorArray);
 
 
             List<String> roadNameList = new List<String>();
@@ -57,11 +56,12 @@ namespace ScreenManager.Forms
             {
                 RoadView rv = new RoadView(i);
 
+
+
                 Label lblIndex = new Label();
                 lblIndex.Anchor = System.Windows.Forms.AnchorStyles.None;
                 lblIndex.Location = new System.Drawing.Point(41, 23);
-                lblIndex.Name = "lblRoadIndex_"+i;
-                lblIndex.Text = i.ToString();
+                lblIndex.Text = "";
                 lblIndex.Size = new System.Drawing.Size(56, 21);
                 lblIndex.TabIndex = 0;
 
@@ -69,6 +69,9 @@ namespace ScreenManager.Forms
                 // 
                 // textRoad
                 // 
+
+
+
                 TextBox textRoad = new System.Windows.Forms.TextBox();
                 textRoad.Anchor = System.Windows.Forms.AnchorStyles.None;
                 textRoad.Location = new System.Drawing.Point(41, 23);
@@ -77,7 +80,7 @@ namespace ScreenManager.Forms
                 textRoad.Text = "textRoad" + i;
                 textRoad.TabIndex = 0;
                 textRoad.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-                textRoad.TextChanged += new System.EventHandler(this.roadNameChanged);
+             //   textRoad.TextChanged += new System.EventHandler(this.roadNameChanged);
 
                 roadNameList.Add(textRoad.Text);
                 // 
@@ -94,6 +97,7 @@ namespace ScreenManager.Forms
                 panelView.MouseMove += new System.Windows.Forms.MouseEventHandler(this.mouseMove);
                 panelView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mouseDown);
                 panelView.MouseUp += new System.Windows.Forms.MouseEventHandler(this.mouseUp);
+                panelView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.mouseClick);
                 rv.LblIndex = lblIndex;
                 rv.PanelView = panelView;
                 rv.TextRoad = textRoad;
@@ -116,9 +120,17 @@ namespace ScreenManager.Forms
         public void loadScreen(ScreenModel m)
         {
             screenModel = m;
+           
             cancelSelectedItem(null);
             this.SelcetedItem = null;
             refrashScrn();
+            refreshStatusBar();
+        }
+        public void refreshStatusBar()
+        {
+            lblStatusScreenName.Text = screenModel.ScreenName;
+            lblStatusScreenIP.Text = screenModel.ScreenIP;
+            lblStatusScreenOpen.Text = ScreenManager.Model.Constant.Constants.screenStatusArray[screenModel.BasicInfo.ScreenStatus];
         }
 
 
@@ -126,10 +138,12 @@ namespace ScreenManager.Forms
          Screen refrash function
          */
         public void refrashScrn() {
-            refrashScrnInfo();
+         
             refrashView();
             refrashSgmtList();
             refrashSgmtInfo();
+            refreshStatusBar();
+
         }
         public void refrashSelectedItem(){
 
@@ -151,22 +165,18 @@ namespace ScreenManager.Forms
       
             
         }
-        public void refrashScrnInfo() {
-            this.txtIPAdrs.Text = screenModel.ScreenIP;
-            this.txtScrnName.Text = screenModel.ScreenName;
-            this.cmbScrnClr.Text = ScreenManager.Model.Constant.Constants.colorArray[screenModel.ScreenColor];
-            this.txtNumA.Value = screenModel.LightLevelA;
-            this.txtNumB.Value = screenModel.LightLevelB;
-            this.cmbLightCtrl.Text = ScreenManager.Model.Constant.Constants.lightCtrlArray[screenModel.ScreenLightCtrl];
-        }
+ 
         public void refrashView()
         {
             for (int i = 0; i < roadListView.list.Count; i++)
             {
-                roadListView.list[i].LblIndex.Text = i.ToString();
-                roadListView.list[i].TextRoad.Text = screenModel.roadList[i].RoadName;
-                roadListView.list[i].PanelView.Road = screenModel.roadList[i];
-                roadListView.list[i].PanelView.repaint();
+               
+                    roadListView.list[i].LblIndex.Text = screenModel.RoadList[i].RoadName;
+                    //roadListView.list[i].TextRoad.Text = screenModel.RoadList[i].RoadName;
+                    roadListView.list[i].PanelView.Road = screenModel.RoadList[i];
+                    roadListView.list[i].PanelView.repaint();
+               
+             
             }
         }
         public void refrashSgmtList() {
@@ -215,64 +225,10 @@ namespace ScreenManager.Forms
         }
 
 
-       
-        /*
-         Button Action
-         */
-        private void btnScrnEdit_Click(object sender, EventArgs e)
-        {
-            if (this.btnScrnEdit.Text.Equals("修改"))
-            {
-                scrnInfoActivation(true);
-                this.btnScrnEdit.Text= "取消";
-                this.btnScrnSet.Enabled = true;
-            }
-            else {
-
-                txtNumA.Value= this.ScreenModel.LightLevelA;
-                txtNumB.Value = this.ScreenModel.LightLevelB;
-                cmbScrnClr.Text = ScreenManager.Model.Constant.Constants.colorArray[this.ScreenModel.ScreenColor];
-               txtScrnName.Text= this.screenModel.ScreenName ;
-               cmbLightCtrl.Text = ScreenManager.Model.Constant.Constants.lightCtrlArray[this.screenModel.ScreenLightCtrl];   
-
-                scrnInfoActivation(false);
-                this.btnScrnEdit.Text = "修改";
-                this.btnScrnSet.Enabled = false;
-            }
+      
            
 
-        }
-        private void btnScrnSet_Click(object sender, EventArgs e)
-        {
-            log.Info("Set screen model. ");
-            this.btnScrnSet.Enabled = false;
-            this.ScreenModel.LightLevelA = System.Convert.ToInt16(txtNumA.Value);
-            this.ScreenModel.LightLevelB = System.Convert.ToInt16(txtNumB.Value);
-            this.ScreenModel.ScreenColor = ScreenManager.Model.Constant.Constants.getIndexByStr(cmbScrnClr.Text);
-            this.screenModel.ScreenName = txtScrnName.Text;
-            this.screenModel.ScreenLightCtrl = cmbLightCtrl.SelectedIndex;
-
-          
-
-            bool result = ScreenManager.Service.ServiceContext.getInstance().getScreenControl().setScreenBasicInfo(this.screenModel.BasicInfo);
- 
-            if (!result)
-            {
-                MessageBox.Show("操作失败");
-                this.btnScrnSet.Enabled = true;
-                //log
-            }
-            else
-            {
-                //dailog
-                //log
-                MessageBox.Show("操作成功");
-                scrnInfoActivation(false);
-                this.btnScrnEdit.Text = "修改";
-                this.btnScrnSet.Enabled = false;
-            }
-           
-        }
+      
         private void btnAddSgmt_Click(object sender, EventArgs e)
         {
             this.ScreenModel.createSegment();
@@ -300,16 +256,7 @@ namespace ScreenManager.Forms
             }
 
         }
-        private void btnDefault_Click(object sender, EventArgs e)
-        {
-            this.cancelSelectedItem(this.SelcetedItem);
-            this.SelcetedItem = null;
-            this.ScreenModel.initRoadList();
-            this.refrashSgmtInfo();
-            this.refrashSgmtList();
-            this.refrashView();
-
-        }
+ 
         private void btnSet_Click(object sender, EventArgs e)
         {
             this.btnSet.Enabled = false;
@@ -333,7 +280,7 @@ namespace ScreenManager.Forms
         }
         /*
          Component Change Action
-         */
+       废弃
         /// <summary>
         /// edit road name
         /// </summary>
@@ -343,11 +290,12 @@ namespace ScreenManager.Forms
         {
             TextBox txt = (TextBox)sender;
             int index = roadListView.getIndexByTextBox(txt);
-            screenModel.roadList[index].RoadName = txt.Text;
+            screenModel.RoadList[index].RoadName = txt.Text;
             initRoadCmb();
             refrashSgmtList();
             refrashSgmtInfo();
         }
+  */
         private void cmbRoad_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (this.selcetedItem != null)
@@ -403,6 +351,7 @@ namespace ScreenManager.Forms
 
             }
         }
+
         private void cmbRdClr_SelectedIndexChanged(object sender, EventArgs e)
         {
 
@@ -423,6 +372,7 @@ namespace ScreenManager.Forms
                 ;
             }
         }
+
         private void lstVwSgmt_MouseClick(object sender, MouseEventArgs e)
         {
             ListView lv = (ListView)sender;
@@ -454,11 +404,7 @@ namespace ScreenManager.Forms
                     this.refrashSelectedItem();
                     this.refrashView();
                 }
-                /*
-                this.refrashSgmtInfo();
-                this.refrashSgmtList();
-                this.refrashView();
-                */
+             
             }
 
         }
@@ -466,6 +412,8 @@ namespace ScreenManager.Forms
         {
             numStart_ValueChanged(sender, e);
         }
+
+
         private void numEnd_KeyUp(object sender, KeyEventArgs e)
         {
             numEnd_ValueChanged(sender, e);
@@ -484,21 +432,19 @@ namespace ScreenManager.Forms
             ScreenSearchForm screenSearchForm = new ScreenSearchForm(this);
             screenSearchForm.Show();
         }
-        private void newMntm_Click(object sender, EventArgs e)
-        {
 
-            this.loadScreen(new ScreenModel());
-        }
+
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void exitMntm_Click(object sender, EventArgs e)
         {
             this.Close();
 
-        }
-        private void openScrnMntm_Click(object sender, EventArgs e)
-        {
-            SetCmdThread setCmd = new SetCmdThread();
-            setCmd.setCmd(CmdConstants.OPEN_SCREEN);
- 
         }
 
         
@@ -513,16 +459,19 @@ namespace ScreenManager.Forms
             SetCmdThread setCmd = new SetCmdThread();
             setCmd.setCmd(CmdConstants.SAVE_SCREEN);
         }
-        private void closeScrnMntm_Click(object sender, EventArgs e)
-        {
-            SetCmdThread setCmd = new SetCmdThread();
-            setCmd.setCmd(CmdConstants.CLOSE_SCREEN);
-        }
+ 
+
+
+        /// <summary>
+        /// 菜单 - 修改IP
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void EditIPMntm_Click(object sender, EventArgs e)
         {
 
             ScreenManager.Forms.PasswordForm pf = new ScreenManager.Forms.PasswordForm();
-          ScreenManager.Forms.ipMacForm ipMacForm = new ScreenManager.Forms.ipMacForm(this.screenModel);
+            ScreenManager.Forms.ipMacForm ipMacForm = new ScreenManager.Forms.ipMacForm(this.screenModel);
 
             if (pf.ShowDialog() == DialogResult.OK)
             {
@@ -534,10 +483,17 @@ namespace ScreenManager.Forms
             }
 
         }
-        private void scrnLengthMntm_Click(object sender, EventArgs e)
+
+        /// <summary>
+        /// 菜单-屏幕信息设置
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void scrnBasicInfoSetupMntm_Click(object sender, EventArgs e)
         {
             ScreenManager.Forms.PasswordForm pf = new ScreenManager.Forms.PasswordForm();
-            ScreenManager.Forms.ScreenLengthForm sf = new ScreenManager.Forms.ScreenLengthForm(this.ScreenModel);
+            ScreenManager.Forms.ScreenBasicInfoForm sf = new ScreenManager.Forms.ScreenBasicInfoForm(this.ScreenModel);
 
             if (pf.ShowDialog() == DialogResult.OK)
             {
@@ -548,6 +504,12 @@ namespace ScreenManager.Forms
                 ;
             }
         }
+
+        /// <summary>
+        /// 菜单-文件载入
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void openMntm_Click(object sender, EventArgs e)
         {
 
@@ -558,7 +520,7 @@ namespace ScreenManager.Forms
                  {
                      this.SelcetedItem = null;
                      this.ScreenModel = new ScreenModel();
-                     this.ScreenModel.roadList = s;
+                     this.ScreenModel.RoadList = s;
                      this.refrashScrn();
                  }
                  else
@@ -567,13 +529,74 @@ namespace ScreenManager.Forms
                  }
 
         }
+
+        /// <summary>
+        /// 菜单-保存文件
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void saveMntm_Click(object sender, EventArgs e)
         {
             ScreenManager.Dao.RoadDao roadDao = new ScreenManager.Dao.RoadDao();
-            if (!roadDao.saveAsFile(this.ScreenModel.roadList))
+            if (!roadDao.saveAsFile(this.ScreenModel.RoadList))
             {
               //  MessageBox.Show("保存文件错误");
             }
+        }
+        private void btnReadScreenInfo_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        /// <summary>
+        /// 菜单-关于软件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void aboutMntm_Click(object sender, EventArgs e)
+        {
+            AboutBox aboutBox = new AboutBox();
+            aboutBox.ShowDialog();
+        }
+
+        /// <summary>
+        /// 菜单-颜色控制
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void colorCtrlMntm_Click(object sender, EventArgs e)
+        {
+            ColorCtrlForm ccf = new ColorCtrlForm(this.ScreenModel);
+
+            ccf.ShowDialog();
+            ccf.Close();
+
+
+        }
+        /// <summary>
+        /// 菜单-颜色亮度控制
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void lightCtrlMntm_Click(object sender, EventArgs e)
+        {
+            LightCtrlForm lcf = new LightCtrlForm(this.ScreenModel);
+
+            lcf.ShowDialog();
+            lcf.Close();
+        }
+
+        /// <summary>
+        /// 菜单-屏幕开关设置
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void openCloseScreenMntm_Click(object sender, EventArgs e)
+        {
+            OpenCloseCtrlForm occf = new OpenCloseCtrlForm();
+            occf.ShowDialog();
+            occf.Close();
         }
 
 
@@ -628,10 +651,74 @@ namespace ScreenManager.Forms
                 ;
             }
         }
+        private void mouseClick(object sender, MouseEventArgs e)
+        {
+
+
+            
+            ScreenManager.Model.UI.RoadPanel panel = (ScreenManager.Model.UI.RoadPanel)sender;
+
+            if (panel.DragSelected == false)
+            {
+
+                int clickValue;
+                int length = panel.Width;
+                int roadLength = panel.Road.RoadLenght;
+                double clickPoint;
+                clickPoint = (double)e.X / (double)length;
+                clickValue = (int)(clickPoint * (double)roadLength);
+
+                int index = panel.Road.getSegmentModelByPositon(clickValue);
+
+                ListView lv = this.lstVwSgmt;
+                if (index != -1)
+                {
+                    ListViewItem item = this.lstVwSgmt.Items[index];
+                    if (this.selcetedItem == null)
+                    {
+                        selectItem(item);
+                        this.refrashSgmtInfo();
+                        this.refrashSelectedItem();
+
+                    }
+                    else if (this.selcetedItem.Equals(item))
+                    {
+                        // cancel
+                        cancelSelectedItem(item);
+                        this.refrashSelectedItem();
+                        lv.SelectedItems.Clear();
+                        this.SelcetedItem = null;
+
+                    }
+                    else
+                    {
+                        // selected Other
+                        cancelSelectedItem(this.selcetedItem);
+                        lv.SelectedItems.Clear();
+                        selectItem(item);
+                        this.refrashSelectedItem();
+                        this.refrashView();
+                    }
+                }
+                else
+                {
+                }
+                System.Console.WriteLine("点击的地点：" + clickValue);
+            }
+            else
+            {
+
+            }
+
+            
+        }
+
         private void mouseMove(object sender, MouseEventArgs e)
         {
             ScreenManager.Model.UI.RoadPanel panel = (ScreenManager.Model.UI.RoadPanel)sender;
             //判断是否是响应的组件
+
+
 
             if (this.SelcetedItem != null)
             {
@@ -656,7 +743,7 @@ namespace ScreenManager.Forms
                     }
                     else
                     {
-                        System.Console.WriteLine("游标位置：" + panel.StartMarkPosition + "," + panel.EndMarkPosition + "鼠标位置" + e.Location.X);
+                       // System.Console.WriteLine("游标位置：" + panel.StartMarkPosition + "," + panel.EndMarkPosition + "鼠标位置" + e.Location.X);
                         //undrag
                         if (e.Location.X >= panel.StartMarkPosition && e.Location.X <= (panel.StartMarkPosition + 4))
                         {
@@ -766,22 +853,31 @@ namespace ScreenManager.Forms
             if (item == null)
             {
 
-                this.txtSgmtName.Text = "";
+                this.lblSegmentName.Text = "";
                 this.cmbRoad.Text = "";
-                this.numStart.Value = 0;
-                this.numEnd.Value = 0;
+                this.txtStart.Value = 0;
+                this.txtEnd.Value = 0;
+                this.txtStart.Maximum = 512;
+                this.txtEnd.Maximum = 512;
+
                 this.cmbRdClr.Text = "";
+                this.cmbRdClr2.Text = "";
+
+
             }
             else
             {
 
 
 
-                this.txtSgmtName.Text = item.SubItems[0].Text;
+                this.lblSegmentName.Text = item.SubItems[0].Text;
                 this.cmbRoad.Text = item.SubItems[1].Text;
-                this.numStart.Value = System.Convert.ToInt16(item.SubItems[2].Text);
-                this.numEnd.Value = System.Convert.ToInt16(item.SubItems[3].Text);
+                this.txtStart.Value = System.Convert.ToInt16(item.SubItems[2].Text);
+                this.txtEnd.Value = System.Convert.ToInt16(item.SubItems[3].Text);
+                this.txtStart.Maximum = this.ScreenModel.getRoadModelBySegmentId(System.Convert.ToInt16(item.SubItems[0].Text)).RoadLenght;
+                this.txtEnd.Maximum = this.ScreenModel.getRoadModelBySegmentId(System.Convert.ToInt16(item.SubItems[0].Text)).RoadLenght;
                 this.cmbRdClr.Text = item.SubItems[4].Text;
+                this.cmbRdClr2.Text = item.SubItems[4].Text;
             }
             this.SelcetedItem = l;
 
@@ -801,25 +897,26 @@ namespace ScreenManager.Forms
             offsetP = (double)offset / (double)length;
 
             roadOffset = (int)(offsetP * (double)roadLength);
+            if (Math.Abs(roadOffset) >= 1)
+            {
+                if (adrs.End + roadOffset < adrs.Start)
+                {
+                    adrs.Start = adrs.End;
+                    panel.MarkDrag = "start";
+                }
+                else if (adrs.End + roadOffset > roadLength)
+                {
+                    adrs.End = roadLength;
+                }
+                else
+                {
+                    adrs.End = adrs.End + roadOffset;
+                }
 
-            if (adrs.End + roadOffset < adrs.Start)
-            {
-                adrs.Start = adrs.End;
-                panel.MarkDrag = "start";
-            }
-            else if (adrs.End + roadOffset > roadLength)
-            {
-                adrs.End = roadLength;
-            }
-            else
-            {
-                adrs.End = adrs.End + roadOffset;
-            }
-
-            panel.Refresh();
+       
             this.refrashSelectedItem();
             this.refrashSgmtInfo();
-
+            }
         }
         private void startMarkMove(MouseEventArgs e, ScreenManager.Model.UI.RoadPanel panel)
         {
@@ -836,28 +933,32 @@ namespace ScreenManager.Forms
             roadOffset = (int)(offsetP * (double)roadLength);
 
             //设置起始值拖拽结果
-
-
-            if (adrs.Start + roadOffset < 0)
+            System.Console.WriteLine("触发鼠标事件");
+            if (Math.Abs(roadOffset) >= 1)
             {
-                //最小
+                System.Console.WriteLine("触发画图事件");
+                if (adrs.Start + roadOffset < 0)
+                {
+                    //最小
 
-                adrs.Start = 0;
-            }
-            else if (adrs.Start + roadOffset > adrs.End)
-            {
-                adrs.End = adrs.Start;
-                panel.MarkDrag = "end";
-            }
-            else
-            {
-                adrs.Start = adrs.Start + roadOffset;
-            }
+                    adrs.Start = 0;
+                }
+                else if (adrs.Start + roadOffset > adrs.End)
+                {
+                    adrs.End = adrs.Start;
+                    panel.MarkDrag = "end";
+                }
+                else
+                {
+                    adrs.Start = adrs.Start + roadOffset;
+                }         
+         
+            
 
-            panel.Refresh();
+          
             this.refrashSelectedItem();
             this.refrashSgmtInfo();
-
+            }
 
         }
         private void initRoadCmb()
@@ -869,26 +970,19 @@ namespace ScreenManager.Forms
 
             for (int i = 0; i < 10; i++)
             {
-                roadNameList.Add(i.ToString() + ":" + ScreenModel.roadList[i].RoadName);
+                roadNameList.Add(i.ToString() + ":" + ScreenModel.RoadList[i].RoadName);
             }
             this.cmbRoad.Items.AddRange(roadNameList.ToArray());
 
         }
-        private void scrnInfoActivation(Boolean b)
-        {
-            txtNumA.Enabled = b;
-            txtNumB.Enabled = b;
-            cmbScrnClr.Enabled = b;
-            txtScrnName.Enabled = b;
-            cmbScrnClr.Enabled = b;
-            cmbLightCtrl.Enabled = b;
-        }
+       
         private void sgmtInfoActivation(Boolean b)
         {
             cmbRoad.Enabled = b;
-            numStart.Enabled = b;
-            numEnd.Enabled = b;
+            txtStart.Enabled = b;
+            txtEnd.Enabled = b;
             cmbRdClr.Enabled = b;
+            cmbRdClr2.Enabled = b;
             btnDltSgmt.Enabled = b;
 
 
@@ -908,6 +1002,20 @@ namespace ScreenManager.Forms
             set { selcetedItem = value; }
         }
 
+        private void ScreenEditForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ScreenEditForm_Paint(object sender, PaintEventArgs e)
+        {
+           this.refrashScrn();
+        }
+
+  
+
+
+     
 
 
 

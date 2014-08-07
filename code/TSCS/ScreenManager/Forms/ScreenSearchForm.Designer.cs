@@ -51,19 +51,15 @@ namespace ScreenManager
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ScreenSearchForm));
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.txtIPStart = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.txtIPEnd = new System.Windows.Forms.TextBox();
             this.btnSearchIP = new System.Windows.Forms.Button();
             this.listViewScrn = new System.Windows.Forms.ListView();
-            this.id = new System.Windows.Forms.ColumnHeader();
             this.name = new System.Windows.Forms.ColumnHeader();
             this.ip = new System.Windows.Forms.ColumnHeader();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.psBar = new System.Windows.Forms.ProgressBar();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.roadNames = new System.Windows.Forms.ColumnHeader();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -71,26 +67,6 @@ namespace ScreenManager
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
             resources.ApplyResources(this.toolStripStatusLabel1, "toolStripStatusLabel1");
-            // 
-            // label1
-            // 
-            resources.ApplyResources(this.label1, "label1");
-            this.label1.Name = "label1";
-            // 
-            // txtIPStart
-            // 
-            resources.ApplyResources(this.txtIPStart, "txtIPStart");
-            this.txtIPStart.Name = "txtIPStart";
-            // 
-            // label2
-            // 
-            resources.ApplyResources(this.label2, "label2");
-            this.label2.Name = "label2";
-            // 
-            // txtIPEnd
-            // 
-            resources.ApplyResources(this.txtIPEnd, "txtIPEnd");
-            this.txtIPEnd.Name = "txtIPEnd";
             // 
             // btnSearchIP
             // 
@@ -102,9 +78,9 @@ namespace ScreenManager
             // listViewScrn
             // 
             this.listViewScrn.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.id,
             this.name,
-            this.ip});
+            this.ip,
+            this.roadNames});
             this.listViewScrn.ForeColor = System.Drawing.SystemColors.WindowText;
             this.listViewScrn.FullRowSelect = true;
             this.listViewScrn.GridLines = true;
@@ -114,10 +90,6 @@ namespace ScreenManager
             this.listViewScrn.UseCompatibleStateImageBehavior = false;
             this.listViewScrn.View = System.Windows.Forms.View.Details;
             this.listViewScrn.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.selcetedScreen);
-            // 
-            // id
-            // 
-            resources.ApplyResources(this.id, "id");
             // 
             // name
             // 
@@ -149,6 +121,10 @@ namespace ScreenManager
             resources.ApplyResources(this.label4, "label4");
             this.label4.Name = "label4";
             // 
+            // roadNames
+            // 
+            resources.ApplyResources(this.roadNames, "roadNames");
+            // 
             // ScreenSearchForm
             // 
             resources.ApplyResources(this, "$this");
@@ -159,11 +135,7 @@ namespace ScreenManager
             this.Controls.Add(this.psBar);
             this.Controls.Add(this.btnSearchIP);
             this.Controls.Add(this.listViewScrn);
-            this.Controls.Add(this.txtIPEnd);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.txtIPStart);
-            this.Controls.Add(this.label1);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ScreenSearchForm";
@@ -187,31 +159,7 @@ namespace ScreenManager
             resources.ApplyResources(this.listViewScrn, "listView1");
         }
 
-        public void reloadIPList()
-        {
-            System.Windows.Forms.ListViewItem[] ItemList = new System.Windows.Forms.ListViewItem[screenList.List.Count];
-            for (int i = 0; i < screenList.List.Count; i++)
-            {
-
-                ListViewItem mainItem = new ListViewItem();
-                mainItem.Text = i.ToString();
-
-                System.Windows.Forms.ListViewItem.ListViewSubItem ipItem = new System.Windows.Forms.ListViewItem.ListViewSubItem();
-                ipItem.Text = screenList.List[i].ScreenIP;
-
-                System.Windows.Forms.ListViewItem.ListViewSubItem nameItem = new System.Windows.Forms.ListViewItem.ListViewSubItem();
-                nameItem.Text = screenList.List[i].ScreenName;
-
-
-                mainItem.SubItems.Add(nameItem);
-                mainItem.SubItems.Add(ipItem);
-                ItemList[i] = mainItem;
-                //   this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {mainItem});
-
-            }
-            this.listViewScrn.Items.Clear();
-            this.listViewScrn.Items.AddRange(ItemList);
-        }
+       
 
        
 
@@ -219,18 +167,14 @@ namespace ScreenManager
 
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox txtIPStart;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox txtIPEnd;
         private System.Windows.Forms.Button btnSearchIP;
         private System.Windows.Forms.ListView listViewScrn;
-        private System.Windows.Forms.ColumnHeader id;
         private System.Windows.Forms.ColumnHeader name;
         private System.Windows.Forms.ColumnHeader ip;
         private ProgressBar psBar;
         private Label label3;
         private Label label4;
+        private ColumnHeader roadNames;
     }
 }
 

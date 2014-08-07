@@ -9,6 +9,23 @@ namespace ScreenManager.Stub
 {
     static class Stub
     {
+        public static ScreenModel getScreenModelStub()
+        {
+            ScreenModel m = new ScreenModel();
+
+            m.ScreenIP = "192.168.1.test";
+            m.ScreenName = "Screen_test";
+            m.ScreenColor = 2;
+            m.LightLevelA = 100;
+            m.LightLevelB = 100;
+            for (int j = 0; j < 10; j++)
+            {
+                m.RoadList[j] = getRoadStub(j.ToString());
+                m.RoadList[j].BaseColor = m.ScreenColor;
+
+            }
+            return m;
+        }
         public static List<ScreenModel> getScreenStub()
         {
             List<ScreenModel> list = new List<ScreenModel>();
@@ -23,7 +40,8 @@ namespace ScreenManager.Stub
                 m.LightLevelB = i+1;
                 for (int j = 0; j < 10; j++)
                 {
-                    m.roadList[j] = getRoadStub(j.ToString());
+                    m.RoadList[j] = getRoadStub(j.ToString());
+                    
                         
                 }
                 list.Add(m);
@@ -37,12 +55,10 @@ namespace ScreenManager.Stub
             String[] rolorArr = { ScreenManager.Model.Constant.Constants.RED_COLOR, ScreenManager.Model.Constant.Constants.GREEN_COLOR, ScreenManager.Model.Constant.Constants.YELLOW_COLOR };
 
             RoadModel roadModel = new RoadModel();
-            roadModel.BaseColor = ScreenManager.Model.Constant.Constants.DEFAULT_COLOR;
+            roadModel.BaseColor = 0;
             roadModel.RoadID = System.Convert.ToInt16(id);
             roadModel.RoadName = "RoadStub" + id;
             List<SegmentModel> sl = new List<SegmentModel>();
-
-
 
             int k = 0;
 
@@ -56,10 +72,11 @@ namespace ScreenManager.Stub
                 k = k + 15;
                 sl.Add(sm);
             }
-            
-           
+                  
             roadModel.SegmentList = sl;
             return roadModel;
         }
+
+
     }
 }

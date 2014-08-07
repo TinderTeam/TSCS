@@ -41,8 +41,10 @@ namespace ScreenManager.Model.UI
         public RoadPanel(RoadModel r)
         {
             road = r;
-            
-        
+         
+            this.SetStyle(ControlStyles.UserPaint, true);
+            this.SetStyle(ControlStyles.AllPaintingInWmPaint, true); // 禁止擦除背景.
+            this.SetStyle(ControlStyles.DoubleBuffer, true); // 双缓冲 
         }
 
 
@@ -76,35 +78,90 @@ namespace ScreenManager.Model.UI
         public void repaint()
         {
 
+            Bitmap bufferimage = new Bitmap(this.Width, this.Height);
+            Graphics g = Graphics.FromImage(bufferimage);
 
             //draw background painting
-            drawBackground();
+
+            drawBackground(g);
+           
+           
 
             if (segment!=null)
             {
                 //draw all segment
-                //drawAllSeg();
+                drawAllSeg(g);
 
                 ///draw selected segment
                 ///  show baseSegment
-                
-                drawSelectedSegment();
+                //drawChangedSegment();
+
+                drawSelectedSegment(g);
                 
                 //draw cursor
-                drawCursor();
+                drawCursor(g);
             }
             else
             {
                 //draw all segment
-                drawAllSeg();
+                drawAllSeg(g);
             }
 
+            using (Graphics tg = CreateGraphics())
+            {
+                tg.DrawImage(bufferimage, 0, 0);　　//把画布贴到画面上
+            }
 
         }
-        private void drawCursor()
-        {
-            Graphics g = CreateGraphics();
 
+
+
+
+        private void drawChangedSegment(Graphics gr)
+        {
+            //画路段图
+            for (int i = 0; i < road.SegmentList.Count; i++)
+            {
+                if (isOverlap(road.SegmentList[i]))
+                {
+                    ;
+                }
+                else
+                {
+                    drawSegment(road.SegmentList[i], gr);
+                }
+                
+            }
+
+        }
+        
+
+        /// <summary>
+        /// 检查路段是否被完整覆盖
+        /// 
+        /// </summary>
+        /// <param name="sm"></param>
+        /// <returns></returns>
+        private bool isOverlap(SegmentModel sm)
+        {
+            if (sm.Address.Start >= segment.Address.Start && sm.Address.End < segment.Address.End)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+
+            }
+        }
+
+        private void drawCursor(Graphics gr)
+        {
+
+
+
+
+        
             int length = this.Width;
             int roadLength = road.RoadLenght;
             double startMarkP = (double)segment.Address.Start / (double)roadLength;
@@ -117,37 +174,45 @@ namespace ScreenManager.Model.UI
             startMarkPosition = startMark;
             endMarkPosition = endMark;
 
-            
 
-            //画起始点
+
+
+            drawTriangle(gr, startMark);
+            drawTriangle(gr, endMark);
+
+        }
+
+
+        public void drawTriangle(Graphics gr,int mark)
+        {
+
             SolidBrush brush = new SolidBrush(Color.Black);
-            Rectangle rectangelStart = new Rectangle(startMark, 0, 4, this.Height - 1);  
-            g.FillRectangle(brush, rectangelStart);
-                
+            Pen p = new Pen(brush, 1);
+
+            Point a = new Point(mark, this.Height / 2);
+            Point b = new Point(mark - 4, this.Height);
+            Point c = new Point(mark + 4, this.Height);
+            Point[] pointArray = { a, b, c };
 
 
-            //画结束点
-            Rectangle rectangelEnd = new Rectangle(endMark - 4, 0, 4, this.Height - 1);
-            g.FillRectangle(brush, rectangelEnd);
-
-        }   
-
-     
+            gr.DrawPolygon(p, pointArray);
+            gr.FillPolygon(brush, pointArray);
+        }
 
 
-        private void drawBackground()
+
+        private void drawBackground(Graphics gr)
         {
             //draw Background
-            Graphics g = CreateGraphics();
-
+            Graphics g = gr;
             Rectangle r = new Rectangle(0, 0, this.Width , this.Height );
-            SolidBrush b = new SolidBrush(ScreenManager.Model.Constant.Constants.getColorByName(road.BaseColor));
+            SolidBrush b = new SolidBrush(ScreenManager.Model.Constant.Constants.getColorByName(ScreenManager.Model.Constant.Constants.colorArray[road.BaseColor]));
             g.FillRectangle(b, r);
         }
 
-        private void drawSelectedSegment()
+        private void drawSelectedSegment(Graphics gr)
         {
-            Graphics g = CreateGraphics();
+            Graphics g = gr;
 
             int length = this.Width;
             int roadLength = road.RoadLenght;
@@ -180,13 +245,12 @@ namespace ScreenManager.Model.UI
 
         }
 
-        private void drawAllSeg() {
-         
-
+        private void drawAllSeg(Graphics gr)
+        {      
             //画路段图
             for (int i = 0; i < road.SegmentList.Count; i++)
             {
-                drawSegment( road.SegmentList[i]);
+                drawSegment( road.SegmentList[i],gr);
             }
         }
 
@@ -197,9 +261,9 @@ namespace ScreenManager.Model.UI
         }
 
 
-        private void drawSegment(SegmentModel segment)
+        private void drawSegment(SegmentModel segment, Graphics gr)
         {
-            Graphics g = CreateGraphics();
+            Graphics g = gr;
 
             int length = this.Width;
             int roadLength = road.RoadLenght;
@@ -208,7 +272,7 @@ namespace ScreenManager.Model.UI
 
             int startInt = (int)(startPoint * (double)length);
             int endInt = (int)(endPoint * (double)length);
-            Rectangle rectangel = new Rectangle(startInt, 0, endInt - startInt, this.Height - 1);
+            Rectangle rectangel = new Rectangle(startInt, 0, endInt - startInt, this.Height );
             SolidBrush brush = new SolidBrush(ScreenManager.Model.Constant.Constants.getColorByName(ScreenManager.Model.Constant.Constants.colorArray[segment.SegmentColor]));
             g.FillRectangle(brush, rectangel);
 

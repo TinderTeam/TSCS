@@ -84,22 +84,46 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dao\RoadDao.cs" />
-    <Compile Include="Forms\screenLengthForm.cs">
+    <Compile Include="Forms\AboutBox.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\screenLengthForm.Designer.cs">
-      <DependentUpon>screenLengthForm.cs</DependentUpon>
+    <Compile Include="Forms\AboutBox.Designer.cs">
+      <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\ipMacForm.cs">
+    <Compile Include="Forms\basicConfig\ColorCtrlForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\ipMacForm.Designer.cs">
+    <Compile Include="Forms\basicConfig\ColorCtrlForm.Designer.cs">
+      <DependentUpon>ColorCtrlForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\basicConfig\LightCtrlForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\basicConfig\LightCtrlForm.Designer.cs">
+      <DependentUpon>LightCtrlForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\basicConfig\OpenCloseCtrlForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\basicConfig\OpenCloseCtrlForm.Designer.cs">
+      <DependentUpon>OpenCloseCtrlForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ExConfig\ScreenBasicInfoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ExConfig\ScreenBasicInfoForm.Designer.cs">
+      <DependentUpon>ScreenBasicInfoForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ExConfig\ipMacForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ExConfig\ipMacForm.Designer.cs">
       <DependentUpon>ipMacForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\PasswordFrom.cs">
+    <Compile Include="Forms\ExConfig\PasswordFrom.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\PasswordFrom.Designer.cs">
+    <Compile Include="Forms\ExConfig\PasswordFrom.Designer.cs">
       <DependentUpon>PasswordFrom.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\ScreenSearchForm.cs">
@@ -136,17 +160,34 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Model\UI\RoadView.cs" />
+    <Compile Include="Model\UI\ScreenBasicView.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Forms\screenLengthForm.resx">
-      <DependentUpon>screenLengthForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\AboutBox.resx">
+      <DependentUpon>AboutBox.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ipMacForm.resx">
+    <EmbeddedResource Include="Forms\basicConfig\ColorCtrlForm.resx">
+      <DependentUpon>ColorCtrlForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\basicConfig\LightCtrlForm.resx">
+      <DependentUpon>LightCtrlForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\basicConfig\OpenCloseCtrlForm.resx">
+      <DependentUpon>OpenCloseCtrlForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ExConfig\ScreenBasicInfoForm.resx">
+      <DependentUpon>ScreenBasicInfoForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ExConfig\ipMacForm.resx">
       <DependentUpon>ipMacForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\PasswordFrom.resx">
+    <EmbeddedResource Include="Forms\ExConfig\PasswordFrom.resx">
       <DependentUpon>PasswordFrom.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>

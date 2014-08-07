@@ -38,7 +38,11 @@ namespace ScreenManager.Model.Constant
         public static String RESERVED_13 = "预留9";
         public static String RESERVED_14 = "预留10";
         public static String RESERVED_15 = "预留11";
-    
+
+
+        public static String SCREEN_OPEN = "打开";
+        public static String SCREEN_CLOSE = "关闭";
+        public static String[] screenStatusArray = { SCREEN_OPEN, SCREEN_CLOSE };
 
 
         public static int getIndexByStr(string str)

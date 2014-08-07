@@ -293,5 +293,11 @@ namespace ScreenManager.Service
             return result;
  
         }
+
+        public Boolean getScreenOpenStatus()
+        {
+            //TODO:
+            return true;
+        }
     }
 }

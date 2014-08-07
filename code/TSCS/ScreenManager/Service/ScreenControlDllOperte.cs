@@ -235,14 +235,14 @@ namespace ScreenManager.Service
         }
         private static bool setRoadNameList(ScreenModel screen)
         {
-            int roadNum = screen.roadList.Count;
+            int roadNum = screen.RoadList.Count;
 
             ROAD_INFO[] roadArr = new ROAD_INFO[roadNum];
             for (int i = 0; i < roadNum; i++)
             {
                 roadArr[i] = new ROAD_INFO();
-                roadArr[i].roadName = screen.roadList[i].RoadName;
-                roadArr[i].roadNum = screen.roadList[i].RoadID;
+                roadArr[i].roadName = screen.RoadList[i].RoadName;
+                roadArr[i].roadNum = screen.RoadList[i].RoadID;
             }
 
             //copy the data to the point

@@ -7,13 +7,24 @@ namespace ScreenManager.Model
 {
    public  class RoadModel
     {
-        private  String baseColor=Constants.DEFAULT_COLOR;
+        private  int baseColor=0;
         private String rodeName;
         private int roadID;
         private int roadLenght = 150;
 
         private List<SegmentModel> segmentList = new List<SegmentModel>();
 
+
+       public int getSegmentModelByPositon(int clickValue){
+            for(int i=0;i<segmentList.Count;i++){
+                if (clickValue < segmentList[i].Address.End && clickValue > segmentList[i].Address.Start)
+                {
+                    return segmentList[i].SegmentID;
+                }
+            }
+            return -1;
+     
+       }
 
 
 
@@ -63,7 +74,7 @@ namespace ScreenManager.Model
             set { segmentList = value; }
         }
 
-        public String BaseColor
+        public int BaseColor
         {
             get { return baseColor; }
             set { baseColor = value; }

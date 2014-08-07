@@ -15,5 +15,9 @@ namespace ScreenManager.Util
         public const String SET_ROAD = "setRoad";
         public const String SET_SCREEN_LENGTH = "setScreenLength";
         public const String SET_SCREEN_IP = "setIp";
+
+
+
+
     }
 }
