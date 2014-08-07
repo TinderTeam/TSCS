@@ -315,7 +315,13 @@ namespace ScreenManager.Service
             //TODO
             
             //Test
-            return 2;
+            return true;
+        }
+
+
+        public Boolean setcreenLight(ScreenManager.Model.ScreenBasicInfoModel basicModel)
+        {
+            return true;
         }
     }
     

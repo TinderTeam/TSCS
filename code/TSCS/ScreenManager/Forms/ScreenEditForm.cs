@@ -580,6 +580,7 @@ namespace ScreenManager.Forms
             ColorCtrlForm ccf = new ColorCtrlForm(this.ScreenModel);
 
             ccf.ShowDialog();
+            this.refrashScrn();
             ccf.Close();
 
 
@@ -594,6 +595,8 @@ namespace ScreenManager.Forms
             LightCtrlForm lcf = new LightCtrlForm(this.ScreenModel);
 
             lcf.ShowDialog();
+
+            this.refrashScrn();
             lcf.Close();
         }
 
@@ -604,8 +607,9 @@ namespace ScreenManager.Forms
         /// <param name="e"></param>
         private void openCloseScreenMntm_Click(object sender, EventArgs e)
         {
-            OpenCloseCtrlForm occf = new OpenCloseCtrlForm();
+            OpenCloseCtrlForm occf = new OpenCloseCtrlForm(this.screenModel);           
             occf.ShowDialog();
+            this.refreshStatusBar();
             occf.Close();
         }
 

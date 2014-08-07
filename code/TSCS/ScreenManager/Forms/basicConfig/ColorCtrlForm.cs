@@ -11,7 +11,7 @@ namespace ScreenManager.Forms.basicConfig
 {
     public partial class ColorCtrlForm : Form
     {
-        ScreenModel screenModel;
+       public  ScreenModel screenModel;
         public ColorCtrlForm(ScreenModel sm)
         {
             InitializeComponent();
@@ -35,7 +35,12 @@ namespace ScreenManager.Forms.basicConfig
         private void btnSet_Click(object sender, EventArgs e)
         {
             //颜色接口
-
+            if (Service.ServiceContext.getInstance().getScreenControl().setScreenColor(this.colorBox.SelectedIndex))
+            {
+                screenModel.BasicInfo.ScreenColor = this.colorBox.SelectedIndex;
+            }
+           
+          
         }
 
     }

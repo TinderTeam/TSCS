@@ -63,7 +63,6 @@
             this.rdbOpen.TabStop = true;
             this.rdbOpen.Text = "打开";
             this.rdbOpen.UseVisualStyleBackColor = true;
-            this.rdbOpen.CheckedChanged += new System.EventHandler(this.CheckedChanged);
             // 
             // rdbClose
             // 
@@ -75,7 +74,7 @@
             this.rdbClose.TabStop = true;
             this.rdbClose.Text = "关闭";
             this.rdbClose.UseVisualStyleBackColor = true;
-            this.rdbClose.CheckedChanged += new System.EventHandler(this.CheckedChanged);
+         
             // 
             // OpenCloseCtrlForm
             // 

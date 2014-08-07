@@ -24,12 +24,23 @@ namespace ScreenManager.Forms.basicConfig
         {
             this.numA.Value = screenModel.BasicInfo.LightLevelA;
             this.numB.Value = screenModel.BasicInfo.LightLevelB;
+            this.cmbCtrl.Items.AddRange(ScreenManager.Model.Constant.Constants.lightCtrlArray);
         }
 
         private void btnSet_Click(object sender, EventArgs e)
         {
-            //下发接口
 
+            ScreenBasicInfoModel s = new ScreenBasicInfoModel();
+
+            s.LightLevelA = System.Convert.ToInt16(this.numA.Value);
+            s.LightLevelB = System.Convert.ToInt16(this.numB.Value);
+            s.LightCtrl = this.cmbCtrl.SelectedIndex;
+            if (Service.ServiceContext.getInstance().getScreenControl().setcreenLight(s))
+           {
+               screenModel.BasicInfo.LightLevelA = System.Convert.ToInt16(this.numA.Value);
+               screenModel.BasicInfo.LightLevelB = System.Convert.ToInt16(this.numB.Value);
+               screenModel.BasicInfo.LightCtrl = this.cmbCtrl.SelectedIndex;              
+           }
         }
     }
 }

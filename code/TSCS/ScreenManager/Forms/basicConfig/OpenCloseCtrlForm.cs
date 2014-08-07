@@ -8,12 +8,17 @@ using System.Text;
 using System.Windows.Forms;
 using ScreenManager.Service;
 using ScreenManager.Util;
+using System.Windows.Forms;
+using ScreenManager.Model;
 namespace ScreenManager.Forms.basicConfig
 {
     public partial class OpenCloseCtrlForm : Form
     {
-        public OpenCloseCtrlForm()
+        ScreenModel screenModel;
+        bool change = true;
+        public OpenCloseCtrlForm(ScreenModel sm)
         {
+            screenModel = sm;
             InitializeComponent();
         }
         bool open;
@@ -32,22 +37,52 @@ namespace ScreenManager.Forms.basicConfig
             {
                 this.rdbOpen.Checked = false;
                 this.rdbClose.Checked = true;
-            }         
+            }
+            this.rdbClose.CheckedChanged += new System.EventHandler(this.rdbClose_CheckedChanged);
+
         }
 
 
-        private void CheckedChanged(object sender, EventArgs e)
+
+
+        private void rdbClose_CheckedChanged(object sender, EventArgs e)
         {
-            if (this.rdbOpen.Checked == true)
+            if (change)
             {
-                SetCmdThread setCmd = new SetCmdThread();
-                setCmd.setCmd(CmdConstants.OPEN_SCREEN);
-            }
-            else if (this.rdbClose.Checked == true)
-            {
-                SetCmdThread setCmd = new SetCmdThread();
-                setCmd.setCmd(CmdConstants.CLOSE_SCREEN);
-            }
+                if (this.rdbOpen.Checked == true)
+                {
+                    bool result = ServiceContext.getInstance().getScreenControl().openScreen();
+                    if (result)
+                    {
+                        this.screenModel.BasicInfo.ScreenStatus = 0;
+                    }
+                    else
+                    {
+                        MessageBox.Show("操作失败");
+                        change = false;
+                        this.rdbClose.Checked = true;
+                        change = true;
+                    }
+
+                }
+                else if (this.rdbClose.Checked == true)
+                {
+                    bool result = ServiceContext.getInstance().getScreenControl().closeScreen();
+                    if (result)
+                    {
+                        this.screenModel.BasicInfo.ScreenStatus = 1;
+                    }
+                    else
+                    {
+                        MessageBox.Show("操作失败");
+                        change = false ;
+                        this.rdbOpen.Checked = true;
+                        change = true;
+                    }
+                }
+            }         
+           
+       
         }
     }
 }

@@ -32,9 +32,10 @@ namespace ScreenManager.Forms
                     {
                         bool result = ServiceContext.getInstance().getScreenControl().openScreen();
                         msgBox(result);
+                        break;
                     }
                     
-                    break;
+                   
                 case CmdConstants.CLOSE_SCREEN:
                     {
                         bool result = ServiceContext.getInstance().getScreenControl().closeScreen();

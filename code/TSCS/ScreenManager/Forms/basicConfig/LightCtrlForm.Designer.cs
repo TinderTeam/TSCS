@@ -35,6 +35,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.numB = new System.Windows.Forms.NumericUpDown();
+            this.label3 = new System.Windows.Forms.Label();
+            this.cmbCtrl = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.numA)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numB)).BeginInit();
             this.SuspendLayout();
@@ -62,7 +64,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(29, 66);
+            this.label1.Location = new System.Drawing.Point(30, 43);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(89, 12);
             this.label1.TabIndex = 6;
@@ -70,7 +72,7 @@
             // 
             // numA
             // 
-            this.numA.Location = new System.Drawing.Point(209, 51);
+            this.numA.Location = new System.Drawing.Point(210, 28);
             this.numA.Maximum = new decimal(new int[] {
             31,
             0,
@@ -83,7 +85,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(147, 53);
+            this.label2.Location = new System.Drawing.Point(148, 30);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(35, 12);
             this.label2.TabIndex = 13;
@@ -92,7 +94,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(147, 79);
+            this.label4.Location = new System.Drawing.Point(148, 56);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(35, 12);
             this.label4.TabIndex = 14;
@@ -100,7 +102,7 @@
             // 
             // numB
             // 
-            this.numB.Location = new System.Drawing.Point(209, 77);
+            this.numB.Location = new System.Drawing.Point(210, 54);
             this.numB.Maximum = new decimal(new int[] {
             31,
             0,
@@ -110,6 +112,24 @@
             this.numB.Size = new System.Drawing.Size(130, 21);
             this.numB.TabIndex = 16;
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(54, 103);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(65, 12);
+            this.label3.TabIndex = 17;
+            this.label3.Text = "控制模式：";
+            // 
+            // cmbCtrl
+            // 
+            this.cmbCtrl.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbCtrl.FormattingEnabled = true;
+            this.cmbCtrl.Location = new System.Drawing.Point(209, 100);
+            this.cmbCtrl.Name = "cmbCtrl";
+            this.cmbCtrl.Size = new System.Drawing.Size(131, 20);
+            this.cmbCtrl.TabIndex = 18;
+            // 
             // LightCtrlForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -117,6 +137,8 @@
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(384, 212);
             this.ControlBox = false;
+            this.Controls.Add(this.cmbCtrl);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.numB);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label2);
@@ -146,5 +168,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.NumericUpDown numB;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ComboBox cmbCtrl;
     }
 }

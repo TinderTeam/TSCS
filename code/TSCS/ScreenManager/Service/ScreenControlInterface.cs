@@ -93,7 +93,19 @@ namespace ScreenManager.Service
         /// <returns></returns>
        List<RoadModel> getRoadList();
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="color"></param>
+        /// <returns></returns>
        Boolean setScreenColor(int color);
 
+        /// <summary>
+        /// 
+        /// 
+        /// </summary>
+        /// <param name="basicModel"></param>
+        /// <returns></returns>
+       Boolean setcreenLight(ScreenManager.Model.ScreenBasicInfoModel basicModel);
     }
 }

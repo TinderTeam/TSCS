@@ -164,7 +164,12 @@ namespace ScreenManager.Model
         public int ScreenColor
         {
             get { return this.basicInfo.ScreenColor; }
-            set { this.basicInfo.ScreenColor = value; }
+            set {
+                this.basicInfo.ScreenColor = value; 
+                for(int i=0;i<this.roadList.Count;i++){
+                    this.RoadList[i].BaseColor = value;
+                }              
+            }
         }
 
 
