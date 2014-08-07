@@ -85,5 +85,15 @@ namespace ScreenManager.Service
         /// </summary>
         /// <returns></returns>
        Boolean getScreenOpenStatus();
+
+        /// <summary>
+        /// 
+        /// 
+        /// </summary>
+        /// <returns></returns>
+       List<RoadModel> getRoadList();
+
+       Boolean setScreenColor(int color);
+
     }
 }

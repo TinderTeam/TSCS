@@ -544,9 +544,19 @@ namespace ScreenManager.Forms
               //  MessageBox.Show("保存文件错误");
             }
         }
+
+
+
         private void btnReadScreenInfo_Click(object sender, EventArgs e)
         {
+            List<RoadModel> rList = ServiceContext.getInstance().getScreenControl().getRoadList() ;
 
+            for( int i=0;i<this.ScreenModel.RoadList.Count;i++){
+                this.ScreenModel.RoadList[i].SegmentList = rList[i].SegmentList;
+            }
+
+            this.refrashScrn();
+            
         }
 
         /// <summary>
@@ -1011,6 +1021,8 @@ namespace ScreenManager.Forms
         {
            this.refrashScrn();
         }
+
+ 
 
   
 

@@ -24,11 +24,11 @@ namespace ScreenManager.Forms.basicConfig
 
             if (screenModel.BasicInfo.ScreenColor < 0)
             {
-                lblScreenColor.Text = "无颜色";
+                this.colorBox.Text = "无颜色";
             }
             else
             {
-                lblScreenColor.Text = ScreenManager.Model.Constant.Constants.colorArray[screenModel.BasicInfo.ScreenColor];
+                this.colorBox.SelectedIndex = screenModel.BasicInfo.ScreenColor;
             }          
         }
 

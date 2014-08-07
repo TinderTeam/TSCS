@@ -299,5 +299,24 @@ namespace ScreenManager.Service
             //TODO:
             return true;
         }
+
+
+        public List<RoadModel> getRoadList()
+        {
+            //TODO
+
+            //Test
+            return ScreenManager.Stub.Stub.getScreenModelStub().RoadList;
+            
+        }
+
+        public Boolean setScreenColor(int color)
+        {
+            //TODO
+            
+            //Test
+            return 2;
+        }
     }
+    
 }

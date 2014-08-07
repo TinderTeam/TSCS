@@ -108,6 +108,7 @@
             this.btnSet = new System.Windows.Forms.Button();
             this.btnReadScreenInfo = new System.Windows.Forms.Button();
             this.groupScreenView = new System.Windows.Forms.GroupBox();
+            this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.paintPanel = new System.Windows.Forms.TableLayoutPanel();
             this.formTablePanel = new System.Windows.Forms.TableLayoutPanel();
@@ -123,7 +124,6 @@
             this.lblStatusScreenIP = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.lblStatusScreenOpen = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
@@ -189,21 +189,21 @@
             // openMntm
             // 
             this.openMntm.Name = "openMntm";
-            this.openMntm.Size = new System.Drawing.Size(152, 22);
+            this.openMntm.Size = new System.Drawing.Size(109, 22);
             this.openMntm.Text = "载入...";
             this.openMntm.Click += new System.EventHandler(this.openMntm_Click);
             // 
             // saveMntm
             // 
             this.saveMntm.Name = "saveMntm";
-            this.saveMntm.Size = new System.Drawing.Size(152, 22);
+            this.saveMntm.Size = new System.Drawing.Size(109, 22);
             this.saveMntm.Text = "保存...";
             this.saveMntm.Click += new System.EventHandler(this.saveMntm_Click);
             // 
             // exitMntm
             // 
             this.exitMntm.Name = "exitMntm";
-            this.exitMntm.Size = new System.Drawing.Size(152, 22);
+            this.exitMntm.Size = new System.Drawing.Size(109, 22);
             this.exitMntm.Text = "退出";
             this.exitMntm.Click += new System.EventHandler(this.exitMntm_Click);
             // 
@@ -275,21 +275,21 @@
             // scrnLengthMntm
             // 
             this.scrnLengthMntm.Name = "scrnLengthMntm";
-            this.scrnLengthMntm.Size = new System.Drawing.Size(152, 22);
+            this.scrnLengthMntm.Size = new System.Drawing.Size(148, 22);
             this.scrnLengthMntm.Text = "屏幕信息设置";
             this.scrnLengthMntm.Click += new System.EventHandler(this.scrnBasicInfoSetupMntm_Click);
             // 
             // EditIPMntm
             // 
             this.EditIPMntm.Name = "EditIPMntm";
-            this.EditIPMntm.Size = new System.Drawing.Size(152, 22);
+            this.EditIPMntm.Size = new System.Drawing.Size(148, 22);
             this.EditIPMntm.Text = "IP地址设置";
             this.EditIPMntm.Click += new System.EventHandler(this.EditIPMntm_Click);
             // 
             // 网段设置ToolStripMenuItem
             // 
             this.网段设置ToolStripMenuItem.Name = "网段设置ToolStripMenuItem";
-            this.网段设置ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.网段设置ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.网段设置ToolStripMenuItem.Text = "网段设置";
             // 
             // helpMnlst
@@ -304,13 +304,13 @@
             // helpMntm
             // 
             this.helpMntm.Name = "helpMntm";
-            this.helpMntm.Size = new System.Drawing.Size(152, 22);
+            this.helpMntm.Size = new System.Drawing.Size(124, 22);
             this.helpMntm.Text = "帮助...";
             // 
             // aboutMntm
             // 
             this.aboutMntm.Name = "aboutMntm";
-            this.aboutMntm.Size = new System.Drawing.Size(152, 22);
+            this.aboutMntm.Size = new System.Drawing.Size(124, 22);
             this.aboutMntm.Text = "关于软件";
             this.aboutMntm.Click += new System.EventHandler(this.aboutMntm_Click);
             // 
@@ -631,6 +631,7 @@
             // cmbRdClr
             // 
             this.cmbRdClr.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cmbRdClr.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbRdClr.Enabled = false;
             this.cmbRdClr.FormattingEnabled = true;
             this.cmbRdClr.Location = new System.Drawing.Point(3, 23);
@@ -732,6 +733,7 @@
             // cmbRoad
             // 
             this.cmbRoad.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cmbRoad.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbRoad.Enabled = false;
             this.cmbRoad.FormattingEnabled = true;
             this.cmbRoad.Location = new System.Drawing.Point(3, 83);
@@ -902,6 +904,7 @@
             // cmbRdClr2
             // 
             this.cmbRdClr2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cmbRdClr2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbRdClr2.FormattingEnabled = true;
             this.cmbRdClr2.Location = new System.Drawing.Point(3, 194);
             this.cmbRdClr2.Name = "cmbRdClr2";
@@ -958,6 +961,15 @@
             this.groupScreenView.TabIndex = 0;
             this.groupScreenView.TabStop = false;
             this.groupScreenView.Text = "图示";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(16, 15);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(53, 12);
+            this.label10.TabIndex = 4;
+            this.label10.Text = "道路名称";
             // 
             // label9
             // 
@@ -1113,15 +1125,6 @@
             this.lblStatusScreenOpen.Size = new System.Drawing.Size(29, 12);
             this.lblStatusScreenOpen.TabIndex = 8;
             this.lblStatusScreenOpen.Text = "打开";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(16, 15);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(53, 12);
-            this.label10.TabIndex = 4;
-            this.label10.Text = "道路名称";
             // 
             // ScreenEditForm
             // 

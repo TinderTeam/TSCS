@@ -105,6 +105,7 @@ namespace ScreenManager.Model
         }
 
 
+ 
 
         public List<SegmentModel> getSegmentList()
         {
