@@ -144,10 +144,7 @@ namespace ScreenManager.Forms
                 else
                 {
                     //dailog
-                    ScreenManager.Service.ServiceContext.getInstance().getScreenControl().initScreen();
-                    
-
-                   
+                    ScreenManager.Service.ServiceContext.getInstance().getScreenControl().initScreen();                                      
                     MessageBox.Show("操作成功");
                     this.form.ScreenModel.BasicInfo.ScreenName = this.screenName.Text;
                     this.form.ScreenModel.BasicInfo.ScreenLength = System.Convert.ToInt16(this.screenLength.Value);
@@ -160,8 +157,6 @@ namespace ScreenManager.Forms
 
                     }
                     this.form.ScreenModel.ScreenColor = this.form.ScreenModel.ScreenColor;
-                    
-
                     this.form.cancelSelectedItem(this.form.SelcetedItem);                   
                     this.form.ScreenModel.cleanSegment();
                     this.form.refreshRoadInfo();
@@ -169,7 +164,7 @@ namespace ScreenManager.Forms
                     this.form.refrashScrn();
                     this.form.btnAddSgmt.Enabled = true;
                 }
-                this.btnSet.Enabled = true;
+                this.form.refrashScrn();
             }
             else
             {

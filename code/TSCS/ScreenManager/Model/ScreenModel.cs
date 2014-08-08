@@ -103,25 +103,31 @@ namespace ScreenManager.Model
         public int  createSegment()
         {
             SegmentModel sm = new SegmentModel(getSegmentList().Count-1);
-            sm.Address.End = this.roadList[getTrueRoadIndex()].RoadLenght;
-            roadList[getTrueRoadIndex()].SegmentList.Add(sm);
+            RoadModel r = getFirstExistRoad();
+            if (r != null)
+            {
+                sm.Address.End = r.RoadLenght;
+                r.SegmentList.Add(sm);
+            }        
+
+           
             getSegmentList();
             return sm.SegmentID;
             
         }
 
 
-        private int getTrueRoadIndex()
+        public RoadModel getFirstExistRoad()
         {
-            int index =0;
+        
             for (int i = 0; i < this.RoadList.Count;i++ )
             {
-                if (this.RoadList[i].SegmentList.Count != 0)
+                if (!this.RoadList[i].RoadName.Equals(""))
                 {
-                    index = i;
+                    return RoadList[i];
                 }
             }
-            return index;
+            return null;
         }
 
         public void deleteByIndex(int id)

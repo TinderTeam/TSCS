@@ -161,7 +161,7 @@ namespace ScreenManager.Forms
             refrashScrn();
           
             refreshStatusBar();
-            refrashBtn();
+         
         }
         public void refreshStatusBar()
         {
@@ -261,7 +261,7 @@ namespace ScreenManager.Forms
 
 
            loadSelectedSegmentInfo(this.SelcetedItem);
-           if (this.lstVwSgmt.Items.Count == 0)
+           if (null==this.ScreenModel.getFirstExistRoad())
            {
                this.btnAddSgmt.Enabled = false;
            }
@@ -272,20 +272,6 @@ namespace ScreenManager.Forms
         }
 
 
-        public void refrashBtn()
-        {
-
-            if (this.lstVwSgmt.Items.Count == 0)
-            {
-                this.btnAddSgmt.Enabled = false;
-            }
-            else
-            {
-                this.btnAddSgmt.Enabled = true;
-            }
-        }
-
-           
 
       
         private void btnAddSgmt_Click(object sender, EventArgs e)
