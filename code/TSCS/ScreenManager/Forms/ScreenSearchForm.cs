@@ -122,5 +122,10 @@ namespace ScreenManager
             this.listViewScrn.Items.Clear();
             this.listViewScrn.Items.AddRange(ItemList);
         }
+
+        private void ScreenSearchForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

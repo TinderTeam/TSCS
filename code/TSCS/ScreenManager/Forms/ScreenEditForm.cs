@@ -155,11 +155,13 @@ namespace ScreenManager.Forms
            
             cancelSelectedItem(null);
             this.SelcetedItem = null;
+
             this.refreshRoadInfo();
           
             refrashScrn();
           
             refreshStatusBar();
+            refrashBtn();
         }
         public void refreshStatusBar()
         {
@@ -270,7 +272,19 @@ namespace ScreenManager.Forms
         }
 
 
-      
+        public void refrashBtn()
+        {
+
+            if (this.lstVwSgmt.Items.Count == 0)
+            {
+                this.btnAddSgmt.Enabled = false;
+            }
+            else
+            {
+                this.btnAddSgmt.Enabled = true;
+            }
+        }
+
            
 
       

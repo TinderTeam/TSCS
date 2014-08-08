@@ -55,11 +55,11 @@ namespace ScreenManager
             this.listViewScrn = new System.Windows.Forms.ListView();
             this.name = new System.Windows.Forms.ColumnHeader();
             this.ip = new System.Windows.Forms.ColumnHeader();
+            this.roadNames = new System.Windows.Forms.ColumnHeader();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.psBar = new System.Windows.Forms.ProgressBar();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.roadNames = new System.Windows.Forms.ColumnHeader();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -99,6 +99,10 @@ namespace ScreenManager
             // 
             resources.ApplyResources(this.ip, "ip");
             // 
+            // roadNames
+            // 
+            resources.ApplyResources(this.roadNames, "roadNames");
+            // 
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -121,10 +125,6 @@ namespace ScreenManager
             resources.ApplyResources(this.label4, "label4");
             this.label4.Name = "label4";
             // 
-            // roadNames
-            // 
-            resources.ApplyResources(this.roadNames, "roadNames");
-            // 
             // ScreenSearchForm
             // 
             resources.ApplyResources(this, "$this");
@@ -141,6 +141,7 @@ namespace ScreenManager
             this.Name = "ScreenSearchForm";
             this.ShowInTaskbar = false;
             this.TopMost = true;
+            this.Load += new System.EventHandler(this.ScreenSearchForm_Load);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
