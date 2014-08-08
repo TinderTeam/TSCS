@@ -415,8 +415,18 @@ namespace ScreenManager.Forms
 
             if (this.selcetedItem != null)
             {
+                SegmentModel segMengt = this.ScreenModel.getSegmentList()[selcetedItem.Index];
 
-                this.ScreenModel.getSegmentList()[selcetedItem.Index].SegmentColor = combBox.SelectedIndex;
+                bool result = ServiceContext.getInstance().getScreenControl().setScreenSegmentColor(segMengt.SegmentID, combBox.SelectedIndex);
+                if (result)
+                {
+                    MessageBox.Show("修改路段颜色成功");
+                    segMengt.SegmentColor = combBox.SelectedIndex;
+                }
+                else
+                {
+                    MessageBox.Show("修改路段颜色失败");
+                }
          
                 refrashSgmtList();
                 refrashView();
@@ -946,7 +956,7 @@ namespace ScreenManager.Forms
 
 
                 this.lblSegmentName.Text = item.SubItems[0].Text;
-                this.cmbRoad.SelectedIndex = this.ScreenModel.getSegmentList()[System.Convert.ToInt16(item.SubItems[0].Text)].SegmentColor;
+                this.cmbRoad.SelectedIndex = this.ScreenModel.getRoadModelBySegmentId(System.Convert.ToInt16(item.SubItems[0].Text)).RoadID;
              
                 this.txtStart.Maximum = this.ScreenModel.getRoadModelBySegmentId(System.Convert.ToInt16(item.SubItems[0].Text)).RoadLenght;
                 this.txtEnd.Maximum = this.ScreenModel.getRoadModelBySegmentId(System.Convert.ToInt16(item.SubItems[0].Text)).RoadLenght;
@@ -955,8 +965,8 @@ namespace ScreenManager.Forms
                 this.txtEnd.Value = System.Convert.ToInt16(item.SubItems[3].Text);
 
 
-                this.cmbRdClr.SelectedIndex = this.ScreenModel.getRoadModelBySegmentId(System.Convert.ToInt16(item.SubItems[0].Text)).BaseColor;
-                this.cmbRdClr2.SelectedIndex = this.ScreenModel.getRoadModelBySegmentId(System.Convert.ToInt16(item.SubItems[0].Text)).BaseColor;
+                this.cmbRdClr.SelectedIndex = this.ScreenModel.getSegmentList()[System.Convert.ToInt16(item.SubItems[0].Text)].SegmentColor;
+                this.cmbRdClr2.SelectedIndex = this.ScreenModel.getSegmentList()[System.Convert.ToInt16(item.SubItems[0].Text)].SegmentColor;
             }
             this.SelcetedItem = l;
 

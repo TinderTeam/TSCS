@@ -104,5 +104,7 @@ namespace ScreenManager.Service
         /// <param name="basicModel"></param>
         /// <returns></returns>
        Boolean setcreenLight(ScreenManager.Model.ScreenBasicInfoModel basicModel);
+
+       Boolean setScreenSegmentColor(int segmentID, int color);
     }
 }

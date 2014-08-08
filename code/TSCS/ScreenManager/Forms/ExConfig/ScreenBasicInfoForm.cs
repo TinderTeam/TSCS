@@ -157,12 +157,13 @@ namespace ScreenManager.Forms
 
                     }
                     this.form.ScreenModel.ScreenColor = this.form.ScreenModel.ScreenColor;
-                    this.form.cancelSelectedItem(this.form.SelcetedItem);                   
+                    this.form.cancelSelectedItem(this.form.SelcetedItem);
+                    this.form.SelcetedItem = null;
                     this.form.ScreenModel.cleanSegment();
                     this.form.refreshRoadInfo();
                     this.form.refrashSgmtInfo();
                     this.form.refrashScrn();
-                    this.form.btnAddSgmt.Enabled = true;
+                  
                 }
                 this.form.refrashScrn();
             }

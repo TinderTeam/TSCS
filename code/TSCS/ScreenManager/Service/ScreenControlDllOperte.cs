@@ -170,7 +170,7 @@ namespace ScreenManager.Service
         private static extern bool getScreenDisp(IntPtr roadInfo, int length);
         public static  bool getSegmentInfoByDll(List<RoadModel> roadList)
         {
-            int segNum = 10;
+            int segNum = 150;
 
             SEGMENT_INFO[] segInfoList = new SEGMENT_INFO[segNum];
             bool result = false;
@@ -180,6 +180,8 @@ namespace ScreenManager.Service
                 for (int i = 0; i < segNum; i++)
                 {
                     segInfoList[i] = new SEGMENT_INFO();
+                    segInfoList[i].segNum = -1;
+                    segInfoList[i].roadNum = -1;
                 }
 
                 IntPtr roadPt = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(SEGMENT_INFO)) * segNum);
@@ -221,19 +223,46 @@ namespace ScreenManager.Service
                     segment.Address.Start = segInfoList[i].startAddr;
                     segment.Address.End = segInfoList[i].endAddr;
                     int roadID = segInfoList[i].roadNum;
-                    if (roadID > 0 && roadID < roadList.Count)
+                    if (segNum != -1)
                     {
-                        roadList[roadID].SegmentList.Add(segment);
-                        roadList[roadID].RoadID = roadID;
+                        if (roadID >= 0 && roadID < roadList.Count)
+                        {
+                            roadList[roadID].SegmentList.Add(segment);
+                            roadList[roadID].RoadID = roadID;
+                        }
+                        else
+                        {
+                            log.Error("the road id is not exist " + roadID);
+                        }
+
                     }
-                    else
-                    {
-                        log.Error("the road id is not exist " + roadID);
-                    }
+
             }
             return result;
         }
 
+        [DllImport("ScreenController.dll", EntryPoint = "setSegmentColor")]
+        private static extern bool setSegmentColor(int segmentID, int color);
+        public static bool setSegmentColorByDll(int segmentID,int color)
+        {
+
+            log.Info("set segment color. the segment id is  " + segmentID + ", the color is " + color);
+            bool result = false;
+            try
+            {
+
+                // set segment list
+                result = setSegmentColor(  segmentID,   color);
+
+            }
+            catch (System.Exception ex)
+            {
+                log.Error("call dll exception", ex);
+            }
+
+
+            return result;
+        }
  
         [DllImport("ScreenController.dll", EntryPoint = "setScreenDisp")]
         private static extern bool setScreenDisp(IntPtr segmentInfo, int length,int screenColor);

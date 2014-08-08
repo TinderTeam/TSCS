@@ -54,8 +54,8 @@ bool ControllerInterface::setScreenCS(std::string & cs)
 }
 bool ControllerInterface::getScreenCS(std::string & str)
 {
-	std::string temp;
-	bool result  = getScreenDesp(temp);
+ 
+	bool result  = getScreenDesp(str);
 
 	 
 	return result;
@@ -240,7 +240,7 @@ bool ControllerInterface::setScreenDisp(SEGMENT_INFO segmentInfo[],int length,in
         std::string segmentInfoStr;
 		
 		segmentInfoStr.push_back(screenColor);
-		segmentInfoStr.push_back(50);
+		segmentInfoStr.push_back(length);
 
 		for(int j=0;j<packSize;j++)
 		{
@@ -257,21 +257,27 @@ bool ControllerInterface::setScreenDisp(SEGMENT_INFO segmentInfo[],int length,in
 	}
 
 	{
-	    std::string segmentInfoStr;
-		segmentInfoStr.push_back(screenColor);
-		segmentInfoStr.push_back(length-packNum*packSize);
-		for(int i=packNum*50;i<length;i++)
+
+		if((packNum*packSize < length) || (packNum == 0))
 		{
-			SEGMENT_INFO segment = segmentInfo[i];
-			segmentInfoStr.push_back(segment.segNum);
-			segmentInfoStr.push_back(segment.roadNum);
-			segmentInfoStr.push_back(segment.color);
-			segmentInfoStr.push_back(segment.startAddr/256);
-			segmentInfoStr.push_back(segment.startAddr%256);
-			segmentInfoStr.push_back(segment.endAddr/256);
-			segmentInfoStr.push_back(segment.endAddr%256);
+			std::string segmentInfoStr;
+			segmentInfoStr.push_back(screenColor);
+			segmentInfoStr.push_back(length);
+			for(int i=packNum*packSize;i<length;i++)
+			{
+				SEGMENT_INFO segment = segmentInfo[i];
+				segmentInfoStr.push_back(segment.segNum);
+				segmentInfoStr.push_back(segment.roadNum);
+				segmentInfoStr.push_back(segment.color);
+				segmentInfoStr.push_back(segment.startAddr/256);
+				segmentInfoStr.push_back(segment.startAddr%256);
+				segmentInfoStr.push_back(segment.endAddr/256);
+				segmentInfoStr.push_back(segment.endAddr%256);
+			}
+			segmentInfoList.push_back(segmentInfoStr);
 		}
-		segmentInfoList.push_back(segmentInfoStr);
+
+	
 	}
    
 	std::vector<std::string>::iterator iter = segmentInfoList.begin();
@@ -300,13 +306,57 @@ bool ControllerInterface::setScreenDisp(SEGMENT_INFO segmentInfo[],int length,in
 bool ControllerInterface::getScreenDisp(SEGMENT_INFO segmentInfo[],int length)
 {
 	std::string revData;
+	std::string segmentStr;
 	bool   result = this->getRecvDataByCmd(CMD_GET_DISP,revData);
 	if(!result)
 	{
-		LOG_ERROR("get the screen length failed");
+		LOG_ERROR("read disp failed");
+		return false;
 	}
 	else
 	{
+		int firstSegID = -1;
+		if(revData.length() > 2)
+		{
+			firstSegID = (unsigned char)revData[2];
+		}
+		if(firstSegID != 0)
+		{
+		   LOG_INFO("we should discard the first package");
+           result = this->getRecvDataByCmd(CMD_GET_DISP,revData);
+		   if(!result)
+		   {
+			   LOG_ERROR("read disp failed");
+			   return false;
+		   }
+		}
+
+		if(revData.length() > 2)
+		{
+			segmentStr = revData.substr(2,revData.length());
+			int segNum = (unsigned char)revData[1];
+			if(segNum > ((revData.length()-2)/7))
+			{
+				LOG_INFO("the segment number bigger than one package,we should read again");
+				result = this->getRecvDataByCmd(CMD_GET_DISP,revData);
+				if(result)
+				{
+					if(revData.length() > 2)
+					{
+						segmentStr += revData.substr(2,revData.length());
+					}
+				}
+				else
+				{
+					LOG_ERROR("read sencond package failed ");
+					return false;
+				}
+			}
+
+		}
+      
+
+
 		int j=0;
 		for(int i=2;i<revData.length();)
 		{
@@ -472,6 +522,7 @@ bool ControllerInterface::getRecvDataByCmd(std::string cmdCode,std::string & rev
 	std::string temp;
 	bool result = this->getData(sendData,temp);
 
+	revData.clear();
 	for(int i=DATA_FIXED_LENGTH;i<temp.length();i++)
 	{
         revData.push_back(temp[i]);

@@ -43,6 +43,10 @@ namespace ScreenManager.Forms.basicConfig
                screenModel.BasicInfo.LightLevelB = System.Convert.ToInt16(this.numB.Value);
                screenModel.BasicInfo.LightCtrl = this.cmbCtrl.SelectedIndex;              
            }
+		   else
+		   {
+		       MessageBox.Show("操作失败");
+		   }
         }
     }
 }

@@ -176,12 +176,6 @@ namespace ScreenManager.Service
                 log.Error("connect screen failed");
             }
             ScreenControlDllOperate.closeConnectByDll();
-
-            //Test/////////////////////////////
-            result = true;
-            /////////////////////////////////
-
-
             return result;
 
         }
@@ -195,6 +189,29 @@ namespace ScreenManager.Service
                 {
                     log.Warn("set failed try again");
                     result = ScreenControlDllOperate.setSegmentByDll(screenModel);
+
+                }
+            }
+            else
+            {
+                log.Error("connect screen failed");
+
+            }
+
+            ScreenControlDllOperate.closeConnectByDll();
+            return result;
+        }
+
+        public Boolean setScreenSegmentColor(int segmentID,int color)
+        {
+            bool result = ScreenControlDllOperate.connectScreenByDLL(connectedIP);
+            if (result)
+            {
+                result = ScreenControlDllOperate.setSegmentColorByDll(segmentID, color);
+                if (!result)
+                {
+                    log.Warn("set failed try again");
+                    result = ScreenControlDllOperate.setSegmentColorByDll(segmentID,color);
 
                 }
             }
