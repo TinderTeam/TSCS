@@ -22,7 +22,7 @@ namespace ScreenManager.Forms
         private static log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType); 
 
         private ScreenModel screenModel;
-        private RoadListView roadListView;
+        private RoadListView roadListView= new RoadListView();
         private ListViewItem selcetedItem;
 
  
@@ -44,78 +44,91 @@ namespace ScreenManager.Forms
 
             this.cmbRdClr.Items.AddRange(Model.Constant.Constants.colorArray);
             this.cmbRdClr2.Items.AddRange(Model.Constant.Constants.colorArray);
+            this.refreshRoadInfo();
+        }
+
+
+        public void refreshRoadInfo()
+        {
 
 
             List<String> roadNameList = new List<String>();
             List<RoadView> viewList = new List<RoadView>();
 
 
-            //init ViewList
-            this.paintPanel.Controls.Clear();
-            for (int i = 0; i < 10; i++)
+            if (this.ScreenModel != null)
             {
-                RoadView rv = new RoadView(i);
+
+                //init ViewList
+                this.paintPanel.Controls.Clear();
+                for (int i = 0; i < this.ScreenModel.RoadList.Count; i++)
+                {
+                    RoadView rv = new RoadView(i);
+                    Label lblIndex = new Label();
+                    TextBox textRoad = new System.Windows.Forms.TextBox();
+                    RoadPanel panelView = new RoadPanel(i);
+                 
 
 
-
-                Label lblIndex = new Label();
-                lblIndex.Anchor = System.Windows.Forms.AnchorStyles.None;
-                lblIndex.Location = new System.Drawing.Point(41, 23);
-                lblIndex.Text = "";
-                lblIndex.Size = new System.Drawing.Size(56, 21);
-                lblIndex.TabIndex = 0;
-
-
-                // 
-                // textRoad
-                // 
+                    if(!this.ScreenModel.RoadList[i].RoadName.Equals("")){
+                    
+                    lblIndex.Anchor = System.Windows.Forms.AnchorStyles.None;
+                    lblIndex.Location = new System.Drawing.Point(41, 23);
+                    lblIndex.Text = "";
+                    lblIndex.Size = new System.Drawing.Size(56, 21);
+                    lblIndex.TabIndex = 0;
 
 
+                    // 
+                    // textRoad
+                    // 
 
-                TextBox textRoad = new System.Windows.Forms.TextBox();
-                textRoad.Anchor = System.Windows.Forms.AnchorStyles.None;
-                textRoad.Location = new System.Drawing.Point(41, 23);
-                textRoad.Name = "textRoad" + i;
-                textRoad.Size = new System.Drawing.Size(56, 21);
-                textRoad.Text = "textRoad" + i;
-                textRoad.TabIndex = 0;
-                textRoad.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-             //   textRoad.TextChanged += new System.EventHandler(this.roadNameChanged);
+                    textRoad.Anchor = System.Windows.Forms.AnchorStyles.None;
+                    textRoad.Location = new System.Drawing.Point(41, 23);
+                    textRoad.Name = this.screenModel.RoadList[i].RoadName;
+                    textRoad.Size = new System.Drawing.Size(56, 21);
+                    textRoad.Text = this.screenModel.RoadList[i].RoadName;
+                    textRoad.TabIndex = 0;
+                    textRoad.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+                    //   textRoad.TextChanged += new System.EventHandler(this.roadNameChanged);
 
-                roadNameList.Add(textRoad.Text);
-                // 
-                // panelView
-                // 
-                RoadPanel panelView = new RoadPanel(i);
-                panelView.Dock = System.Windows.Forms.DockStyle.Fill;
-                panelView.Location = new System.Drawing.Point(105, 25);
-                panelView.Margin = new System.Windows.Forms.Padding(5, 25, 5, 25);
-                panelView.Name = "panelView"+i;
-                panelView.Size = new System.Drawing.Size(427, 17);
-                panelView.TabIndex = 2;
-                //panelView.Paint += new System.Windows.Forms.PaintEventHandler(this.roadPanel_Paint);
-                panelView.MouseMove += new System.Windows.Forms.MouseEventHandler(this.mouseMove);
-                panelView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mouseDown);
-                panelView.MouseUp += new System.Windows.Forms.MouseEventHandler(this.mouseUp);
-                panelView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.mouseClick);
-                rv.LblIndex = lblIndex;
-                rv.PanelView = panelView;
-                rv.TextRoad = textRoad;
+                    roadNameList.Add(textRoad.Text);
+                    // 
+                    // panelView
+                    // 
 
+                    panelView.Dock = System.Windows.Forms.DockStyle.Fill;
+                    panelView.Location = new System.Drawing.Point(105, 25);
+                    panelView.Margin = new System.Windows.Forms.Padding(5, 25, 5, 25);
+                    panelView.Name = "panelView" + i;
+                    panelView.Size = new System.Drawing.Size(427, 17);
+                    panelView.TabIndex = 2;
+                    panelView.screenLength = this.screenModel.ScreenLong;
+                    //panelView.Paint += new System.Windows.Forms.PaintEventHandler(this.roadPanel_Paint);
+                    panelView.MouseMove += new System.Windows.Forms.MouseEventHandler(this.mouseMove);
+                    panelView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mouseDown);
+                    panelView.MouseUp += new System.Windows.Forms.MouseEventHandler(this.mouseUp);
+                    panelView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.mouseClick);
+                    rv.LblIndex = lblIndex;
+                    rv.PanelView = panelView;
+                    rv.TextRoad = textRoad;
 
-                viewList.Add(rv);
+                    this.paintPanel.Controls.Add(lblIndex, 0, i);
+                    this.paintPanel.Controls.Add(textRoad, 1, i);
+                    this.paintPanel.Controls.Add(panelView, 2, i);
+                    }
+                    viewList.Add(rv);
+                }
 
-                this.paintPanel.Controls.Add(lblIndex, 0, i);
-                this.paintPanel.Controls.Add(textRoad, 1, i);
-                this.paintPanel.Controls.Add(panelView, 2, i);
+                roadListView = new RoadListView(viewList);
+                this.cmbRoad.Items.Clear();
+                this.cmbRoad.Items.AddRange(roadNameList.ToArray());
+ 
             }
 
-            roadListView = new RoadListView(viewList);
-            this.cmbRoad.Items.AddRange(roadNameList.ToArray());
 
+            }
            
-        }
-
 
         public void refreshRoadNameList()
         {
@@ -124,7 +137,12 @@ namespace ScreenManager.Forms
             for (int i = 0; i < this.ScreenModel.RoadList.Count; i++)
             {
 
-                roadNameList.Add(this.ScreenModel.RoadList[i].RoadName);
+                if (!this.ScreenModel.RoadList[i].RoadName.Equals(""))
+                {
+                     roadNameList.Add(this.ScreenModel.RoadList[i].RoadName);
+                }
+
+                
             }
             this.cmbRoad.Items.AddRange(roadNameList.ToArray());
 
@@ -138,12 +156,16 @@ namespace ScreenManager.Forms
            
             cancelSelectedItem(null);
             this.SelcetedItem = null;
+            this.refreshRoadInfo();
+          
             refrashScrn();
+          
             refreshStatusBar();
         }
         public void refreshStatusBar()
         {
             lblStatusScreenName.Text = screenModel.ScreenName;
+            lblScreenViewName.Text = screenModel.ScreenName;
             lblStatusScreenIP.Text = screenModel.ScreenIP;
             lblStatusScreenOpen.Text = ScreenManager.Model.Constant.Constants.screenStatusArray[screenModel.BasicInfo.ScreenStatus];
         }
@@ -236,7 +258,16 @@ namespace ScreenManager.Forms
    
         public void refrashSgmtInfo(){
 
+
            loadSelectedSegmentInfo(this.SelcetedItem);
+           if (this.lstVwSgmt.Items.Count == 0)
+           {
+               this.btnAddSgmt.Enabled = false;
+           }
+           else
+           {
+               this.btnAddSgmt.Enabled = true;
+           }
         }
 
 
@@ -323,7 +354,7 @@ namespace ScreenManager.Forms
                     SegmentModel sgmtModel=this.ScreenModel.changeRoad(this.SelcetedItem.Index, cmb.SelectedIndex);                
                     this.roadListView.list[this.ScreenModel.getRoadModelBySegmentId(this.SelcetedItem.Index).RoadID].PanelView.Segment = this.ScreenModel.getSegmentList()[this.SelcetedItem.Index];
                     this.cmbRoad.Text = this.ScreenModel.getRoadModelBySegmentId(this.SelcetedItem.Index).RoadID + ":" + this.ScreenModel.getRoadModelBySegmentId(this.SelcetedItem.Index).RoadName;
-
+                    refrashSgmtList();
 
                     cancelSelectedItem(this.selcetedItem);
                     this.lstVwSgmt.SelectedItems.Clear();
@@ -534,9 +565,8 @@ namespace ScreenManager.Forms
                  if (s != null)
                  {
                      this.SelcetedItem = null;
-                     this.ScreenModel = new ScreenModel();
+                     this.loadScreen(new ScreenModel());
                      this.ScreenModel.RoadList = s;
-                     this.refrashScrn();
                  }
                  else
                  {
@@ -852,7 +882,7 @@ namespace ScreenManager.Forms
             this.SelcetedItem = item;
 
         }
-        private void cancelSelectedItem(ListViewItem item)
+        public  void cancelSelectedItem(ListViewItem item)
         {
 
             if (item != null)
@@ -865,6 +895,8 @@ namespace ScreenManager.Forms
             this.roadListView.cleanSelected();
             loadSelectedSegmentInfo(null);
         }
+
+
         private void loadSelectedSegmentInfo(ListViewItem item)
         {
 
@@ -896,10 +928,15 @@ namespace ScreenManager.Forms
 
                 this.lblSegmentName.Text = item.SubItems[0].Text;
                 this.cmbRoad.Text = item.SubItems[1].Text;
-                this.txtStart.Value = System.Convert.ToInt16(item.SubItems[2].Text);
-                this.txtEnd.Value = System.Convert.ToInt16(item.SubItems[3].Text);
+
+             
                 this.txtStart.Maximum = this.ScreenModel.getRoadModelBySegmentId(System.Convert.ToInt16(item.SubItems[0].Text)).RoadLenght;
                 this.txtEnd.Maximum = this.ScreenModel.getRoadModelBySegmentId(System.Convert.ToInt16(item.SubItems[0].Text)).RoadLenght;
+
+                this.txtStart.Value = System.Convert.ToInt16(item.SubItems[2].Text);
+                this.txtEnd.Value = System.Convert.ToInt16(item.SubItems[3].Text);
+
+
                 this.cmbRdClr.Text = item.SubItems[4].Text;
                 this.cmbRdClr2.Text = item.SubItems[4].Text;
             }
