@@ -117,6 +117,21 @@ namespace ScreenManager.Forms
         }
 
 
+        public void refreshRoadNameList()
+        {
+            this.cmbRoad.Items.Clear();
+            List<String> roadNameList = new List<String>();
+            for (int i = 0; i < this.ScreenModel.RoadList.Count; i++)
+            {
+
+                roadNameList.Add(this.ScreenModel.RoadList[i].RoadName);
+            }
+            this.cmbRoad.Items.AddRange(roadNameList.ToArray());
+
+        }
+
+
+
         public void loadScreen(ScreenModel m)
         {
             screenModel = m;

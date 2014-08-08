@@ -176,6 +176,12 @@ namespace ScreenManager.Service
                 log.Error("connect screen failed");
             }
             ScreenControlDllOperate.closeConnectByDll();
+
+            //Test/////////////////////////////
+            result = true;
+            /////////////////////////////////
+
+
             return result;
 
         }

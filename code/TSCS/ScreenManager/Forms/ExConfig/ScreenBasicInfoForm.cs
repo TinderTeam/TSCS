@@ -115,13 +115,14 @@ namespace ScreenManager.Forms
 
             for (int i = 0; i < this.screenBasicRoadView.Count; i++)
             {
+                m.RoadList[i].RoadName = this.screenBasicRoadView[i].RoadName.Text;
+                m.RoadList[i].RoadLenght = System.Convert.ToInt16(this.screenBasicRoadView[i].RoadLength.Value);
               
-               
-
-
             }
+            m.ScreenColor = this.form.ScreenModel.ScreenColor;
 
-            bool result = ScreenManager.Service.ServiceContext.getInstance().getScreenControl().setScreenAndRoadNameInfo(screenModel);
+
+            bool result = ScreenManager.Service.ServiceContext.getInstance().getScreenControl().setScreenAndRoadNameInfo(m);
 
             if (!result)
             {
@@ -134,8 +135,18 @@ namespace ScreenManager.Forms
 
                 //log
                 MessageBox.Show("操作成功");
-                
+                this.form.ScreenModel.BasicInfo.ScreenName = this.screenName.Text;
+                this.form.ScreenModel.BasicInfo.ScreenLength = System.Convert.ToInt16(this.screenLength.Value);
 
+                for (int i = 0; i < this.screenBasicRoadView.Count; i++)
+                {
+                    this.form.ScreenModel.RoadList[i].RoadName = this.screenBasicRoadView[i].RoadName.Text;
+                    this.form.ScreenModel.RoadList[i].RoadLenght = System.Convert.ToInt16(this.screenBasicRoadView[i].RoadLength.Value);
+                    
+                }
+                this.form.ScreenModel.ScreenColor = this.form.ScreenModel.ScreenColor;
+                this.form.refreshRoadNameList();
+                this.form.refrashScrn();
             }
             this.btnSet.Enabled = true;
         
