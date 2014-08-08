@@ -102,6 +102,7 @@
             this.screenLength.Name = "screenLength";
             this.screenLength.Size = new System.Drawing.Size(181, 21);
             this.screenLength.TabIndex = 3;
+            this.screenLength.ValueChanged += new System.EventHandler(this.screenLength_ValueChanged);
             // 
             // tableLayoutPanel1
             // 
@@ -245,7 +246,6 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "屏幕信息设置";
-            this.TopMost = true;
             this.Load += new System.EventHandler(this.ScreenBasicInfoForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using ScreenManager.Service;
 using ScreenManager.Util;
-using System.Windows.Forms;
+using ScreenManager.Forms;
 using ScreenManager.Model;
 namespace ScreenManager.Forms.basicConfig
 {

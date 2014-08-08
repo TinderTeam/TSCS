@@ -8,13 +8,14 @@ namespace ScreenManager.Model.UI
 {
     public class RoadPanel : System.Windows.Forms.Panel
     {
+
         private RoadModel road ;
         private SegmentModel segment = null;    
         private Boolean dragSelected = false;
         private string  markDrag;
         private int startMarkPosition = 0;
         private int endMarkPosition = 0;
-  
+        public  int screenLength = 150;
 
           
 
@@ -38,13 +39,14 @@ namespace ScreenManager.Model.UI
         }      
         
 
-        public RoadPanel(RoadModel r)
+        public RoadPanel(RoadModel r,int l)
         {
             road = r;
          
             this.SetStyle(ControlStyles.UserPaint, true);
             this.SetStyle(ControlStyles.AllPaintingInWmPaint, true); // 禁止擦除背景.
             this.SetStyle(ControlStyles.DoubleBuffer, true); // 双缓冲 
+            screenLength = l;
         }
 
 
@@ -81,6 +83,7 @@ namespace ScreenManager.Model.UI
             Bitmap bufferimage = new Bitmap(this.Width, this.Height);
             Graphics g = Graphics.FromImage(bufferimage);
 
+            g.Clear(this.BackColor);
             //draw background painting
 
             drawBackground(g);
@@ -163,7 +166,7 @@ namespace ScreenManager.Model.UI
 
         
             int length = this.Width;
-            int roadLength = road.RoadLenght;
+            int roadLength = this.screenLength;
             double startMarkP = (double)segment.Address.Start / (double)roadLength;
             int startMark = (int)(startMarkP * (double)length);
 
@@ -203,9 +206,18 @@ namespace ScreenManager.Model.UI
 
         private void drawBackground(Graphics gr)
         {
+
+            int length = this.Width;
+            int roadLength = road.RoadLenght;
+            double backGroundLength = (double)roadLength / (double)this.screenLength;
+
+
+
+            int bLength = (int)(backGroundLength * (double)length);
+
             //draw Background
             Graphics g = gr;
-            Rectangle r = new Rectangle(0, 0, this.Width , this.Height );
+            Rectangle r = new Rectangle(0, 0, bLength, bLength);
             SolidBrush b = new SolidBrush(ScreenManager.Model.Constant.Constants.getColorByName(ScreenManager.Model.Constant.Constants.colorArray[road.BaseColor]));
             g.FillRectangle(b, r);
         }
@@ -216,8 +228,8 @@ namespace ScreenManager.Model.UI
 
             int length = this.Width;
             int roadLength = road.RoadLenght;
-            double startPoint = (double)segment.Address.Start / (double)roadLength;
-            double endPoint = (double)segment.Address.End / (double)roadLength;
+            double startPoint = (double)segment.Address.Start / (double)this.screenLength;
+            double endPoint = (double)segment.Address.End / (double)this.screenLength;
 
             int startInt = (int)(startPoint * (double)length);
             int endInt = (int)(endPoint * (double)length);
@@ -267,9 +279,8 @@ namespace ScreenManager.Model.UI
 
             int length = this.Width;
             int roadLength = road.RoadLenght;
-            double startPoint = (double)segment.Address.Start / (double)roadLength;
-            double endPoint = (double)segment.Address.End / (double)roadLength;
-
+            double startPoint = (double)segment.Address.Start / (double)this.screenLength;
+            double endPoint = (double)segment.Address.End / (double)this.screenLength;
             int startInt = (int)(startPoint * (double)length);
             int endInt = (int)(endPoint * (double)length);
             Rectangle rectangel = new Rectangle(startInt, 0, endInt - startInt, this.Height );

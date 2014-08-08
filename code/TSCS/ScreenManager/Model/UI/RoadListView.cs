@@ -9,6 +9,12 @@ namespace ScreenManager.Model.UI
    public class RoadListView
     {
         public List<RoadView> list;
+
+        public RoadListView()
+        {
+            list = new List<RoadView>();
+        }
+
         public RoadListView(List<RoadView> l)
         {
             list = l;

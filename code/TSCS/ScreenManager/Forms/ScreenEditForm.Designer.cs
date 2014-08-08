@@ -109,7 +109,7 @@
             this.btnReadScreenInfo = new System.Windows.Forms.Button();
             this.groupScreenView = new System.Windows.Forms.GroupBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
+            this.lblScreenViewName = new System.Windows.Forms.Label();
             this.paintPanel = new System.Windows.Forms.TableLayoutPanel();
             this.formTablePanel = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel15 = new System.Windows.Forms.TableLayoutPanel();
@@ -223,42 +223,42 @@
             // searchScrnMntm
             // 
             this.searchScrnMntm.Name = "searchScrnMntm";
-            this.searchScrnMntm.Size = new System.Drawing.Size(152, 22);
+            this.searchScrnMntm.Size = new System.Drawing.Size(148, 22);
             this.searchScrnMntm.Text = "搜索屏幕";
             this.searchScrnMntm.Click += new System.EventHandler(this.searchScrnMntm_Click);
             // 
             // colorCtrlMntm
             // 
             this.colorCtrlMntm.Name = "colorCtrlMntm";
-            this.colorCtrlMntm.Size = new System.Drawing.Size(152, 22);
+            this.colorCtrlMntm.Size = new System.Drawing.Size(148, 22);
             this.colorCtrlMntm.Text = "屏幕颜色控制";
             this.colorCtrlMntm.Click += new System.EventHandler(this.colorCtrlMntm_Click);
             // 
             // lightCtrlMntm
             // 
             this.lightCtrlMntm.Name = "lightCtrlMntm";
-            this.lightCtrlMntm.Size = new System.Drawing.Size(152, 22);
+            this.lightCtrlMntm.Size = new System.Drawing.Size(148, 22);
             this.lightCtrlMntm.Text = "屏幕亮度控制";
             this.lightCtrlMntm.Click += new System.EventHandler(this.lightCtrlMntm_Click);
             // 
             // openCloseScreenMntm
             // 
             this.openCloseScreenMntm.Name = "openCloseScreenMntm";
-            this.openCloseScreenMntm.Size = new System.Drawing.Size(152, 22);
+            this.openCloseScreenMntm.Size = new System.Drawing.Size(148, 22);
             this.openCloseScreenMntm.Text = "屏幕开关控制";
             this.openCloseScreenMntm.Click += new System.EventHandler(this.openCloseScreenMntm_Click);
             // 
             // saveScrnMntm
             // 
             this.saveScrnMntm.Name = "saveScrnMntm";
-            this.saveScrnMntm.Size = new System.Drawing.Size(152, 22);
+            this.saveScrnMntm.Size = new System.Drawing.Size(148, 22);
             this.saveScrnMntm.Text = "保存屏幕";
             this.saveScrnMntm.Click += new System.EventHandler(this.saveScrnMntm_Click);
             // 
             // initScrnMntm
             // 
             this.initScrnMntm.Name = "initScrnMntm";
-            this.initScrnMntm.Size = new System.Drawing.Size(152, 22);
+            this.initScrnMntm.Size = new System.Drawing.Size(148, 22);
             this.initScrnMntm.Text = "初始化屏幕";
             this.initScrnMntm.Click += new System.EventHandler(this.initScrnMntm_Click);
             // 
@@ -669,8 +669,8 @@
             this.tableLayoutPanel16.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel16.Name = "tableLayoutPanel16";
             this.tableLayoutPanel16.RowCount = 11;
-            this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
+            this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 21F));
             this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -678,7 +678,7 @@
             this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
             this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 22F));
             this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel16.Size = new System.Drawing.Size(299, 249);
             this.tableLayoutPanel16.TabIndex = 2;
@@ -761,19 +761,20 @@
             this.tableLayoutPanel7.Controls.Add(this.btnAddSgmt, 0, 0);
             this.tableLayoutPanel7.Controls.Add(this.btnDltSgmt, 1, 0);
             this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel7.Location = new System.Drawing.Point(3, 214);
+            this.tableLayoutPanel7.Location = new System.Drawing.Point(3, 216);
             this.tableLayoutPanel7.Name = "tableLayoutPanel7";
             this.tableLayoutPanel7.RowCount = 1;
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel7.Size = new System.Drawing.Size(293, 32);
+            this.tableLayoutPanel7.Size = new System.Drawing.Size(293, 30);
             this.tableLayoutPanel7.TabIndex = 20;
             // 
             // btnAddSgmt
             // 
             this.btnAddSgmt.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnAddSgmt.Enabled = false;
             this.btnAddSgmt.Location = new System.Drawing.Point(14, 3);
             this.btnAddSgmt.Name = "btnAddSgmt";
-            this.btnAddSgmt.Size = new System.Drawing.Size(117, 26);
+            this.btnAddSgmt.Size = new System.Drawing.Size(117, 24);
             this.btnAddSgmt.TabIndex = 0;
             this.btnAddSgmt.Text = "增加路段";
             this.btnAddSgmt.UseVisualStyleBackColor = true;
@@ -784,7 +785,7 @@
             this.btnDltSgmt.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btnDltSgmt.Location = new System.Drawing.Point(160, 3);
             this.btnDltSgmt.Name = "btnDltSgmt";
-            this.btnDltSgmt.Size = new System.Drawing.Size(117, 26);
+            this.btnDltSgmt.Size = new System.Drawing.Size(117, 24);
             this.btnDltSgmt.TabIndex = 1;
             this.btnDltSgmt.Text = "删除路段";
             this.btnDltSgmt.UseVisualStyleBackColor = true;
@@ -952,7 +953,7 @@
             // groupScreenView
             // 
             this.groupScreenView.Controls.Add(this.label10);
-            this.groupScreenView.Controls.Add(this.label9);
+            this.groupScreenView.Controls.Add(this.lblScreenViewName);
             this.groupScreenView.Controls.Add(this.paintPanel);
             this.groupScreenView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupScreenView.Location = new System.Drawing.Point(3, 3);
@@ -971,20 +972,20 @@
             this.label10.TabIndex = 4;
             this.label10.Text = "道路名称";
             // 
-            // label9
+            // lblScreenViewName
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(272, 15);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(65, 12);
-            this.label9.TabIndex = 3;
-            this.label9.Text = "路段示意图";
+            this.lblScreenViewName.AutoSize = true;
+            this.lblScreenViewName.Location = new System.Drawing.Point(315, 15);
+            this.lblScreenViewName.Name = "lblScreenViewName";
+            this.lblScreenViewName.Size = new System.Drawing.Size(65, 12);
+            this.lblScreenViewName.TabIndex = 3;
+            this.lblScreenViewName.Text = "未连接屏幕";
             // 
             // paintPanel
             // 
             this.paintPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.paintPanel.ColumnCount = 3;
-            this.paintPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.paintPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
             this.paintPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 0F));
             this.paintPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.paintPanel.Location = new System.Drawing.Point(9, 30);
@@ -1251,7 +1252,7 @@
         private System.Windows.Forms.Button btnSet;
         private System.Windows.Forms.Button btnReadScreenInfo;
         private System.Windows.Forms.GroupBox groupScreenView;
-        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label lblScreenViewName;
         private System.Windows.Forms.TableLayoutPanel paintPanel;
         private System.Windows.Forms.TableLayoutPanel formTablePanel;
         private System.Windows.Forms.TabControl tabControl1;
@@ -1268,7 +1269,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
         private System.Windows.Forms.Button btnDltSgmt;
-        private System.Windows.Forms.Button btnAddSgmt;
+        public  System.Windows.Forms.Button btnAddSgmt;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cmbRdClr;

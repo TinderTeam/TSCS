@@ -18,7 +18,7 @@ namespace ScreenManager.Stub
             m.ScreenColor = 2;
             m.LightLevelA = 100;
             m.LightLevelB = 100;
-            for (int j = 0; j < 10; j++)
+            for (int j = 0; j < 10; j=j+2)
             {
                 m.RoadList[j] = getRoadStub(j.ToString());
                 m.RoadList[j].BaseColor = m.ScreenColor;

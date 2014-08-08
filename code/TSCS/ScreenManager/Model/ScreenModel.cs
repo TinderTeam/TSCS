@@ -24,6 +24,17 @@ namespace ScreenManager.Model
         }
 
 
+
+      public void  cleanSegment()
+      {
+          for (int i = 0; i < RoadList.Count; i++)
+          {
+              RoadList[i].SegmentList.Clear();
+          }
+          
+       }
+
+
         public SegmentModel changeRoad(int segmentIndex, int roadIndex)
         {
             RoadModel roadModel = getRoadModelBySegmentId(segmentIndex);
@@ -34,9 +45,20 @@ namespace ScreenManager.Model
             sm.Address = new SegmentAddress();
 
 
-
-            sm.Address.Start = this.getSegmentList()[segmentIndex].Address.Start;
-            sm.Address.End = this.getSegmentList()[segmentIndex].Address.End;
+            if (this.getSegmentList()[segmentIndex].Address.Start > roadList[roadIndex].RoadLenght)
+            {
+                sm.Address.Start = roadList[roadIndex].RoadLenght;
+            }
+            else if (this.getSegmentList()[segmentIndex].Address.End > roadList[roadIndex].RoadLenght)
+            {
+                sm.Address.End = roadList[roadIndex].RoadLenght;
+            }
+            else
+            {
+                sm.Address.Start = this.getSegmentList()[segmentIndex].Address.Start;
+                sm.Address.End = this.getSegmentList()[segmentIndex].Address.End;
+            }
+           
        
             //add
             roadList[roadIndex].SegmentList.Add( sm );
@@ -81,8 +103,23 @@ namespace ScreenManager.Model
         public void createSegment()
         {
             SegmentModel sm = new SegmentModel(getSegmentList().Count-1);
-            roadList[roadList.Count - 1].SegmentList.Add(sm);
+            sm.Address.End = this.roadList[getTrueRoadIndex()].RoadLenght;
+            roadList[getTrueRoadIndex()].SegmentList.Add(sm);
+            
+        }
 
+
+        private int getTrueRoadIndex()
+        {
+            int index =0;
+            for (int i = 0; i < this.RoadList.Count;i++ )
+            {
+                if (this.RoadList[i].SegmentList.Count != 0)
+                {
+                    index = i;
+                }
+            }
+            return index;
         }
 
         public void deleteByIndex(int id)
