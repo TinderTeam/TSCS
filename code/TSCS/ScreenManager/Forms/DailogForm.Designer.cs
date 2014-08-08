@@ -74,6 +74,7 @@
             this.Controls.Add(this.btnCanel);
             this.Controls.Add(this.btnOk);
             this.Name = "DailogForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "提示";
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -40,6 +40,10 @@ namespace ScreenManager.Forms.basicConfig
                 form.ScreenModel.ScreenColor = this.colorBox.SelectedIndex;
                 form.refrashScrn();
             }
+            else
+            {
+                MessageBox.Show("操作失败");
+            }
            
           
         }

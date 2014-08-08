@@ -25,6 +25,7 @@ namespace ScreenManager.Forms.basicConfig
             this.numA.Value = screenModel.BasicInfo.LightLevelA;
             this.numB.Value = screenModel.BasicInfo.LightLevelB;
             this.cmbCtrl.Items.AddRange(ScreenManager.Model.Constant.Constants.lightCtrlArray);
+            this.cmbCtrl.SelectedIndex = screenModel.BasicInfo.LightCtrl;
         }
 
         private void btnSet_Click(object sender, EventArgs e)

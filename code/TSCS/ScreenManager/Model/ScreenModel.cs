@@ -100,11 +100,13 @@ namespace ScreenManager.Model
             }
         }
 
-        public void createSegment()
+        public int  createSegment()
         {
             SegmentModel sm = new SegmentModel(getSegmentList().Count-1);
             sm.Address.End = this.roadList[getTrueRoadIndex()].RoadLenght;
             roadList[getTrueRoadIndex()].SegmentList.Add(sm);
+            getSegmentList();
+            return sm.SegmentID;
             
         }
 

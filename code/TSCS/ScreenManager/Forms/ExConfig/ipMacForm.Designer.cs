@@ -91,7 +91,6 @@
             this.textBox2.Size = new System.Drawing.Size(360, 21);
             this.textBox2.TabIndex = 5;
             this.textBox2.Text = "00-00-00-00-00-00";
-
             this.textBox2.KeyUp += new System.Windows.Forms.KeyEventHandler(this.textBox2_KeyUp);
             // 
             // ipMacForm
@@ -113,7 +112,7 @@
             this.Name = "ipMacForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "修改IP Mac地址";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.ipMacForm_Load);

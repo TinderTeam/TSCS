@@ -145,7 +145,6 @@ namespace ScreenManager.Forms
                 
             }
             this.cmbRoad.Items.AddRange(roadNameList.ToArray());
-
         }
 
 
@@ -277,11 +276,24 @@ namespace ScreenManager.Forms
       
         private void btnAddSgmt_Click(object sender, EventArgs e)
         {
-            this.ScreenModel.createSegment();
-
+            int index =this.ScreenModel.createSegment();
+           
             refrashSgmtList();
             refrashView();
             refrashSgmtInfo();
+
+
+         
+            // selected Other
+
+            cancelSelectedItem(this.selcetedItem);
+            this.lstVwSgmt.SelectedItems.Clear();
+            selectItem(this.lstVwSgmt.Items[index]);
+            this.refrashSelectedItem();
+            this.refrashView();
+
+         
+          
         }
         private void btnDltSgmt_Click(object sender, EventArgs e)
         {
@@ -306,19 +318,17 @@ namespace ScreenManager.Forms
         private void btnSet_Click(object sender, EventArgs e)
         {
             this.btnSet.Enabled = false;
-            bool result = ScreenManager.Service.ServiceContext.getInstance().getScreenControl().setScreenSegmentInfo(this.ScreenModel);
+            this.cancelSelectedItem(this.SelcetedItem);
 
+            bool result = ScreenManager.Service.ServiceContext.getInstance().getScreenControl().setScreenSegmentInfo(this.ScreenModel);
             if (!result)
             {
                 MessageBox.Show("操作失败");
-
-
                 //log
             }
             else
             {
                 //dailog
-
                 //log
                 MessageBox.Show("操作成功");
             }
@@ -594,9 +604,18 @@ namespace ScreenManager.Forms
 
         private void btnReadScreenInfo_Click(object sender, EventArgs e)
         {
-            ServiceContext.getInstance().getScreenControl().getScreenSegmentInfo(this.ScreenModel.RoadList);
- 
+            
 
+            if (ServiceContext.getInstance().getScreenControl().getScreenSegmentInfo(this.ScreenModel.RoadList))
+            {
+               
+            }
+            else
+            {
+                MessageBox.Show("操作失败");
+            }
+            this.cancelSelectedItem(this.SelcetedItem);
+            this.SelcetedItem = null;
             this.refrashScrn();
             
         }
@@ -927,8 +946,7 @@ namespace ScreenManager.Forms
 
 
                 this.lblSegmentName.Text = item.SubItems[0].Text;
-                this.cmbRoad.Text = item.SubItems[1].Text;
-
+                this.cmbRoad.SelectedIndex = this.ScreenModel.getRoadModelBySegmentId(System.Convert.ToInt16(item.SubItems[0].Text)).RoadID;
              
                 this.txtStart.Maximum = this.ScreenModel.getRoadModelBySegmentId(System.Convert.ToInt16(item.SubItems[0].Text)).RoadLenght;
                 this.txtEnd.Maximum = this.ScreenModel.getRoadModelBySegmentId(System.Convert.ToInt16(item.SubItems[0].Text)).RoadLenght;
@@ -937,8 +955,8 @@ namespace ScreenManager.Forms
                 this.txtEnd.Value = System.Convert.ToInt16(item.SubItems[3].Text);
 
 
-                this.cmbRdClr.Text = item.SubItems[4].Text;
-                this.cmbRdClr2.Text = item.SubItems[4].Text;
+                this.cmbRdClr.SelectedIndex = this.ScreenModel.getRoadModelBySegmentId(System.Convert.ToInt16(item.SubItems[0].Text)).BaseColor;
+                this.cmbRdClr2.SelectedIndex = this.ScreenModel.getRoadModelBySegmentId(System.Convert.ToInt16(item.SubItems[0].Text)).BaseColor;
             }
             this.SelcetedItem = l;
 
