@@ -38,6 +38,7 @@ namespace ScreenManager.Forms.basicConfig
             s.LightCtrl = this.cmbCtrl.SelectedIndex;
             if (Service.ServiceContext.getInstance().getScreenControl().setcreenLight(s))
            {
+               MessageBox.Show("操作成功");
                screenModel.BasicInfo.LightLevelA = System.Convert.ToInt16(this.numA.Value);
                screenModel.BasicInfo.LightLevelB = System.Convert.ToInt16(this.numB.Value);
                screenModel.BasicInfo.LightCtrl = this.cmbCtrl.SelectedIndex;              

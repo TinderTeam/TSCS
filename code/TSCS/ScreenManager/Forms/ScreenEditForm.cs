@@ -946,7 +946,7 @@ namespace ScreenManager.Forms
 
 
                 this.lblSegmentName.Text = item.SubItems[0].Text;
-                this.cmbRoad.SelectedIndex = this.ScreenModel.getRoadModelBySegmentId(System.Convert.ToInt16(item.SubItems[0].Text)).RoadID;
+                this.cmbRoad.SelectedIndex = this.ScreenModel.getSegmentList()[System.Convert.ToInt16(item.SubItems[0].Text)].SegmentColor;
              
                 this.txtStart.Maximum = this.ScreenModel.getRoadModelBySegmentId(System.Convert.ToInt16(item.SubItems[0].Text)).RoadLenght;
                 this.txtEnd.Maximum = this.ScreenModel.getRoadModelBySegmentId(System.Convert.ToInt16(item.SubItems[0].Text)).RoadLenght;

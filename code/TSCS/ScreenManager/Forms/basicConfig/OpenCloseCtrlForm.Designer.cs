@@ -63,6 +63,7 @@
             this.rdbOpen.TabStop = true;
             this.rdbOpen.Text = "打开";
             this.rdbOpen.UseVisualStyleBackColor = true;
+            this.rdbOpen.CheckedChanged += new System.EventHandler(this.rdbOpen_CheckedChanged);
             // 
             // rdbClose
             // 
@@ -87,7 +88,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnCancel);
             this.Name = "OpenCloseCtrlForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "屏幕开关设置";
             this.Load += new System.EventHandler(this.OpenCloseCtrlForm_Load);
             this.ResumeLayout(false);

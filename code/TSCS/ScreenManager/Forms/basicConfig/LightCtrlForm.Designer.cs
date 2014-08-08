@@ -149,7 +149,7 @@
             this.MaximumSize = new System.Drawing.Size(400, 250);
             this.MinimumSize = new System.Drawing.Size(400, 250);
             this.Name = "LightCtrlForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "亮度设置";
             this.Load += new System.EventHandler(this.LightCtrlForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numA)).EndInit();

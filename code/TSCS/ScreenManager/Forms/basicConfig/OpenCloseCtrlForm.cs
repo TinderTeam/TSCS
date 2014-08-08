@@ -72,6 +72,7 @@ namespace ScreenManager.Forms.basicConfig
                     bool result = ServiceContext.getInstance().getScreenControl().closeScreen();
                     if (result)
                     {
+                        MessageBox.Show("操作成功");
                         this.screenModel.BasicInfo.ScreenStatus = 1;
                     }
                     else
@@ -86,5 +87,7 @@ namespace ScreenManager.Forms.basicConfig
            
        
         }
+
+
     }
 }

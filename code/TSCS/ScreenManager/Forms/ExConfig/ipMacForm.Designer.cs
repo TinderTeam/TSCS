@@ -112,7 +112,7 @@
             this.Name = "ipMacForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "修改IP Mac地址";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.ipMacForm_Load);

@@ -86,7 +86,7 @@
             this.MaximumSize = new System.Drawing.Size(400, 150);
             this.MinimumSize = new System.Drawing.Size(400, 150);
             this.Name = "ColorCtrlForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "屏幕颜色设置";
             this.Load += new System.EventHandler(this.ColorCtrlForm_Load);
             this.ResumeLayout(false);

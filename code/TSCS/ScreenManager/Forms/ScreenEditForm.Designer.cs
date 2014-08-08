@@ -93,6 +93,9 @@
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
             this.btnAddSgmt = new System.Windows.Forms.Button();
             this.btnDltSgmt = new System.Windows.Forms.Button();
+            this.flowLayoutPanel4 = new System.Windows.Forms.FlowLayoutPanel();
+            this.lblSegmentName = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.txtStart = new System.Windows.Forms.NumericUpDown();
             this.txtEnd = new System.Windows.Forms.NumericUpDown();
@@ -118,9 +121,6 @@
             this.lblStatusScreenIP = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.lblStatusScreenOpen = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
-            this.lblSegmentName = new System.Windows.Forms.Label();
-            this.flowLayoutPanel4 = new System.Windows.Forms.FlowLayoutPanel();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
@@ -150,13 +150,13 @@
             this.tableLayoutPanel16.SuspendLayout();
             this.tableLayoutPanel8.SuspendLayout();
             this.tableLayoutPanel7.SuspendLayout();
+            this.flowLayoutPanel4.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtStart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtEnd)).BeginInit();
             this.tableLayoutPanel6.SuspendLayout();
             this.groupScreenView.SuspendLayout();
             this.formTablePanel.SuspendLayout();
-            this.flowLayoutPanel4.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip
@@ -219,42 +219,42 @@
             // searchScrnMntm
             // 
             this.searchScrnMntm.Name = "searchScrnMntm";
-            this.searchScrnMntm.Size = new System.Drawing.Size(152, 22);
+            this.searchScrnMntm.Size = new System.Drawing.Size(148, 22);
             this.searchScrnMntm.Text = "搜索屏幕";
             this.searchScrnMntm.Click += new System.EventHandler(this.searchScrnMntm_Click);
             // 
             // colorCtrlMntm
             // 
             this.colorCtrlMntm.Name = "colorCtrlMntm";
-            this.colorCtrlMntm.Size = new System.Drawing.Size(152, 22);
+            this.colorCtrlMntm.Size = new System.Drawing.Size(148, 22);
             this.colorCtrlMntm.Text = "屏幕颜色控制";
             this.colorCtrlMntm.Click += new System.EventHandler(this.colorCtrlMntm_Click);
             // 
             // lightCtrlMntm
             // 
             this.lightCtrlMntm.Name = "lightCtrlMntm";
-            this.lightCtrlMntm.Size = new System.Drawing.Size(152, 22);
+            this.lightCtrlMntm.Size = new System.Drawing.Size(148, 22);
             this.lightCtrlMntm.Text = "屏幕亮度控制";
             this.lightCtrlMntm.Click += new System.EventHandler(this.lightCtrlMntm_Click);
             // 
             // openCloseScreenMntm
             // 
             this.openCloseScreenMntm.Name = "openCloseScreenMntm";
-            this.openCloseScreenMntm.Size = new System.Drawing.Size(152, 22);
+            this.openCloseScreenMntm.Size = new System.Drawing.Size(148, 22);
             this.openCloseScreenMntm.Text = "屏幕开关控制";
             this.openCloseScreenMntm.Click += new System.EventHandler(this.openCloseScreenMntm_Click);
             // 
             // saveScrnMntm
             // 
             this.saveScrnMntm.Name = "saveScrnMntm";
-            this.saveScrnMntm.Size = new System.Drawing.Size(152, 22);
+            this.saveScrnMntm.Size = new System.Drawing.Size(148, 22);
             this.saveScrnMntm.Text = "保存屏幕";
             this.saveScrnMntm.Click += new System.EventHandler(this.saveScrnMntm_Click);
             // 
             // initScrnMntm
             // 
             this.initScrnMntm.Name = "initScrnMntm";
-            this.initScrnMntm.Size = new System.Drawing.Size(152, 22);
+            this.initScrnMntm.Size = new System.Drawing.Size(148, 22);
             this.initScrnMntm.Text = "初始化屏幕";
             this.initScrnMntm.Click += new System.EventHandler(this.initScrnMntm_Click);
             // 
@@ -786,6 +786,34 @@
             this.btnDltSgmt.UseVisualStyleBackColor = true;
             this.btnDltSgmt.Click += new System.EventHandler(this.btnDltSgmt_Click);
             // 
+            // flowLayoutPanel4
+            // 
+            this.flowLayoutPanel4.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.flowLayoutPanel4.Controls.Add(this.lblSegmentName);
+            this.flowLayoutPanel4.Controls.Add(this.label20);
+            this.flowLayoutPanel4.Location = new System.Drawing.Point(3, 3);
+            this.flowLayoutPanel4.Name = "flowLayoutPanel4";
+            this.flowLayoutPanel4.Size = new System.Drawing.Size(293, 23);
+            this.flowLayoutPanel4.TabIndex = 23;
+            // 
+            // lblSegmentName
+            // 
+            this.lblSegmentName.AutoSize = true;
+            this.lblSegmentName.Location = new System.Drawing.Point(3, 0);
+            this.lblSegmentName.Name = "lblSegmentName";
+            this.lblSegmentName.Size = new System.Drawing.Size(0, 12);
+            this.lblSegmentName.TabIndex = 1;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label20.Location = new System.Drawing.Point(9, 0);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(47, 12);
+            this.label20.TabIndex = 0;
+            this.label20.Text = "路段号:";
+            // 
             // tableLayoutPanel2
             // 
             this.tableLayoutPanel2.ColumnCount = 2;
@@ -906,7 +934,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(16, 15);
+            this.label10.Location = new System.Drawing.Point(61, 15);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(53, 12);
             this.label10.TabIndex = 4;
@@ -1067,34 +1095,6 @@
             this.lblStatusScreenOpen.TabIndex = 8;
             this.lblStatusScreenOpen.Text = "打开";
             // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label20.Location = new System.Drawing.Point(9, 0);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(47, 12);
-            this.label20.TabIndex = 0;
-            this.label20.Text = "路段号:";
-            // 
-            // lblSegmentName
-            // 
-            this.lblSegmentName.AutoSize = true;
-            this.lblSegmentName.Location = new System.Drawing.Point(3, 0);
-            this.lblSegmentName.Name = "lblSegmentName";
-            this.lblSegmentName.Size = new System.Drawing.Size(0, 12);
-            this.lblSegmentName.TabIndex = 1;
-            // 
-            // flowLayoutPanel4
-            // 
-            this.flowLayoutPanel4.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.flowLayoutPanel4.Controls.Add(this.lblSegmentName);
-            this.flowLayoutPanel4.Controls.Add(this.label20);
-            this.flowLayoutPanel4.Location = new System.Drawing.Point(3, 3);
-            this.flowLayoutPanel4.Name = "flowLayoutPanel4";
-            this.flowLayoutPanel4.Size = new System.Drawing.Size(293, 23);
-            this.flowLayoutPanel4.TabIndex = 23;
-            // 
             // ScreenEditForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1152,6 +1152,8 @@
             this.tableLayoutPanel8.ResumeLayout(false);
             this.tableLayoutPanel8.PerformLayout();
             this.tableLayoutPanel7.ResumeLayout(false);
+            this.flowLayoutPanel4.ResumeLayout(false);
+            this.flowLayoutPanel4.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.txtStart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtEnd)).EndInit();
@@ -1159,8 +1161,6 @@
             this.groupScreenView.ResumeLayout(false);
             this.groupScreenView.PerformLayout();
             this.formTablePanel.ResumeLayout(false);
-            this.flowLayoutPanel4.ResumeLayout(false);
-            this.flowLayoutPanel4.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
