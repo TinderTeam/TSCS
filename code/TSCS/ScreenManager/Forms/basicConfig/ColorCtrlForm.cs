@@ -37,6 +37,7 @@ namespace ScreenManager.Forms.basicConfig
             //颜色接口
             if (Service.ServiceContext.getInstance().getScreenControl().setScreenColor(this.colorBox.SelectedIndex))
             {
+                MessageBox.Show("操作成功");
                 form.ScreenModel.ScreenColor = this.colorBox.SelectedIndex;
                 form.refrashScrn();
             }

@@ -40,7 +40,7 @@ namespace ScreenManager.Forms.basicConfig
                 this.rdbOpen.Checked = false;
                 this.rdbClose.Checked = true;
             }
-            this.rdbClose.CheckedChanged += new System.EventHandler(this.rdbClose_CheckedChanged);
+         
 
         }
 
@@ -60,8 +60,9 @@ namespace ScreenManager.Forms.basicConfig
                     }
                     else
                     {
-                        MessageBox.Show("操作失败");
+                     
                         change = false;
+                        MessageBox.Show("操作失败");
                         this.rdbClose.Checked = true;
                         change = true;
                     }

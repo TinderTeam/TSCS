@@ -63,7 +63,7 @@
             this.rdbOpen.TabStop = true;
             this.rdbOpen.Text = "打开";
             this.rdbOpen.UseVisualStyleBackColor = true;
-            this.rdbOpen.CheckedChanged += new System.EventHandler(this.rdbOpen_CheckedChanged);
+            this.rdbOpen.CheckedChanged += new System.EventHandler(this.rdbClose_CheckedChanged);
             // 
             // rdbClose
             // 
