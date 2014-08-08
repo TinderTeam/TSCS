@@ -44,11 +44,9 @@ namespace ScreenManager.Service
                 bool result = ScreenControlDllOperate.connectScreenByDLL(ipList[i]);
                 if (result)
                 {
-                    String screenName = ScreenControlDllOperate.getScreenNameByDll();
-
-                    ScreenModel screen = new ScreenModel();
+  
+                    ScreenModel screen = ScreenControlDllOperate.getScreenNameInfoByDll();
                     screen.ScreenIP = ipList[i];
-                    screen.ScreenName = screenName;
                     screenList.List.Add(screen);
                     ScreenControlDllOperate.closeConnectByDll();
                 }
@@ -87,6 +85,7 @@ namespace ScreenManager.Service
 
  
         }
+
         public ScreenModel getScreenInfo(String ip)
         {
             ScreenModel screen = new ScreenModel();
@@ -105,15 +104,15 @@ namespace ScreenManager.Service
                 log.Error("can not connect to ip address.the ip address is" + this.connectedIP );
                 return screen;
             }
-           
 
+            screen = ScreenControlDllOperate.getScreenNameInfoByDll();
          
             ScreenBasicInfoModel screenBasic = ScreenControlDllOperate.getScreenBasicInfoByDll();
 
             if (null != screenBasic)
             {
-                screen.ScreenIP = ip;
-                screen.ScreenName = screenBasic.ScreenName;
+                screen.ScreenIP = this.connectedIP;
+
                 screen.ScreenColor = screenBasic.ScreenColor;
  
                 screen.ScreenLightCtrl = screenBasic.LightCtrl;
@@ -121,14 +120,10 @@ namespace ScreenManager.Service
                 screen.LightLevelA = screenBasic.LightLevelA;
                 screen.LightLevelB = screenBasic.LightLevelB;
                 screen.BasicInfo.ScreenLength = screenBasic.ScreenLength;
-
-                List<RoadModel> roadList = ScreenControlDllOperate.getRoadInfoByDll();
-                for (int i = 0; i < roadList.Count; i++)
-                {
-                    screen.setRoadNameWithId(roadList[i].RoadID, roadList[i].RoadName);
-                }
+ 
             
             }
+            //ScreenControlDllOperate.getSegmentInfoByDll(screen.RoadList);
             ScreenControlDllOperate.closeConnectByDll();
             log.Info(screen);
 
@@ -160,19 +155,20 @@ namespace ScreenManager.Service
 
             return result;
         }
-  
-        public Boolean setScreenBasicInfo(ScreenBasicInfoModel basicInfo)
-        {
 
+  
+  
+        public Boolean setScreenAndRoadNameInfo(ScreenModel screen)
+        {
             bool result = ScreenControlDllOperate.connectScreenByDLL(connectedIP);
             if (result)
             {
-                 result = ScreenControlDllOperate.setScreenInfoByDll(basicInfo);
+                result = ScreenControlDllOperate.setScreenNameInfoByDll(screen);
                 if (!result)
                 {
                     log.Warn("screen operate failed, try again");
-                    result = ScreenControlDllOperate.setScreenInfoByDll(basicInfo);
-                    
+                    result = ScreenControlDllOperate.setScreenNameInfoByDll(screen);
+
                 }
             }
             else
@@ -181,17 +177,18 @@ namespace ScreenManager.Service
             }
             ScreenControlDllOperate.closeConnectByDll();
             return result;
+
         }
-        public Boolean setScreenRoadInfo(ScreenModel screenModel)
+        public Boolean setScreenSegmentInfo(ScreenModel screenModel)
         {
             bool result = ScreenControlDllOperate.connectScreenByDLL(connectedIP);
             if (result)
             {
-                 result = ScreenControlDllOperate.setRoadInfoByDll(screenModel);
+                 result = ScreenControlDllOperate.setSegmentByDll(screenModel);
                 if (!result)
                 {
                     log.Warn("set failed try again");
-                    result = ScreenControlDllOperate.setRoadInfoByDll(screenModel);
+                    result = ScreenControlDllOperate.setSegmentByDll(screenModel);
 
                 }
             }
@@ -204,6 +201,30 @@ namespace ScreenManager.Service
             ScreenControlDllOperate.closeConnectByDll();
             return result;
         }
+
+
+        public bool getScreenSegmentInfo(List<RoadModel> roadList)
+        {
+            bool result = ScreenControlDllOperate.connectScreenByDLL(connectedIP);
+            if (result)
+            {
+                result = ScreenControlDllOperate.getSegmentInfoByDll(roadList);
+                if (!result)
+                {
+                    log.Warn("get failed try again");
+                    result = ScreenControlDllOperate.getSegmentInfoByDll(roadList);
+
+                }
+            }
+            else
+            {
+                log.Error("connect screen failed");
+
+            }
+            ScreenControlDllOperate.closeConnectByDll();
+            return result;
+        }
+
         public Boolean closeScreen()
         {
             bool result = ScreenControlDllOperate.connectScreenByDLL(connectedIP);
@@ -293,36 +314,53 @@ namespace ScreenManager.Service
             return result;
  
         }
-
-        public Boolean getScreenOpenStatus()
+        public int getScreenOpenStatus()
         {
-            //TODO:
-            return true;
-        }
 
-
-        public List<RoadModel> getRoadList()
-        {
-            //TODO
-
-            //Test
-            return ScreenManager.Stub.Stub.getScreenModelStub().RoadList;
-            
+            return 0;
         }
 
         public Boolean setScreenColor(int color)
         {
-            //TODO
-            
-            //Test
-            return true;
+            bool result = ScreenControlDllOperate.connectScreenByDLL(connectedIP);
+            if (result)
+            {
+                result = ScreenControlDllOperate.setScreenColorByDll(color);
+                if (!result)
+                {
+                    log.Warn("screen operate failed, try again");
+                    result = ScreenControlDllOperate.setScreenColorByDll(color);
+
+                }
+            }
+            else
+            {
+                log.Error("connect screen failed");
+            }
+            ScreenControlDllOperate.closeConnectByDll();
+            return result;
         }
 
-
-        public Boolean setcreenLight(ScreenManager.Model.ScreenBasicInfoModel basicModel)
+        public Boolean setcreenLight(ScreenBasicInfoModel basicInfo)
         {
-            return true;
+            bool result = ScreenControlDllOperate.connectScreenByDLL(connectedIP);
+            if (result)
+            {
+                result = ScreenControlDllOperate.setScreenLightByDll(basicInfo);
+                if (!result)
+                {
+                    log.Warn("screen operate failed, try again");
+                    result = ScreenControlDllOperate.setScreenLightByDll(basicInfo);
+
+                }
+            }
+            else
+            {
+                log.Error("connect screen failed");
+            }
+            ScreenControlDllOperate.closeConnectByDll();
+            return result;
         }
+ 
     }
-    
 }

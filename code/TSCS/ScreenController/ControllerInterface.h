@@ -19,8 +19,9 @@ public:
 	virtual void closeConnect(void);
 
 	virtual bool initScreen(void);
-	virtual bool setScreenName(std::string & name);
-	virtual bool getScreenName(std::string & name);
+ 
+	virtual bool getScreenCS(std::string & cs);
+	virtual bool setScreenCS(std::string & cs);
 	virtual bool setScreenColor(int color);
 	virtual int  getScreenColor();
 
@@ -28,15 +29,15 @@ public:
 	virtual int getScreenLength();
 
 	virtual bool setScreenDisp(SEGMENT_INFO segmentInfo[],int length,int screenColor);
+	virtual bool getScreenDisp(SEGMENT_INFO segmentInfo[],int length);
     virtual bool setScreenOn(void);
 	virtual bool setScreenOff(void);
+	virtual int getScreenOnOff(void);
 	virtual bool saveScreen(bool update,bool save);
 
 	virtual bool setScreenIpAddr(std::string & ipAddr,std::string & macAddr);
 	virtual bool setSegmentColor(int segNum,int color);
-
-	virtual bool setRoadInfo(ROAD_INFO raodInfo[],int length);
-	virtual bool getRoadInfo(ROAD_INFO raodInfo[],int length);
+ 
  
 	virtual bool setScreenLight(SCREEN_LIGHT_INFO & lightInfo);
 	virtual bool getScreenLight(SCREEN_LIGHT_INFO & lightInfo);

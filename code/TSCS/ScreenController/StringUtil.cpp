@@ -53,10 +53,10 @@ std::vector< std::string>  StringUtil::split(std::string& s, std::string& delim)
 		last=index+1;  
 		index=s.find_first_of(delim,last);  
 	}  
-	/*if (index-last>0)  
+	if (index-last>0)  
 	{  
 		ret.push_back(s.substr(last,index-last));  
-	} */
+	} 
 
 	return ret;
 }

@@ -31,7 +31,7 @@ namespace ScreenManager.Service
         /// </summary>
         /// <param name="screenModel"></param>
         /// <returns></returns>
-       Boolean setScreenBasicInfo(ScreenBasicInfoModel basicInfo);
+       Boolean setScreenAndRoadNameInfo(ScreenModel screen);
 
 
        /// <summary>
@@ -40,7 +40,7 @@ namespace ScreenManager.Service
        /// </summary>
        /// <param name="screenModel"></param>
        /// <returns></returns>
-       Boolean setScreenRoadInfo(ScreenModel screenModel);
+       Boolean setScreenSegmentInfo(ScreenModel screenModel);
 
         /// <summary>
         /// 
@@ -84,22 +84,19 @@ namespace ScreenManager.Service
         /// 
         /// </summary>
         /// <returns></returns>
-       Boolean getScreenOpenStatus();
-
+       int getScreenOpenStatus();
         /// <summary>
         /// 
         /// 
         /// </summary>
         /// <returns></returns>
-       List<RoadModel> getRoadList();
-
+       bool getScreenSegmentInfo(List<RoadModel> roadList);
         /// <summary>
         /// 
         /// </summary>
         /// <param name="color"></param>
         /// <returns></returns>
        Boolean setScreenColor(int color);
-
         /// <summary>
         /// 
         /// 

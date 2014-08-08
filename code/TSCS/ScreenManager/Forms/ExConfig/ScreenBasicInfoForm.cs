@@ -109,7 +109,7 @@ namespace ScreenManager.Forms
         private void btnSet_Click(object sender, EventArgs e)
         {
             this.btnSet.Enabled = false;
-            bool result = ScreenManager.Service.ServiceContext.getInstance().getScreenControl().setScreenBasicInfo(this.screenModel.BasicInfo);
+            bool result = ScreenManager.Service.ServiceContext.getInstance().getScreenControl().setScreenAndRoadNameInfo(screenModel);
 
             if (!result)
             {

@@ -260,7 +260,7 @@ namespace ScreenManager.Forms
         private void btnSet_Click(object sender, EventArgs e)
         {
             this.btnSet.Enabled = false;
-            bool result = ScreenManager.Service.ServiceContext.getInstance().getScreenControl().setScreenRoadInfo(this.ScreenModel);
+            bool result = ScreenManager.Service.ServiceContext.getInstance().getScreenControl().setScreenSegmentInfo(this.ScreenModel);
 
             if (!result)
             {
@@ -549,11 +549,8 @@ namespace ScreenManager.Forms
 
         private void btnReadScreenInfo_Click(object sender, EventArgs e)
         {
-            List<RoadModel> rList = ServiceContext.getInstance().getScreenControl().getRoadList() ;
-
-            for( int i=0;i<this.ScreenModel.RoadList.Count;i++){
-                this.ScreenModel.RoadList[i].SegmentList = rList[i].SegmentList;
-            }
+            ServiceContext.getInstance().getScreenControl().getScreenSegmentInfo(this.ScreenModel.RoadList);
+ 
 
             this.refrashScrn();
             

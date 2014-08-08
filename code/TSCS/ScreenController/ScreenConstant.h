@@ -24,6 +24,7 @@
 #define CMD_GET_L "GET-L"
 
 #define CMD_SET_ON_OFF "SOnof"  //软关屏软开屏   
+#define CMD_GET_ON_OFF "GOnof"  //软关屏软开屏   
 
 #define CMD_SET_DESP "SetCs"  //设置屏目信息位置信息(屏幕名称)
 #define CMD_GET_DESP "GetCs"  //设置屏目信息位置信息(屏幕名称)

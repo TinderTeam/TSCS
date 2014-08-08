@@ -26,15 +26,17 @@ namespace ScreenManager.Forms.basicConfig
         private void OpenCloseCtrlForm_Load(object sender, EventArgs e)
         {
             //Get Screen Status
-            bool result = ServiceContext.getInstance().getScreenControl().getScreenOpenStatus();
-            open = result;
-            if (result)
+            int result = ServiceContext.getInstance().getScreenControl().getScreenOpenStatus();
+            
+            if (result == 1)
             {
+                open = true;
                 this.rdbOpen.Checked = true;
                 this.rdbClose.Checked = false;
             }
             else
             {
+                open = false;
                 this.rdbOpen.Checked = false;
                 this.rdbClose.Checked = true;
             }

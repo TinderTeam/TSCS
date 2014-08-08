@@ -7,10 +7,11 @@ namespace ScreenManager.Model
 {
     public class ScreenBasicInfoModel
     {
-        private String screenIP;   
+        private String screenIP;
+        private String screenName = "未命名";
+
         private String macAddr;
 
-        private String screenName = "未命名";
         private int lightCtrl = 0;
         private int lightLeverA = 0;
         private int lightLeverB = 0;

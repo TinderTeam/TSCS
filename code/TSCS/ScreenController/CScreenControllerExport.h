@@ -30,8 +30,12 @@ extern "C" CSCREENCONTROLLER_API void closeConnect(void);
 
 
 
-extern "C" CSCREENCONTROLLER_API bool setScreenName(char* name);
-extern "C" CSCREENCONTROLLER_API char * getScreenName();
+//extern "C" CSCREENCONTROLLER_API bool setScreenName(char* name);
+//extern "C" CSCREENCONTROLLER_API char * getScreenName();
+
+extern "C" CSCREENCONTROLLER_API char* getScreenCS();
+extern "C" CSCREENCONTROLLER_API bool setScreenCS(char* name);
+
 
 extern "C" CSCREENCONTROLLER_API bool setRoadInfo(ROAD_INFO raodInfo[],int length);
 extern "C" CSCREENCONTROLLER_API bool getRoadInfo(ROAD_INFO raodInfo[],int length);
@@ -45,7 +49,7 @@ extern "C" CSCREENCONTROLLER_API bool setScreenLength(int length);
 extern "C" CSCREENCONTROLLER_API int getScreenLength();
 
 extern "C" CSCREENCONTROLLER_API bool setScreenDisp(SEGMENT_INFO segmentInfo[],int length,int screenColor);
-extern "C" CSCREENCONTROLLER_API int getScreenDisp();
+extern "C" CSCREENCONTROLLER_API bool getScreenDisp(SEGMENT_INFO segmentInfo[],int length);
 
 extern "C" CSCREENCONTROLLER_API bool setScreenIpAddr(char * ipAddr,char * macAddr);
 
@@ -53,6 +57,9 @@ extern "C" CSCREENCONTROLLER_API bool setScreenIpAddr(char * ipAddr,char * macAd
 extern "C" CSCREENCONTROLLER_API bool setScreenOn();
 
 extern "C" CSCREENCONTROLLER_API bool setScreenOff();
+
+
+extern "C" CSCREENCONTROLLER_API int getScreenOnOff();
 
 
 extern "C" CSCREENCONTROLLER_API bool setSegmentColor(int segNum,int color);

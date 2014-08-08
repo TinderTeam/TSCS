@@ -44,61 +44,26 @@ bool ControllerInterface::initScreen(void)
 	return result;
 }
 
-bool ControllerInterface::setScreenName(std::string & name)
+bool ControllerInterface::setScreenCS(std::string & cs)
 {
 	 
-	//get the description from screen
-	std::string str;
-	bool result  = getScreenDesp(str);
-
-	std::vector< std::string> nameList;
-
-	nameList = StringUtil::split(str,std::string(SPLIT_FLAG));
-	if(nameList.size() == 0)
-	{
-
-		LOG_INFO("the screen name is empty");
-		nameList.push_back(name);
-		
-	}
-	else
-	{
-		//modify the description 
-
-		nameList[0] = name;
-	
-	}
-
-	std::string desp = StringUtil::convertToStringWithFlag(nameList,std::string(SPLIT_FLAG));
-	//send the description to screen
  
- 
-	result =this->sendCmd(CMD_SET_DESP,desp);
+	bool result =this->sendCmd(CMD_SET_DESP,cs);
 
 	return result;
 }
-bool ControllerInterface::getScreenName(std::string & str)
+bool ControllerInterface::getScreenCS(std::string & str)
 {
 	std::string temp;
 	bool result  = getScreenDesp(temp);
 
-	if(!result)
-	{
-		return result;
-
-	}
-	std::vector< std::string> nameList = StringUtil::split(temp,std::string(SPLIT_FLAG));
-    if(nameList.size() > 0)
-	{
-		str = nameList[0];
-	}
-	else
-	{
-		str = "";
-	}
+	 
 	return result;
 }
 
+
+
+/*
 bool ControllerInterface::getRoadInfo(ROAD_INFO roadInfo[],int length)
 {
 	std::string str;
@@ -151,7 +116,7 @@ bool ControllerInterface::setRoadInfo(ROAD_INFO roadInfo[],int length)
 
 	return result;
 }
-
+*/
 bool ControllerInterface::setScreenLight(SCREEN_LIGHT_INFO & lightInfo)
 {
 	std::string data;
@@ -236,12 +201,23 @@ int ControllerInterface::getScreenLength()
 {
 
 	std::string revData;
-	this->getRecvDataByCmd(CMD_GET_SP,revData);
+	bool result = this->getRecvDataByCmd(CMD_GET_SP,revData);
+
 
 	int length = -1;
-	if(revData.length() == 2)
+
+	if(!result)
 	{
-		length = ((unsigned char)(revData[0]))*256 +  (unsigned char)revData[1];
+		LOG_ERROR("get the screen length failed");
+	}
+	else
+	{
+
+		if(revData.length() == 2)
+		{
+			length = ((unsigned char)(revData[0]))*256 +  (unsigned char)revData[1];
+
+		}
 
 	}
 
@@ -321,7 +297,45 @@ bool ControllerInterface::setScreenDisp(SEGMENT_INFO segmentInfo[],int length,in
 
 
 }
+bool ControllerInterface::getScreenDisp(SEGMENT_INFO segmentInfo[],int length)
+{
+	std::string revData;
+	bool   result = this->getRecvDataByCmd(CMD_GET_DISP,revData);
+	if(!result)
+	{
+		LOG_ERROR("get the screen length failed");
+	}
+	else
+	{
+		int j=0;
+		for(int i=2;i<revData.length();)
+		{
+			if(j<length)
+			{
+				segmentInfo[j].segNum = (unsigned char)revData[i];
+				i++;
+				segmentInfo[j].roadNum = (unsigned char)revData[i];
+				i++;
+				segmentInfo[j].color = (unsigned char)revData[i];
+				i++;
+				segmentInfo[j].startAddr = ((unsigned char)revData[i])*256 + (unsigned char)revData[i+1];
+				i = i + 2;
+				segmentInfo[j].endAddr = ((unsigned char)revData[i])*256 + (unsigned char)revData[i+1];
+				i = i + 2;
+				j++;
+			}
+			else
+			{
+				break;
+			}
 
+		}
+	}
+
+
+	return result;
+
+}
 bool ControllerInterface::setScreenIpAddr(std::string & ipAddr,std::string & macAddr)
 {
 	std::vector< std::string>  ipList = StringUtil::split(ipAddr,std::string(IP_SPLIT_FLAG));
@@ -406,9 +420,24 @@ bool ControllerInterface::setScreenOff(void)
 	bool result =this->sendCmd(CMD_SET_ON_OFF,data);
 
 	return result;
-
-
 }
+
+int ControllerInterface::getScreenOnOff(void)
+{
+
+	std::string revData;
+	this->getRecvDataByCmd(CMD_GET_ON_OFF,revData);
+
+	int length = -1;
+	if(revData.length() == 1)
+	{
+		length = (unsigned char)(revData[0]);
+
+	}
+
+	return length;
+}
+
 
 
 std::string ControllerInterface::makeSendData(std::string cmdCode,std::string data)

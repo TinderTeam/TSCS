@@ -45,18 +45,20 @@ CSCREENCONTROLLER_API void closeConnect()
 
 
 }
+ 
 
-CSCREENCONTROLLER_API char * getScreenName()
+
+CSCREENCONTROLLER_API char * getScreenCS()
 {
-    LOG_INFO("getScreenName");
+	LOG_INFO("getScreenName");
 	std::string str;
-	bool result = CInstanceFactory::getInstance()->getController()->getScreenName(str);
+	bool result = CInstanceFactory::getInstance()->getController()->getScreenCS(str);
 
-	
-    if(!result)
+
+	if(!result)
 	{
 		str = std::string("");
-       LOG_ERROR("can not get the screen name");
+		LOG_ERROR("can not get the screen name");
 	}
 
 	const int len = str.length();
@@ -67,44 +69,24 @@ CSCREENCONTROLLER_API char * getScreenName()
 	return name;
 }
 
-CSCREENCONTROLLER_API bool setScreenName(char * name)
+CSCREENCONTROLLER_API bool setScreenCS(char * cs)
 {
-    LOG_INFO("setScreenName");
-	if(NULL == name)
+	LOG_INFO("setScreenName");
+	if(NULL == cs)
 	{
 		LOG_ERROR("null point of screen name");
 		return false;
 	}
-	LOG_INFO("the screen name to set is ");
-	LOG_INFO(name);
-	bool result = CInstanceFactory::getInstance()->getController()->setScreenName(std::string(name));
+	LOG_INFO("the screen cs to set is ");
+	LOG_INFO(cs);
+	bool result = CInstanceFactory::getInstance()->getController()->setScreenCS(std::string(cs));
 
 	//LOG_INFO(StringUtil::addToString("set screen name result is ",result).c_str());
 
 	return result;
 }
 
-CSCREENCONTROLLER_API bool getRoadInfo(ROAD_INFO raodInfo[],int length)
-{
-    LOG_INFO("getRoadInfo");
-	bool result = CInstanceFactory::getInstance()->getController()->getRoadInfo(raodInfo,length);
-
-	//LOG_INFO(StringUtil::addToString("get screen road info result is ",result).c_str());
-
-	return result;
-}
-
-CSCREENCONTROLLER_API bool setRoadInfo(ROAD_INFO raodInfo[],int length)
-{
-	LOG_INFO("setRoadInfo");
  
-	bool result = CInstanceFactory::getInstance()->getController()->setRoadInfo(raodInfo,length);
-
-
-	//LOG_INFO(StringUtil::addToString("set screen road info result is ",result).c_str());
-
-	return result;
-}
 
 CSCREENCONTROLLER_API bool setScreenLight(SCREEN_LIGHT_INFO & lightInfo)
 {
@@ -184,6 +166,18 @@ CSCREENCONTROLLER_API bool setScreenDisp(SEGMENT_INFO segmentInfo[],int length,i
 	   return result;
 }
 
+CSCREENCONTROLLER_API bool getScreenDisp(SEGMENT_INFO segmentInfo[],int length)
+{
+	LOG_INFO("getScreenDisp");
+
+	bool result = CInstanceFactory::getInstance()->getController()->getScreenDisp(segmentInfo,length);
+
+	//LOG_INFO(StringUtil::addToString("set screen display result is ",result).c_str());
+
+	return result;
+}
+
+
 
 CSCREENCONTROLLER_API bool setScreenIpAddr(char * ipAddr,char * macAddr)
 {
@@ -235,6 +229,15 @@ CSCREENCONTROLLER_API bool  setScreenOff()
 	//LOG_INFO(StringUtil::addToString("set Screen off result is ",result).c_str());
 	return result;
 }
+
+CSCREENCONTROLLER_API int getScreenOnOff()
+{
+	LOG_INFO("getScreenOnOff");
+	int status = CInstanceFactory::getInstance()->getController()->getScreenLength();
+	
+	return status;
+}
+
 // This is the constructor of a class that has been exported.
 // see ScreenController.h for the class definition
 CScreenControllerExport::CScreenControllerExport()

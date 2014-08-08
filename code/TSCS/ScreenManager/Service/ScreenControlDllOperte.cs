@@ -31,10 +31,17 @@ namespace ScreenManager.Service
         public int endAddr;   
     } 
 
+
+
     public class ScreenControlDllOperate
     {
 
         private static log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+        private const char SCREEN_ROAD_FLAG = ';';
+        private const char ROAD_INFO_FLAG = ',';
+
+
         [DllImport("ScreenController.dll", EntryPoint = "connectScreen")]
         private static extern bool connectScreen(string ipAddr);
         public static bool connectScreenByDLL(string ipAddr)
@@ -69,17 +76,17 @@ namespace ScreenManager.Service
             return result;
         }
 
-        [DllImport("ScreenController.dll", EntryPoint = "getScreenName")]
-        private static extern IntPtr getScreenName();
-        public static string getScreenNameByDll()
+        [DllImport("ScreenController.dll", EntryPoint = "getScreenCS")]
+        private static extern IntPtr getScreenCS();
+        public static ScreenModel getScreenNameInfoByDll()
         {
-            IntPtr name;
+            IntPtr cs;
             string str = "";
 
             try
             {
-                name = getScreenName();
-                str = Marshal.PtrToStringAnsi(name);
+                cs = getScreenCS();
+                str = Marshal.PtrToStringAnsi(cs);
             }
             catch (System.Exception ex)
             {
@@ -87,71 +94,109 @@ namespace ScreenManager.Service
             }
 
             log.Info("get screen name is " + str);
+
+            String[] csInfoArry = str.Split(SCREEN_ROAD_FLAG);
+
+            ScreenModel screen = new ScreenModel();
+            if (csInfoArry.Length>1)
+            {
+                screen.ScreenName = csInfoArry[0];
+                for (int i = 0; i < screen.RoadList.Count;i++ )
+                {
+                    if((i+1) < csInfoArry.Length)
+                    {
+                      String[] nameAndLength = csInfoArry[i+1].Split(ROAD_INFO_FLAG);
+
+                      screen.RoadList[i].RoadLenght = i;
+
+                      if (nameAndLength.Length > 0)
+                      {
+                          screen.RoadList[i].RoadName = nameAndLength[0];
+                      }
+                      if(nameAndLength.Length > 1)
+                      {
+                          screen.RoadList[i].RoadLenght = Convert.ToInt32(nameAndLength[1]);
+                      }
+                        
+                    }
+                }
+            }
  
-            return str;
+            return screen;
         }
 
- 
-
-        [DllImport("ScreenController.dll", EntryPoint = "getRoadInfo")]
-        private static extern bool getRoadInfo(IntPtr roadInfo, int length);
-        public static List<RoadModel> getRoadInfoByDll()
+        [DllImport("ScreenController.dll", EntryPoint = "setScreenCS")]
+        private static extern bool setScreenCS(string cs);
+        public static bool setScreenNameInfoByDll(ScreenModel screen)
         {
-            List<RoadModel> roadList = new List<RoadModel>();
+            
+            string str = "";
+            str += screen.ScreenName;
+            str += SCREEN_ROAD_FLAG;
+
+            for (int i = 0; i < screen.RoadList.Count; i++)
+            {
+                str += screen.RoadList[i].RoadName;
+                str += ROAD_INFO_FLAG;
+                str += screen.RoadList[i].RoadLenght;
+                str += SCREEN_ROAD_FLAG;
+            }
+            bool result  = false ; 
+           
             try
             {
-                int roadNum = 10;
-
-                ROAD_INFO[] infos = new ROAD_INFO[roadNum];
-                for (int i = 0; i < roadNum; i++)
-                {
-                    infos[i] = new ROAD_INFO();
-                }
-
-              /*  IntPtr[] ptArr = new IntPtr[1];
-                ptArr[0] = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(ROAD_INFO)) * roadNum); //分配包含两个元素的数组   
-                IntPtr pt = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(ROAD_INFO)));
-                Marshal.Copy(ptArr, 0, pt, 1); //拷贝指针数组  
-
-
-
-                bool result = getRoadInfo(pt, roadNum);
+                result = setScreenCS(str);
 
                 if (!result)
                 {
-                    log.Error("get road info failed");
-                    return roadList;
+                    log.Error("set screen cs  failed");
                 }
 
+                result = setScreenLength(screen.ScreenLong);
+            }
+            catch (System.Exception ex)
+            {
+                log.Error("set screen cs failed");
+            }
 
-                for (int i = 0; i < roadNum; i++)
+            
+
+            return result;
+        }
+
+
+
+        [DllImport("ScreenController.dll", EntryPoint = "getScreenDisp")]
+        private static extern bool getScreenDisp(IntPtr roadInfo, int length);
+        public static  bool getSegmentInfoByDll(List<RoadModel> roadList)
+        {
+            int segNum = 10;
+
+            SEGMENT_INFO[] segInfoList = new SEGMENT_INFO[segNum];
+            bool result = false;
+            try
+            {
+
+                for (int i = 0; i < segNum; i++)
                 {
-                    infos[i] = (ROAD_INFO)Marshal.PtrToStructure((IntPtr)(pt.ToInt32() + i * Marshal.SizeOf(typeof(ROAD_INFO))), typeof(ROAD_INFO));
-                    RoadModel road = new RoadModel();
-                    road.RoadID = infos[i].roadNum;
-                    road.RoadName = infos[i].roadName;
-                    roadList.Add(road);
-                }*/
+                    segInfoList[i] = new SEGMENT_INFO();
+                }
 
-                IntPtr roadPt = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(ROAD_INFO)) * roadNum);
+                IntPtr roadPt = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(SEGMENT_INFO)) * segNum);
                 long longSegPt = roadPt.ToInt64();
 
-                for (int i = 0; i < infos.Length; i++)
+                for (int i = 0; i < segInfoList.Length; i++)
                 {
                     IntPtr RectPtr = new IntPtr(longSegPt);
-                    Marshal.StructureToPtr(infos[i], RectPtr, false); // You do not need to erase struct in this case
-                    longSegPt += Marshal.SizeOf(typeof(ROAD_INFO));
+                    Marshal.StructureToPtr(segInfoList[i], RectPtr, false); // You do not need to erase struct in this case
+                    longSegPt += Marshal.SizeOf(typeof(SEGMENT_INFO));
                 }
 
-                bool result = getRoadInfo(roadPt, roadNum);
+                result = getScreenDisp(roadPt, segNum);
 
-                for (int i = 0; i < roadNum; i++)
+                for (int i = 0; i < segNum; i++)
                 {
-                    infos[i] = (ROAD_INFO)Marshal.PtrToStructure((IntPtr)(roadPt.ToInt32() + i * Marshal.SizeOf(typeof(ROAD_INFO))), typeof(ROAD_INFO));
-                    RoadModel road = new RoadModel();
-                    road.RoadID = infos[i].roadNum;
-                    road.RoadName = infos[i].roadName;
-                    roadList.Add(road);
+                    segInfoList[i] = (SEGMENT_INFO)Marshal.PtrToStructure((IntPtr)(roadPt.ToInt32() + i * Marshal.SizeOf(typeof(SEGMENT_INFO))), typeof(SEGMENT_INFO));
                 }
 
                 Marshal.FreeHGlobal(roadPt);
@@ -161,30 +206,44 @@ namespace ScreenManager.Service
             {
                 log.Error("call dll exception", ex);
             }
-           
-           
 
-            return roadList;
+            for (int i = 0; i < roadList.Count; i++)
+            {
+                roadList[i].SegmentList.Clear();
+            }
+
+
+            for (int i = 0; i < segInfoList.Count(); i++)
+            {
+                    SegmentModel segment = new SegmentModel();
+                    segment.SegmentID = segInfoList[i].segNum;
+                    segment.SegmentColor = segInfoList[i].color;
+                    segment.Address.Start = segInfoList[i].startAddr;
+                    segment.Address.End = segInfoList[i].endAddr;
+                    int roadID = segInfoList[i].roadNum;
+                    if (roadID > 0 && roadID < roadList.Count)
+                    {
+                        roadList[roadID].SegmentList.Add(segment);
+                        roadList[roadID].RoadID = roadID;
+                    }
+                    else
+                    {
+                        log.Error("the road id is not exist " + roadID);
+                    }
+            }
+            return result;
         }
 
-        [DllImport("ScreenController.dll", EntryPoint = "setRoadInfo")]
-        private static extern bool setRoadInfo(IntPtr roadInfo, int length);
+ 
         [DllImport("ScreenController.dll", EntryPoint = "setScreenDisp")]
         private static extern bool setScreenDisp(IntPtr segmentInfo, int length,int screenColor);
-        public static bool setRoadInfoByDll(ScreenModel screen)
+        public static bool setSegmentByDll(ScreenModel screen)
         {
             log.Info("set road information." + screen);
             bool result = false;
             try
             {
-                result  = setRoadNameList(screen);
-
-
-                if (!result)
-                {
-                    log.Error("set road name failed");
-                    return result;
-                }
+ 
                 // set segment list
                 result = setSegmentList(screen);
 
@@ -233,55 +292,20 @@ namespace ScreenManager.Service
 
             return result;
         }
-        private static bool setRoadNameList(ScreenModel screen)
-        {
-            int roadNum = screen.RoadList.Count;
 
-            ROAD_INFO[] roadArr = new ROAD_INFO[roadNum];
-            for (int i = 0; i < roadNum; i++)
-            {
-                roadArr[i] = new ROAD_INFO();
-                roadArr[i].roadName = screen.RoadList[i].RoadName;
-                roadArr[i].roadNum = screen.RoadList[i].RoadID;
-            }
-
-            //copy the data to the point
-            IntPtr roadPt = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(ROAD_INFO)) * roadNum);
-            long longRoadPt = roadPt.ToInt64();
-
-            for (int i = 0; i < roadArr.Length; i++)
-            {
-                IntPtr RectPtr = new IntPtr(longRoadPt);
-                Marshal.StructureToPtr(roadArr[i], RectPtr, false); // You do not need to erase struct in this case
-                longRoadPt += Marshal.SizeOf(typeof(ROAD_INFO));
-            }
-
-
-            bool result = setRoadInfo(roadPt, roadNum);
-
-            Marshal.FreeHGlobal(roadPt);
-
-            return result;
-        }
+     
+       
         [DllImport("ScreenController.dll", EntryPoint = "setScreenLight")]
         private static extern bool setScreenLight(ref SCREEN_LIGHT_INFO lightInfo);
         [DllImport("ScreenController.dll", EntryPoint = "setScreenName")]
         private static extern bool setScreenName(string ipAddr);
-        [DllImport("ScreenController.dll", EntryPoint = "setScreenColor")]
-        private static extern bool setScreenColor(int color);
-        public static bool setScreenInfoByDll(ScreenBasicInfoModel screenBaiscInfo)
+
+        public static bool setScreenLightByDll(ScreenBasicInfoModel screenBaiscInfo)
         {
              bool result = false;
             try
             {
-                result = setScreenName(screenBaiscInfo.ScreenName);
-
-                if (!result)
-                {
-                    log.Error("set screen name failed");
-                    return result;
-                }
-
+ 
                 SCREEN_LIGHT_INFO screenLight = new SCREEN_LIGHT_INFO();
 
 
@@ -305,10 +329,26 @@ namespace ScreenManager.Service
                 log.Error("call dll exception", ex);
             }
 
-
-
            return result;
         }
+        [DllImport("ScreenController.dll", EntryPoint = "setScreenColor")]
+        private static extern bool setScreenColor(int color);
+        public static bool setScreenColorByDll(int color)
+        {
+            bool result = false;
+            try
+            {
+                result = setScreenColor(color);
+            }
+            catch (System.Exception ex)
+            {
+                log.Error("call dll exception", ex);
+            }
+
+            return result;
+
+        }
+ 
 
         [DllImport("ScreenController.dll", EntryPoint = "getScreenLight")]
         private static extern bool getScreenLight(ref SCREEN_LIGHT_INFO lightInfo);
@@ -316,6 +356,8 @@ namespace ScreenManager.Service
         private static extern int getScreenColor();
         [DllImport("ScreenController.dll", EntryPoint = "getScreenLength")]
         private static extern int getScreenLength();
+        [DllImport("ScreenController.dll", EntryPoint = "getScreenOnOff")]
+        private static extern int getScreenOnOff();
         public static ScreenBasicInfoModel getScreenBasicInfoByDll()
         {
             ScreenBasicInfoModel screenBaiscInfo = new ScreenBasicInfoModel();
@@ -353,7 +395,7 @@ namespace ScreenManager.Service
                     return screenBaiscInfo;
                 }
 
-                screenBaiscInfo.ScreenName = getScreenNameByDll();
+  
 
                 screenBaiscInfo.ScreenLength = getScreenLength();
                
