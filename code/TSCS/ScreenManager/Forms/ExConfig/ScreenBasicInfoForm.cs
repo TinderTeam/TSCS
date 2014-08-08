@@ -14,15 +14,15 @@ namespace ScreenManager.Forms
     public partial class ScreenBasicInfoForm : System.Windows.Forms.Form
     {
 
-        private ScreenModel screenModel;
+        private ScreenEditForm form;
         public List<ScreenBasicRoadView> screenBasicRoadView = new List<ScreenBasicRoadView>();
 
-        public ScreenBasicInfoForm(ScreenModel screen)
+        public ScreenBasicInfoForm(ScreenEditForm f)
         {
  
             InitializeComponent();
-            this.screenModel = screen;
-            this.screenLength.Value = screen.ScreenLong;
+            form = f;
+            this.screenLength.Value = form.ScreenModel.ScreenLong;
         }
 
         private void btnSure_Click(object sender, EventArgs e)
@@ -31,7 +31,7 @@ namespace ScreenManager.Forms
             bool result = ScreenManager.Service.ServiceContext.getInstance().getScreenControl().setScreenLength(System.Convert.ToInt16(this.screenLength.Value));
             if (result)
             {
-                this.screenModel.ScreenLong = System.Convert.ToInt16(this.screenLength.Value);
+                this.form.ScreenModel.ScreenLong = System.Convert.ToInt16(this.screenLength.Value);
                 MessageBox.Show("操作成功");
                 this.DialogResult = DialogResult.OK;
             }
@@ -54,10 +54,10 @@ namespace ScreenManager.Forms
 
           
             this.screenLength.Maximum = 512;
-            this.screenLength.Value = screenModel.ScreenLong;
-            this.screenName.Text = screenModel.ScreenName;
+            this.screenLength.Value = this.form.ScreenModel.ScreenLong;
+            this.screenName.Text = this.form.ScreenModel.ScreenName;
 
-            for (int i = 0; i < screenModel.RoadList.Count; i++)
+            for (int i = 0; i < this.form.ScreenModel.RoadList.Count; i++)
             {
                 ScreenBasicRoadView sv = new ScreenBasicRoadView();
 
@@ -75,20 +75,20 @@ namespace ScreenManager.Forms
                 roadColor.Location = new System.Drawing.Point(240, 21);             
                 roadColor.Size = new System.Drawing.Size(121, 20);
                 roadColor.TabIndex = 3;
-                roadColor.Text =ScreenManager.Model.Constant.Constants.colorArray[screenModel.RoadList[i].BaseColor];
+                roadColor.Text =ScreenManager.Model.Constant.Constants.colorArray[form.ScreenModel.RoadList[i].BaseColor];
                 roadColor.Items.AddRange(Model.Constant.Constants.colorArray);
 
                 roadLength.Anchor = System.Windows.Forms.AnchorStyles.None;
                 roadLength.Location = new System.Drawing.Point(442, 20);              
                 roadLength.Size = new System.Drawing.Size(120, 21);
                 roadLength.TabIndex = 4;
-                roadLength.Maximum = screenModel.ScreenLong;
-                roadLength.Value = screenModel.RoadList[i].RoadLenght;
+                roadLength.Maximum = form.ScreenModel.ScreenLong;
+                roadLength.Value = form.ScreenModel.RoadList[i].RoadLenght;
 
 
                 roadName.Anchor = System.Windows.Forms.AnchorStyles.None;
                 roadName.Location = new System.Drawing.Point(40, 20);
-                roadName.Text = screenModel.RoadList[i].RoadName;
+                roadName.Text = form.ScreenModel.RoadList[i].RoadName;
                 roadName.Size = new System.Drawing.Size(120, 21);
                 roadName.TabIndex = 5;
 
@@ -109,6 +109,18 @@ namespace ScreenManager.Forms
         private void btnSet_Click(object sender, EventArgs e)
         {
             this.btnSet.Enabled = false;
+            ScreenModel m = new ScreenModel();
+            m.BasicInfo.ScreenName = this.screenName.Text;
+            m.BasicInfo.ScreenLength = System.Convert.ToInt16(this.screenLength.Value);
+
+            for (int i = 0; i < this.screenBasicRoadView.Count; i++)
+            {
+              
+               
+
+
+            }
+
             bool result = ScreenManager.Service.ServiceContext.getInstance().getScreenControl().setScreenAndRoadNameInfo(screenModel);
 
             if (!result)
@@ -122,6 +134,8 @@ namespace ScreenManager.Forms
 
                 //log
                 MessageBox.Show("操作成功");
+                
+
             }
             this.btnSet.Enabled = true;
         

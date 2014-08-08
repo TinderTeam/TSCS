@@ -11,24 +11,24 @@ namespace ScreenManager.Forms.basicConfig
 {
     public partial class ColorCtrlForm : Form
     {
-       public  ScreenModel screenModel;
-        public ColorCtrlForm(ScreenModel sm)
+       public  ScreenEditForm form         ;
+       public ColorCtrlForm(ScreenEditForm f)
         {
             InitializeComponent();
-            screenModel = sm;
+            form = f;
         }
 
         private void ColorCtrlForm_Load(object sender, EventArgs e)
         {
             this.colorBox.Items.AddRange(Model.Constant.Constants.colorArray);
 
-            if (screenModel.BasicInfo.ScreenColor < 0)
+            if (form.ScreenModel.BasicInfo.ScreenColor < 0)
             {
                 this.colorBox.Text = "无颜色";
             }
             else
             {
-                this.colorBox.SelectedIndex = screenModel.BasicInfo.ScreenColor;
+                this.colorBox.SelectedIndex = form.ScreenModel.BasicInfo.ScreenColor;
             }          
         }
 
@@ -37,7 +37,8 @@ namespace ScreenManager.Forms.basicConfig
             //颜色接口
             if (Service.ServiceContext.getInstance().getScreenControl().setScreenColor(this.colorBox.SelectedIndex))
             {
-                screenModel.BasicInfo.ScreenColor = this.colorBox.SelectedIndex;
+                form.ScreenModel.ScreenColor = this.colorBox.SelectedIndex;
+                form.refrashScrn();
             }
            
           

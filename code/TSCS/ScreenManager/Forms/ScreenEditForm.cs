@@ -493,7 +493,7 @@ namespace ScreenManager.Forms
         private void scrnBasicInfoSetupMntm_Click(object sender, EventArgs e)
         {
             ScreenManager.Forms.PasswordForm pf = new ScreenManager.Forms.PasswordForm();
-            ScreenManager.Forms.ScreenBasicInfoForm sf = new ScreenManager.Forms.ScreenBasicInfoForm(this.ScreenModel);
+            ScreenManager.Forms.ScreenBasicInfoForm sf = new ScreenManager.Forms.ScreenBasicInfoForm(this);
 
             if (pf.ShowDialog() == DialogResult.OK)
             {
@@ -574,10 +574,8 @@ namespace ScreenManager.Forms
         /// <param name="e"></param>
         private void colorCtrlMntm_Click(object sender, EventArgs e)
         {
-            ColorCtrlForm ccf = new ColorCtrlForm(this.ScreenModel);
-
-            ccf.ShowDialog();
-            this.refrashScrn();
+            ColorCtrlForm ccf = new ColorCtrlForm(this);
+            ccf.ShowDialog();        
             ccf.Close();
 
 
