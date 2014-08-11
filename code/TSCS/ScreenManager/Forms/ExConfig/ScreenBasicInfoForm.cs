@@ -182,7 +182,12 @@ namespace ScreenManager.Forms
             for (int i = 0; i < screenBasicRoadView.Count; i++)
             {
                 screenBasicRoadView[i].RoadLength.Maximum = System.Convert.ToInt16(this.screenLength.Value);
-                screenBasicRoadView[i].RoadLength.Value = System.Convert.ToInt16(this.screenLength.Value);
+
+                if (screenBasicRoadView[i].RoadLength.Value >  System.Convert.ToInt16(this.screenLength.Value))
+                {
+
+                    screenBasicRoadView[i].RoadLength.Value = System.Convert.ToInt16(this.screenLength.Value);
+                }
             }
         }
 

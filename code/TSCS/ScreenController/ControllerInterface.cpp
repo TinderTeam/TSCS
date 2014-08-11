@@ -549,6 +549,13 @@ bool ControllerInterface::sendCmd(std::string cmdCode,std::string  data)
         return result;
 	}
  
+	int index = revData.find(OK_FLAG);
+	if(index == -1)
+	{
+		LOG_ERROR("recive data is not contains ok.");
+		return false;
+	}
+
 	//if return ok, send success
 
 	return result;

@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "CDataProtocol.h"
-
+#include "Log.h"
 
 
 
@@ -49,6 +49,16 @@ bool CDataProtocol::decode(std::string & rawData,std::string & decodeData)
 	{
 
 		decodeData.push_back(rawData[DATA_START_FLAG_LENGTH+i]);
+	}
+
+ 
+	int crcValue  = rawData[DATA_START_FLAG_LENGTH+length] + rawData[DATA_START_FLAG_LENGTH+length+1];
+	
+	unsigned short crc = calCRC16(decodeData);
+	if(crcValue == crc)
+	{
+		LOG_ERROR("crc value is wrong");
+		return false;
 	}
 
 	return true;

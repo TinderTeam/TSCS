@@ -51,6 +51,8 @@
 const char DATA_START_FLAG[DATA_START_FLAG_LENGTH] ={0x5a,0x53,0x5a,0x4d,0x2d};
 const char DATA_END_FLAG[DATA_END_FLAG_LENGTH] ={0x17,0x17,0x17,0x17,0x17};
 
+#define  OK_FLAG "OK"
+
 #define CRC_LENGTH   2
 
 #define DESP_LENGTH 128

@@ -20,25 +20,16 @@ public:
 #include <string>
 #include "ScreenConstant.h"
  
-extern "C" CSCREENCONTROLLER_API int fnScreenController(void);
+ 
 
 extern "C" CSCREENCONTROLLER_API bool connectScreen(char * ipAddr);
-
-extern "C" CSCREENCONTROLLER_API bool initScreen(void);
-
 extern "C" CSCREENCONTROLLER_API void closeConnect(void);
 
-
-
-//extern "C" CSCREENCONTROLLER_API bool setScreenName(char* name);
-//extern "C" CSCREENCONTROLLER_API char * getScreenName();
 
 extern "C" CSCREENCONTROLLER_API char* getScreenCS();
 extern "C" CSCREENCONTROLLER_API bool setScreenCS(char* name);
 
 
-extern "C" CSCREENCONTROLLER_API bool setRoadInfo(ROAD_INFO raodInfo[],int length);
-extern "C" CSCREENCONTROLLER_API bool getRoadInfo(ROAD_INFO raodInfo[],int length);
 extern "C" CSCREENCONTROLLER_API bool setScreenLight(SCREEN_LIGHT_INFO & lightInfo);
 extern "C" CSCREENCONTROLLER_API bool getScreenLight(SCREEN_LIGHT_INFO & lightInfo);
 
@@ -55,19 +46,21 @@ extern "C" CSCREENCONTROLLER_API bool setScreenIpAddr(char * ipAddr,char * macAd
 
 
 extern "C" CSCREENCONTROLLER_API bool setScreenOn();
-
 extern "C" CSCREENCONTROLLER_API bool setScreenOff();
-
-
 extern "C" CSCREENCONTROLLER_API int getScreenOnOff();
 
 
 extern "C" CSCREENCONTROLLER_API bool setSegmentColor(int segNum,int color);
 
-
+extern "C" CSCREENCONTROLLER_API bool initScreen(void);
 extern "C" CSCREENCONTROLLER_API bool saveScreen(void);
 
 
 
 
+//extern "C" CSCREENCONTROLLER_API bool setScreenName(char* name);
+//extern "C" CSCREENCONTROLLER_API char * getScreenName();
+
+//extern "C" CSCREENCONTROLLER_API bool setRoadInfo(ROAD_INFO raodInfo[],int length);
+//extern "C" CSCREENCONTROLLER_API bool getRoadInfo(ROAD_INFO raodInfo[],int length);
 
