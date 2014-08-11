@@ -140,6 +140,7 @@ namespace ScreenManager.Forms
                 {
                     MessageBox.Show("操作失败");
                     //log
+                    this.btnSet.Enabled = true;
                 }
                 else
                 {
@@ -163,7 +164,8 @@ namespace ScreenManager.Forms
                     this.form.refreshRoadInfo();
                     this.form.refrashSgmtInfo();
                     this.form.refrashScrn();
-                  
+                    this.form.btnAddSgmt.Enabled = true;
+                    this.btnSet.Enabled = true;
                 }
                 this.form.refrashScrn();
             }

@@ -185,21 +185,21 @@
             // openMntm
             // 
             this.openMntm.Name = "openMntm";
-            this.openMntm.Size = new System.Drawing.Size(109, 22);
+            this.openMntm.Size = new System.Drawing.Size(152, 22);
             this.openMntm.Text = "载入...";
             this.openMntm.Click += new System.EventHandler(this.openMntm_Click);
             // 
             // saveMntm
             // 
             this.saveMntm.Name = "saveMntm";
-            this.saveMntm.Size = new System.Drawing.Size(109, 22);
+            this.saveMntm.Size = new System.Drawing.Size(152, 22);
             this.saveMntm.Text = "保存...";
             this.saveMntm.Click += new System.EventHandler(this.saveMntm_Click);
             // 
             // exitMntm
             // 
             this.exitMntm.Name = "exitMntm";
-            this.exitMntm.Size = new System.Drawing.Size(109, 22);
+            this.exitMntm.Size = new System.Drawing.Size(152, 22);
             this.exitMntm.Text = "退出";
             this.exitMntm.Click += new System.EventHandler(this.exitMntm_Click);
             // 
@@ -219,42 +219,42 @@
             // searchScrnMntm
             // 
             this.searchScrnMntm.Name = "searchScrnMntm";
-            this.searchScrnMntm.Size = new System.Drawing.Size(148, 22);
+            this.searchScrnMntm.Size = new System.Drawing.Size(152, 22);
             this.searchScrnMntm.Text = "搜索屏幕";
             this.searchScrnMntm.Click += new System.EventHandler(this.searchScrnMntm_Click);
             // 
             // colorCtrlMntm
             // 
             this.colorCtrlMntm.Name = "colorCtrlMntm";
-            this.colorCtrlMntm.Size = new System.Drawing.Size(148, 22);
+            this.colorCtrlMntm.Size = new System.Drawing.Size(152, 22);
             this.colorCtrlMntm.Text = "屏幕颜色控制";
             this.colorCtrlMntm.Click += new System.EventHandler(this.colorCtrlMntm_Click);
             // 
             // lightCtrlMntm
             // 
             this.lightCtrlMntm.Name = "lightCtrlMntm";
-            this.lightCtrlMntm.Size = new System.Drawing.Size(148, 22);
+            this.lightCtrlMntm.Size = new System.Drawing.Size(152, 22);
             this.lightCtrlMntm.Text = "屏幕亮度控制";
             this.lightCtrlMntm.Click += new System.EventHandler(this.lightCtrlMntm_Click);
             // 
             // openCloseScreenMntm
             // 
             this.openCloseScreenMntm.Name = "openCloseScreenMntm";
-            this.openCloseScreenMntm.Size = new System.Drawing.Size(148, 22);
+            this.openCloseScreenMntm.Size = new System.Drawing.Size(152, 22);
             this.openCloseScreenMntm.Text = "屏幕开关控制";
             this.openCloseScreenMntm.Click += new System.EventHandler(this.openCloseScreenMntm_Click);
             // 
             // saveScrnMntm
             // 
             this.saveScrnMntm.Name = "saveScrnMntm";
-            this.saveScrnMntm.Size = new System.Drawing.Size(148, 22);
+            this.saveScrnMntm.Size = new System.Drawing.Size(152, 22);
             this.saveScrnMntm.Text = "保存屏幕";
             this.saveScrnMntm.Click += new System.EventHandler(this.saveScrnMntm_Click);
             // 
             // initScrnMntm
             // 
             this.initScrnMntm.Name = "initScrnMntm";
-            this.initScrnMntm.Size = new System.Drawing.Size(148, 22);
+            this.initScrnMntm.Size = new System.Drawing.Size(152, 22);
             this.initScrnMntm.Text = "初始化屏幕";
             this.initScrnMntm.Click += new System.EventHandler(this.initScrnMntm_Click);
             // 
@@ -634,7 +634,7 @@
             this.cmbRdClr.Name = "cmbRdClr";
             this.cmbRdClr.Size = new System.Drawing.Size(293, 20);
             this.cmbRdClr.TabIndex = 20;
-            this.cmbRdClr.SelectedIndexChanged += new System.EventHandler(this.cmbRdClr_SelectedIndexChanged);
+            this.cmbRdClr.SelectedIndexChanged += new System.EventHandler(this.cmbRdClr_SelectedIndexChangedAndSend);
             // 
             // tabPage2
             // 
@@ -1116,7 +1116,6 @@
             this.Name = "ScreenEditForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "诱导屏控制系统";
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.ScreenEditForm_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.ScreenEditForm_Paint);
             this.menuStrip.ResumeLayout(false);

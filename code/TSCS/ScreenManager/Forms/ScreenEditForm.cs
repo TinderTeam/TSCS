@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using ScreenManager.Model;
 using ScreenManager.Model.UI;
 using ScreenManager.Service;
+using ScreenManager.Dao;
 using ScreenManager.Util;
 using ScreenManager.Forms;
 using ScreenManager.Forms.basicConfig;
@@ -408,7 +409,7 @@ namespace ScreenManager.Forms
             }
         }
 
-        private void cmbRdClr_SelectedIndexChanged(object sender, EventArgs e)
+        private void cmbRdClr_SelectedIndexChangedAndSend(object sender, EventArgs e)
         {
 
             ComboBox combBox = (ComboBox)sender;
@@ -428,6 +429,31 @@ namespace ScreenManager.Forms
                     MessageBox.Show("修改路段颜色失败");
                 }
          
+                refrashSgmtList();
+                refrashView();
+                refrashSgmtInfo();
+
+            }
+            else
+            {
+                ;
+            }
+        }
+
+
+        private void cmbRdClr_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+            ComboBox combBox = (ComboBox)sender;
+
+            if (this.selcetedItem != null)
+            {
+                SegmentModel segMengt = this.ScreenModel.getSegmentList()[selcetedItem.Index];
+
+              
+                segMengt.SegmentColor = combBox.SelectedIndex;
+             
+
                 refrashSgmtList();
                 refrashView();
                 refrashSgmtInfo();
@@ -517,13 +543,29 @@ namespace ScreenManager.Forms
         
         private void initScrnMntm_Click(object sender, EventArgs e)
         {
-            SetCmdThread setCmd = new SetCmdThread();
-            setCmd.setCmd(CmdConstants.INIT_SCREEN);
+            bool result = ServiceContext.getInstance().getScreenControl().closeScreen();
+            if (result)
+            {
+                MessageBox.Show("操作成功");
+                this.ScreenModel = new ScreenModel();
+                loadScreen(this.ScreenModel);
+            }
+            else
+            {
+                MessageBox.Show("操作失败");
+            } 
         }
         private void saveScrnMntm_Click(object sender, EventArgs e)
         {
-            SetCmdThread setCmd = new SetCmdThread();
-            setCmd.setCmd(CmdConstants.SAVE_SCREEN);
+            bool result = ServiceContext.getInstance().getScreenControl().saveScreen();
+            if (result)
+            {
+                MessageBox.Show("操作成功");
+            }
+            else
+            {
+                MessageBox.Show("操作失败");
+            } 
         }
  
 
@@ -578,19 +620,57 @@ namespace ScreenManager.Forms
         /// <param name="e"></param>
         private void openMntm_Click(object sender, EventArgs e)
         {
-
+            RoadDaoModel roadDaoModel = null ;
                 ScreenManager.Dao.RoadDao roadDao = new ScreenManager.Dao.RoadDao();
-
-                 List<RoadModel> s= roadDao.loadByFile();
-                 if (s != null)
+                 bool check=true;
+             
+                 try
                  {
-                     this.SelcetedItem = null;
-                     this.loadScreen(new ScreenModel());
-                     this.ScreenModel.RoadList = s;
+
+                     roadDaoModel = roadDao.loadByFile();
+                 } catch (System.Exception ex)
+                 {
+                     log.Error("Can not open file.",ex);
+                     MessageBox.Show("打开文件错误");
+
                  }
+               
+
+                 if (roadDaoModel != null)
+                 {
+
+                     if (roadDaoModel.ScreenLength <=this.ScreenModel.BasicInfo.ScreenLength || !roadDaoModel.ScreenName.Equals(this.ScreenModel.BasicInfo.ScreenName))
+                     {
+
+                         for (int i = 0; i < roadDaoModel.RoadList.Count; i++)
+                         {
+
+                             if (roadDaoModel.RoadList[i].RoadLenght > this.ScreenModel.RoadList[i].RoadLenght)
+                             {
+                                 check = false;
+                             }
+                         }
+                         if (check == true)
+                         {
+                             this.SelcetedItem = null;
+                             roadDaoModel.read(this.ScreenModel);
+                             this.refreshRoadInfo();
+                             this.refrashScrn();
+                         }
+                         else
+                         {
+                             MessageBox.Show("路段长度不匹配");
+                         }
+                     }
+                     else
+                     {
+
+                         MessageBox.Show("屏幕名称或长度不匹配。");
+                     }
+                 }  
                  else
                  {
-                  //   MessageBox.Show("打开文件错误");
+                     MessageBox.Show("打开文件错误");
                  }
 
         }
@@ -604,9 +684,9 @@ namespace ScreenManager.Forms
         private void saveMntm_Click(object sender, EventArgs e)
         {
             ScreenManager.Dao.RoadDao roadDao = new ScreenManager.Dao.RoadDao();
-            if (!roadDao.saveAsFile(this.ScreenModel.RoadList))
+            if (!roadDao.saveAsFile(this.ScreenModel))
             {
-              //  MessageBox.Show("保存文件错误");
+               MessageBox.Show("保存文件错误");
             }
         }
 

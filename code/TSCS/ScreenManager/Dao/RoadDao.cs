@@ -24,7 +24,7 @@ namespace ScreenManager.Dao
     public class RoadDao
     {
 
-        public bool saveAsFile(List<RoadModel> roadModel)
+        public bool saveAsFile(ScreenModel screenModel)
         {
             SaveFileDialog fileDialog = new SaveFileDialog();
 
@@ -36,13 +36,19 @@ namespace ScreenManager.Dao
 
             fileDialog.RestoreDirectory = true;
 
+
+
+
             if (fileDialog.ShowDialog() == DialogResult.OK)
             {
 
-                XmlSerializer serializer = new XmlSerializer(typeof(List<RoadModel>));
+                RoadDaoModel roadDaoModel = new RoadDaoModel();
+                roadDaoModel.load(screenModel);
+
+                XmlSerializer serializer = new XmlSerializer(typeof(RoadDaoModel));
                 Stream writer = new FileStream(fileDialog.FileName, FileMode.Create);
                 // Serialize the object, and close the TextWriter
-                serializer.Serialize(writer, roadModel);
+                serializer.Serialize(writer, roadDaoModel);
                 return true;
             }
             else
@@ -52,7 +58,10 @@ namespace ScreenManager.Dao
           
         }
 
-        public List<RoadModel> loadByFile()
+
+
+
+        public RoadDaoModel loadByFile()
         {
             OpenFileDialog fileDialog = new OpenFileDialog();
 
@@ -66,13 +75,15 @@ namespace ScreenManager.Dao
 
             if (fileDialog.ShowDialog() == DialogResult.OK)
             {
-                XmlSerializer formatter = new XmlSerializer(typeof(List<RoadModel>));
+
+                XmlSerializer formatter = new XmlSerializer(typeof(RoadDaoModel));
                 System.Console.WriteLine(fileDialog.FileName);
                 StreamReader sr = new StreamReader(fileDialog.FileName);
-                List<RoadModel> s = (List<RoadModel>)formatter.Deserialize(sr);
+                RoadDaoModel r = (RoadDaoModel)formatter.Deserialize(sr);
+               
                 sr.Close();
 
-                return s;
+                return r;
             }
             else
             {
