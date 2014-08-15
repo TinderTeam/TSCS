@@ -44,17 +44,24 @@ namespace ScreenManager.Service
                 bool result = ScreenControlDllOperate.connectScreenByDLL(ipList[i]);
                 if (result)
                 {
-  
-                    ScreenModel screen = ScreenControlDllOperate.getScreenNameInfoByDll();
-                    screen.ScreenIP = ipList[i];
-                    screenList.List.Add(screen);
-                    ScreenControlDllOperate.closeConnectByDll();
+                  
+                    try
+                    {
+                        ScreenModel screen  = ScreenControlDllOperate.getScreenNameInfoByDll();
+                        screen.ScreenIP = ipList[i];
+                        screenList.List.Add(screen);
+                    }
+                    catch(SystemException ex)
+                    {
+                        log.Error("connect screen success,but can not set name success",ex);
+                    }
                 }
                 else
                 {
                     ScreenControlDllOperate.closeConnectByDll();
                     log.Error("can not find the screen with ip address ." + ipList[i]);
                 }
+                ScreenControlDllOperate.closeConnectByDll();
                 bar.Value += 20 / ipList.Count;
 
             }
@@ -92,7 +99,7 @@ namespace ScreenManager.Service
             if (!IPAddrHandleUtil.isValid(ip))
             {
                 log.Error("the ip address is invalid.the ip address is "+ip);
-                return screen;
+                throw new SystemException("IP 地址不合法");
             }
             log.Info("set new connect ip address.ip is " + ip);
             this.connectedIP  = ip;
@@ -102,7 +109,10 @@ namespace ScreenManager.Service
             if (!result)
             {
                 log.Error("can not connect to ip address.the ip address is" + this.connectedIP );
-                return screen;
+
+                ScreenControlDllOperate.closeConnectByDll();
+                throw new SystemException("连接屏幕失败");
+ 
             }
 
             screen = ScreenControlDllOperate.getScreenNameInfoByDll();
@@ -120,10 +130,12 @@ namespace ScreenManager.Service
                 screen.LightLevelA = screenBasic.LightLevelA;
                 screen.LightLevelB = screenBasic.LightLevelB;
                 screen.BasicInfo.ScreenLength = screenBasic.ScreenLength;
+                screen.BasicInfo.ScreenStatus = screenBasic.ScreenStatus;
  
             
             }
-            //ScreenControlDllOperate.getSegmentInfoByDll(screen.RoadList);
+            ScreenControlDllOperate.getSegmentInfoByDll(screen.RoadList);
+
             ScreenControlDllOperate.closeConnectByDll();
             log.Info(screen);
 
@@ -163,13 +175,23 @@ namespace ScreenManager.Service
             bool result = ScreenControlDllOperate.connectScreenByDLL(connectedIP);
             if (result)
             {
-                result = ScreenControlDllOperate.setScreenNameInfoByDll(screen);
-                if (!result)
+                try
                 {
-                    log.Warn("screen operate failed, try again");
                     result = ScreenControlDllOperate.setScreenNameInfoByDll(screen);
+                    if (!result)
+                    {
+                        log.Warn("screen operate failed, try again");
+                        result = ScreenControlDllOperate.setScreenNameInfoByDll(screen);
 
+                    }
                 }
+                catch (System.Exception ex)
+                {
+                    log.Error("set screen name failed");
+                    ScreenControlDllOperate.closeConnectByDll();
+                    throw ex;
+                }
+
             }
             else
             {

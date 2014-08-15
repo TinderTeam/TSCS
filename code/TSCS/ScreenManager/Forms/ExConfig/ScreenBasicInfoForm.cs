@@ -15,15 +15,18 @@ namespace ScreenManager.Forms
     public partial class ScreenBasicInfoForm : System.Windows.Forms.Form
     {
 
+        private static log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         private ScreenEditForm form;
         public List<ScreenBasicRoadView> screenBasicRoadView = new List<ScreenBasicRoadView>();
 
         public ScreenBasicInfoForm(ScreenEditForm f)
         {
- 
+
             InitializeComponent();
             form = f;
             this.screenLength.Value = form.ScreenModel.ScreenLong;
+
         }
 
         private void btnSure_Click(object sender, EventArgs e)
@@ -52,14 +55,14 @@ namespace ScreenManager.Forms
         private void ScreenBasicInfoForm_Load(object sender, EventArgs e)
         {
 
-
-          
+ 
             this.screenLength.Maximum = 512;
             this.screenLength.Value = this.form.ScreenModel.ScreenLong;
             this.screenName.Text = this.form.ScreenModel.ScreenName;
 
             for (int i = 0; i < this.form.ScreenModel.RoadList.Count; i++)
             {
+                
                 ScreenBasicRoadView sv = new ScreenBasicRoadView();
 
                 System.Windows.Forms.ComboBox roadColor;
@@ -69,8 +72,8 @@ namespace ScreenManager.Forms
                 roadColor = new System.Windows.Forms.ComboBox();
                 roadLength = new System.Windows.Forms.NumericUpDown();
                 roadName = new System.Windows.Forms.TextBox();
-     
 
+             
                 roadColor.Anchor = System.Windows.Forms.AnchorStyles.None;
                 roadColor.FormattingEnabled = true;
                 roadColor.Location = new System.Drawing.Point(240, 21);             
@@ -78,15 +81,14 @@ namespace ScreenManager.Forms
                 roadColor.TabIndex = 3;
                 roadColor.Text =ScreenManager.Model.Constant.Constants.colorArray[form.ScreenModel.RoadList[i].BaseColor];
                 roadColor.Items.AddRange(Model.Constant.Constants.colorArray);
-
+         
                     roadLength.Anchor = System.Windows.Forms.AnchorStyles.None;
                     roadLength.Location = new System.Drawing.Point(442, 20);
                     roadLength.Size = new System.Drawing.Size(120, 21);
                     roadLength.TabIndex = 4;
                     roadLength.Maximum = form.ScreenModel.ScreenLong;
                     roadLength.Value = form.ScreenModel.RoadList[i].RoadLenght;
-
-
+              
                     roadName.Anchor = System.Windows.Forms.AnchorStyles.None;
                     roadName.Location = new System.Drawing.Point(40, 20);
                     roadName.Text = form.ScreenModel.RoadList[i].RoadName;
@@ -96,14 +98,14 @@ namespace ScreenManager.Forms
                 sv.RoadColor = roadColor;
                 sv.RoadLength = roadLength;
                 sv.RoadName = roadName;
-
+ 
                 this.screenBasicRoadView.Add(sv);
-
-                this.tableLayoutPanel3.Controls.Add(roadColor, 1, i+1);
+ 
                 this.tableLayoutPanel3.Controls.Add(roadLength, 2, i + 1);
                 this.tableLayoutPanel3.Controls.Add(roadName, 0, i + 1);
-
+ 
             }
+ 
           
         }
 
@@ -133,47 +135,52 @@ namespace ScreenManager.Forms
                 }
                 m.ScreenColor = this.form.ScreenModel.ScreenColor;
 
-
-                bool result = ScreenManager.Service.ServiceContext.getInstance().getScreenControl().setScreenAndRoadNameInfo(m);
-
-                if (!result)
+                bool result = false;
+                try
                 {
-                    MessageBox.Show("操作失败");
-                    //log
-                    this.btnSet.Enabled = true;
-                }
-                else
-                {
-                    //dailog
-                    ScreenManager.Service.ServiceContext.getInstance().getScreenControl().initScreen();                                      
-                    MessageBox.Show("操作成功");
-                    this.form.ScreenModel.BasicInfo.ScreenName = this.screenName.Text;
-                    this.form.ScreenModel.BasicInfo.ScreenLength = System.Convert.ToInt16(this.screenLength.Value);
-
-                    for (int i = 0; i < this.screenBasicRoadView.Count; i++)
+                    result = ScreenManager.Service.ServiceContext.getInstance().getScreenControl().setScreenAndRoadNameInfo(m);
+                    if (!result)
                     {
-
-                        this.form.ScreenModel.RoadList[i].RoadName = this.screenBasicRoadView[i].RoadName.Text;
-                        this.form.ScreenModel.RoadList[i].RoadLenght = System.Convert.ToInt16(this.screenBasicRoadView[i].RoadLength.Value);
-
+                        MessageBox.Show("操作失败");
+                        //log
+                        this.btnSet.Enabled = true;
                     }
-                    this.form.ScreenModel.ScreenColor = this.form.ScreenModel.ScreenColor;
-                    this.form.cancelSelectedItem(this.form.SelcetedItem);
-                    this.form.SelcetedItem = null;
-                    this.form.ScreenModel.cleanSegment();
-                    this.form.refreshRoadInfo();
-                    this.form.refrashSgmtInfo();
-                    this.form.refrashScrn();
-                    this.form.btnAddSgmt.Enabled = true;
-                    this.btnSet.Enabled = true;
+                    else
+                    {
+                        //dailog
+                        ScreenManager.Service.ServiceContext.getInstance().getScreenControl().initScreen();
+                        MessageBox.Show("操作成功");
+                        this.form.ScreenModel.BasicInfo.ScreenName = this.screenName.Text;
+                        this.form.ScreenModel.BasicInfo.ScreenLength = System.Convert.ToInt16(this.screenLength.Value);
+
+                        for (int i = 0; i < this.screenBasicRoadView.Count; i++)
+                        {
+
+                            this.form.ScreenModel.RoadList[i].RoadName = this.screenBasicRoadView[i].RoadName.Text;
+                            this.form.ScreenModel.RoadList[i].RoadLenght = System.Convert.ToInt16(this.screenBasicRoadView[i].RoadLength.Value);
+
+                        }
+                        this.form.ScreenModel.ScreenColor = this.form.ScreenModel.ScreenColor;
+                        this.form.cancelSelectedItem(this.form.SelcetedItem);
+                        this.form.SelcetedItem = null;
+                        this.form.ScreenModel.cleanSegment();
+                        this.form.refreshRoadInfo();
+                        this.form.refreshSgmtInfo();
+                        this.form.refreshScrn();
+                        this.form.btnAddSgmt.Enabled = true;
+                        this.btnSet.Enabled = true;
+                    }
+                    this.form.refreshScrn();
                 }
-                this.form.refrashScrn();
-            }
-            else
-            {
+                catch(SystemException ex)
+                {
+                    log.Error("set screeen exception",ex);
+                    MessageBox.Show(ex.Message);
+                }
+          
 
             }
-            
+ 
 
 
 

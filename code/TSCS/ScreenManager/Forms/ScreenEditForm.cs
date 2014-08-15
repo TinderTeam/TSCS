@@ -68,8 +68,8 @@ namespace ScreenManager.Forms
                     Label lblIndex = new Label();
                     TextBox textRoad = new System.Windows.Forms.TextBox();
                     RoadPanel panelView = new RoadPanel(i);
-                 
 
+                    panelView.Paint += new System.Windows.Forms.PaintEventHandler(this.panel_Paint);
 
                     if(!this.ScreenModel.RoadList[i].RoadName.Equals("")){
                     
@@ -159,7 +159,7 @@ namespace ScreenManager.Forms
 
             this.refreshRoadInfo();
           
-            refrashScrn();
+            refreshScrn();
           
             refreshStatusBar();
          
@@ -169,22 +169,23 @@ namespace ScreenManager.Forms
             lblStatusScreenName.Text = screenModel.ScreenName;
             lblScreenViewName.Text = screenModel.ScreenName;
             lblStatusScreenIP.Text = screenModel.ScreenIP;
-            lblStatusScreenOpen.Text = ScreenManager.Model.Constant.Constants.screenStatusArray[screenModel.BasicInfo.ScreenStatus];
+           
+            lblStatusScreenOpen.Text = ScreenManager.Model.Constant.Constants.getStatusStr(screenModel.BasicInfo.ScreenStatus);
         }
 
 
         /*
          Screen refrash function
          */
-        public void refrashScrn() {
+        public void refreshScrn() {
          
-            refrashView();
-            refrashSgmtList();
-            refrashSgmtInfo();
+            refreshView();
+            refreshSgmtList();
+            refreshSgmtInfo();
             refreshStatusBar();
 
         }
-        public void refrashSelectedItem(){
+        public void refreshSelectedItem(){
 
             if (this.SelcetedItem!= null)
             {
@@ -205,7 +206,7 @@ namespace ScreenManager.Forms
             
         }
  
-        public void refrashView()
+        public void refreshView()
         {
             for (int i = 0; i < roadListView.list.Count; i++)
             {
@@ -218,7 +219,7 @@ namespace ScreenManager.Forms
              
             }
         }
-        public void refrashSgmtList() {
+        public void refreshSgmtList() {
 
             int selectedID=-1;
             if (this.selcetedItem != null)
@@ -258,7 +259,7 @@ namespace ScreenManager.Forms
         
             }
    
-        public void refrashSgmtInfo(){
+        public void refreshSgmtInfo(){
 
 
            loadSelectedSegmentInfo(this.SelcetedItem);
@@ -279,9 +280,9 @@ namespace ScreenManager.Forms
         {
             int index =this.ScreenModel.createSegment();
            
-            refrashSgmtList();
-            refrashView();
-            refrashSgmtInfo();
+            refreshSgmtList();
+            refreshView();
+            refreshSgmtInfo();
 
 
          
@@ -290,8 +291,8 @@ namespace ScreenManager.Forms
             cancelSelectedItem(this.selcetedItem);
             this.lstVwSgmt.SelectedItems.Clear();
             selectItem(this.lstVwSgmt.Items[index]);
-            this.refrashSelectedItem();
-            this.refrashView();
+            this.refreshSelectedItem();
+            this.refreshView();
 
          
           
@@ -304,9 +305,9 @@ namespace ScreenManager.Forms
 
                 this.ScreenModel.deleteByIndex(this.selcetedItem.Index);
                 cancelSelectedItem(this.selcetedItem);
-                refrashSgmtList();
-                refrashView();
-                refrashSgmtInfo();
+                refreshSgmtList();
+                refreshView();
+                refreshSgmtInfo();
 
             }
             else
@@ -365,15 +366,15 @@ namespace ScreenManager.Forms
                     SegmentModel sgmtModel=this.ScreenModel.changeRoad(this.SelcetedItem.Index, cmb.SelectedIndex);                
                     this.roadListView.list[this.ScreenModel.getRoadModelBySegmentId(this.SelcetedItem.Index).RoadID].PanelView.Segment = this.ScreenModel.getSegmentList()[this.SelcetedItem.Index];
                     this.cmbRoad.Text = this.ScreenModel.getRoadModelBySegmentId(this.SelcetedItem.Index).RoadID + ":" + this.ScreenModel.getRoadModelBySegmentId(this.SelcetedItem.Index).RoadName;
-                    refrashSgmtList();
+                    refreshSgmtList();
 
                     cancelSelectedItem(this.selcetedItem);
                     this.lstVwSgmt.SelectedItems.Clear();
                     selectItem( this.lstVwSgmt.Items[sgmtModel.SegmentID]);
 
-                    refrashSgmtList();
+                    refreshSgmtList();
                  
-                    refrashView();
+                    refreshView();
                 }
                
             }
@@ -388,7 +389,7 @@ namespace ScreenManager.Forms
             {
                 System.Windows.Forms.NumericUpDown num = (System.Windows.Forms.NumericUpDown)sender;
                 this.ScreenModel.getSegmentList()[selcetedItem.Index].Address.Start = System.Convert.ToInt16(num.Value);       
-                refrashSelectedItem();
+                refreshSelectedItem();
             }
             else
             { 
@@ -401,7 +402,7 @@ namespace ScreenManager.Forms
             {
                 System.Windows.Forms.NumericUpDown num = (System.Windows.Forms.NumericUpDown)sender;
                 this.ScreenModel.getSegmentList()[selcetedItem.Index].Address.End = System.Convert.ToInt16(num.Value);            
-                refrashSelectedItem();
+                refreshSelectedItem();
             }
             else
             {
@@ -429,9 +430,9 @@ namespace ScreenManager.Forms
                     MessageBox.Show("修改路段颜色失败");
                 }
          
-                refrashSgmtList();
-                refrashView();
-                refrashSgmtInfo();
+                refreshSgmtList();
+                refreshView();
+                refreshSgmtInfo();
 
             }
             else
@@ -454,9 +455,9 @@ namespace ScreenManager.Forms
                 segMengt.SegmentColor = combBox.SelectedIndex;
              
 
-                refrashSgmtList();
-                refrashView();
-                refrashSgmtInfo();
+                refreshSgmtList();
+                refreshView();
+                refreshSgmtInfo();
 
             }
             else
@@ -474,15 +475,15 @@ namespace ScreenManager.Forms
                 if (this.selcetedItem == null)
                 {
                     selectItem(item);
-                    this.refrashSgmtInfo();
-                    this.refrashSelectedItem();
+                    this.refreshSgmtInfo();
+                    this.refreshSelectedItem();
                   
                 }
                 else if (this.selcetedItem.Equals(lv.SelectedItems[lv.SelectedItems.Count-1]))
                 {
                     // cancel
                     cancelSelectedItem(item);
-                    this.refrashSelectedItem();
+                    this.refreshSelectedItem();
                     lv.SelectedItems.Clear();
                     this.SelcetedItem = null;
                     
@@ -493,8 +494,8 @@ namespace ScreenManager.Forms
                     cancelSelectedItem(this.selcetedItem);
                     lv.SelectedItems.Clear();
                     selectItem(item);
-                    this.refrashSelectedItem();
-                    this.refrashView();
+                    this.refreshSelectedItem();
+                    this.refreshView();
                 }
              
             }
@@ -543,12 +544,27 @@ namespace ScreenManager.Forms
         
         private void initScrnMntm_Click(object sender, EventArgs e)
         {
-            bool result = ServiceContext.getInstance().getScreenControl().closeScreen();
+            bool result = ServiceContext.getInstance().getScreenControl().initScreen();
+
+            ScreenModel screenModel = new ScreenModel();
+            try
+            {
+                 screenModel = ServiceContext.getInstance().getScreenControl().getScreenInfo(this.ScreenModel.BasicInfo.ScreenIP);
+
+            }
+            catch(SystemException ex)
+            {
+                log.Error("get screen information failed", ex);
+                result = false;
+
+            }
             if (result)
             {
+
                 MessageBox.Show("操作成功");
-                this.ScreenModel = new ScreenModel();
-                loadScreen(this.ScreenModel);
+
+
+                loadScreen(screenModel);
             }
             else
             {
@@ -603,9 +619,12 @@ namespace ScreenManager.Forms
             ScreenManager.Forms.PasswordForm pf = new ScreenManager.Forms.PasswordForm();
             ScreenManager.Forms.ScreenBasicInfoForm sf = new ScreenManager.Forms.ScreenBasicInfoForm(this);
 
+           
             if (pf.ShowDialog() == DialogResult.OK)
             {
+ 
                 sf.ShowDialog();
+           
             }
             else
             {
@@ -655,7 +674,7 @@ namespace ScreenManager.Forms
                              this.SelcetedItem = null;
                              roadDaoModel.read(this.ScreenModel);
                              this.refreshRoadInfo();
-                             this.refrashScrn();
+                             this.refreshScrn();
                          }
                          else
                          {
@@ -706,7 +725,7 @@ namespace ScreenManager.Forms
             }
             this.cancelSelectedItem(this.SelcetedItem);
             this.SelcetedItem = null;
-            this.refrashScrn();
+            this.refreshScrn();
             
         }
 
@@ -745,7 +764,7 @@ namespace ScreenManager.Forms
 
             lcf.ShowDialog();
 
-            this.refrashScrn();
+            this.refreshScrn();
             lcf.Close();
         }
 
@@ -840,15 +859,15 @@ namespace ScreenManager.Forms
                     if (this.selcetedItem == null)
                     {
                         selectItem(item);
-                        this.refrashSgmtInfo();
-                        this.refrashSelectedItem();
+                        this.refreshSgmtInfo();
+                        this.refreshSelectedItem();
 
                     }
                     else if (this.selcetedItem.Equals(item))
                     {
                         // cancel
                         cancelSelectedItem(item);
-                        this.refrashSelectedItem();
+                        this.refreshSelectedItem();
                         lv.SelectedItems.Clear();
                         this.SelcetedItem = null;
 
@@ -859,8 +878,8 @@ namespace ScreenManager.Forms
                         cancelSelectedItem(this.selcetedItem);
                         lv.SelectedItems.Clear();
                         selectItem(item);
-                        this.refrashSelectedItem();
-                        this.refrashView();
+                        this.refreshSelectedItem();
+                        this.refreshView();
                     }
                 }
                 else
@@ -1083,8 +1102,8 @@ namespace ScreenManager.Forms
                 }
 
        
-            this.refrashSelectedItem();
-            this.refrashSgmtInfo();
+            this.refreshSelectedItem();
+            this.refreshSgmtInfo();
             }
         }
         private void startMarkMove(MouseEventArgs e, ScreenManager.Model.UI.RoadPanel panel)
@@ -1125,8 +1144,8 @@ namespace ScreenManager.Forms
             
 
           
-            this.refrashSelectedItem();
-            this.refrashSgmtInfo();
+            this.refreshSelectedItem();
+            this.refreshSgmtInfo();
             }
 
         }
@@ -1178,8 +1197,16 @@ namespace ScreenManager.Forms
 
         private void ScreenEditForm_Paint(object sender, PaintEventArgs e)
         {
-           this.refrashScrn();
+           this.refreshScrn();
         }
+
+        private void panel_Paint(object sender, PaintEventArgs e)
+        {
+            RoadPanel rp = (RoadPanel)sender;
+            rp.repaint();
+        }
+
+       
 
  
 

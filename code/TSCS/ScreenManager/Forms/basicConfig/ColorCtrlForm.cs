@@ -39,7 +39,7 @@ namespace ScreenManager.Forms.basicConfig
             {
                 MessageBox.Show("操作成功");
                 form.ScreenModel.ScreenColor = this.colorBox.SelectedIndex;
-                form.refrashScrn();
+                form.refreshScrn();
             }
             else
             {

@@ -136,7 +136,7 @@
     <value>5</value>
   </data>
   <data name="btnSearchIP.Text" xml:space="preserve">
-    <value>搜索IP段</value>
+    <value>搜索诱导屏</value>
   </data>
   <data name="&gt;&gt;btnSearchIP.Name" xml:space="preserve">
     <value>btnSearchIP</value>

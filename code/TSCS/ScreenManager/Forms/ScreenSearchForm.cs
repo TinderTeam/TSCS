@@ -15,6 +15,7 @@ namespace ScreenManager
 {
     public partial class ScreenSearchForm : System.Windows.Forms.Form
     {
+        private static log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
 
         public ScreenManager.Forms.ScreenEditForm  sef;
@@ -57,17 +58,29 @@ namespace ScreenManager
 
             //Load Selected Screen
             ScreenModel screenModel = screenList.getModelByIndex(item.Index);
-              
-            screenModel = ServiceContext.getInstance().getScreenControl().getScreenInfo(screenModel.ScreenIP);
-            
-            //Test Stub
 
-            // screenModel = ScreenManager.Stub.Stub.getScreenModelStub();
-            //UpdateScreen
-            sef.loadScreen(screenModel);
-            sef.refrashScrn();
-            sef.Show();
-            this.Close();
+            try
+            {
+                screenModel = ServiceContext.getInstance().getScreenControl().getScreenInfo(screenModel.BasicInfo.ScreenIP);
+
+                //Test Stub
+                // screenModel = ScreenManager.Stub.Stub.getScreenModelStub();
+                //UpdateScreen
+                sef.loadScreen(screenModel);
+                sef.refreshScrn();
+                sef.Show();
+                this.Close();
+
+            }
+            catch (SystemException ex)
+            {
+                log.Error("get screen information failed", ex);
+                MessageBox.Show("连接屏幕失败，请重新搜索屏幕！");
+
+            }
+            view.Items.Clear();
+    
+
         }
 
         /// <summary>

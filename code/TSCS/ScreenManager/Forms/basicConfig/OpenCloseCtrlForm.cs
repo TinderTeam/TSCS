@@ -15,7 +15,7 @@ namespace ScreenManager.Forms.basicConfig
     public partial class OpenCloseCtrlForm : Form
     {
         ScreenModel screenModel;
-        bool change = true;
+        bool change = false;
         public OpenCloseCtrlForm(ScreenModel sm)
         {
             screenModel = sm;
@@ -26,9 +26,9 @@ namespace ScreenManager.Forms.basicConfig
         private void OpenCloseCtrlForm_Load(object sender, EventArgs e)
         {
             //Get Screen Status
-            int result = ServiceContext.getInstance().getScreenControl().getScreenOpenStatus();
-            
-            if (result == 1)
+            int result = screenModel.BasicInfo.ScreenStatus;
+    
+            if (result == ScreenManager.Model.Constant.Constants.SCREEN_OPEN_VALUE)
             {
                 open = true;
                 this.rdbOpen.Checked = true;
@@ -40,8 +40,8 @@ namespace ScreenManager.Forms.basicConfig
                 this.rdbOpen.Checked = false;
                 this.rdbClose.Checked = true;
             }
-         
 
+            change = true;
         }
 
 
@@ -56,7 +56,8 @@ namespace ScreenManager.Forms.basicConfig
                     bool result = ServiceContext.getInstance().getScreenControl().openScreen();
                     if (result)
                     {
-                        this.screenModel.BasicInfo.ScreenStatus = 0;
+                        MessageBox.Show("操作成功");
+                        this.screenModel.BasicInfo.ScreenStatus = ScreenManager.Model.Constant.Constants.SCREEN_OPEN_VALUE;
                     }
                     else
                     {
@@ -74,7 +75,7 @@ namespace ScreenManager.Forms.basicConfig
                     if (result)
                     {
                         MessageBox.Show("操作成功");
-                        this.screenModel.BasicInfo.ScreenStatus = 1;
+                        this.screenModel.BasicInfo.ScreenStatus = ScreenManager.Model.Constant.Constants.SCREEN_CLOSE_VALUE;
                     }
                     else
                     {

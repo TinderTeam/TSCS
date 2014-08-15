@@ -42,8 +42,20 @@ namespace ScreenManager.Model.Constant
 
         public static String SCREEN_OPEN = "打开";
         public static String SCREEN_CLOSE = "关闭";
-        public static String[] screenStatusArray = { SCREEN_OPEN, SCREEN_CLOSE };
+        public static String[] screenStatusArray = {null, SCREEN_OPEN, SCREEN_CLOSE };
 
+        public static int SCREEN_OPEN_VALUE = 1;
+        public static int SCREEN_CLOSE_VALUE =2;
+
+
+        public static String getStatusStr(int value)
+        {
+            if(value< screenStatusArray.Length)
+            {
+                return screenStatusArray[value];
+            }
+            return "";
+        }
 
         public static int getIndexByStr(string str)
         {

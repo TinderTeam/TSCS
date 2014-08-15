@@ -82,18 +82,29 @@ namespace ScreenManager.Service
         {
             IntPtr cs;
             string str = "";
+            bool result = true;
 
             try
             {
+                SCREEN_LIGHT_INFO screenLight = new SCREEN_LIGHT_INFO();
+                result = getScreenLight(ref screenLight);
+ 
+                if(!result)
+                {
+                    log.Error("the screen can not connect success");
+                    throw new SystemException("不能连接屏幕");
+                }
                 cs = getScreenCS();
                 str = Marshal.PtrToStringAnsi(cs);
             }
             catch (System.Exception ex)
             {
                 log.Error("call dll exception", ex);
+                throw new SystemException("不能连接屏幕");
             }
 
             log.Info("get screen name is " + str);
+ 
 
             String[] csInfoArry = str.Split(SCREEN_ROAD_FLAG);
 
@@ -130,7 +141,7 @@ namespace ScreenManager.Service
         public static bool setScreenNameInfoByDll(ScreenModel screen)
         {
             
-            string str = "";
+            String str = "";
             str += screen.ScreenName;
             str += SCREEN_ROAD_FLAG;
 
@@ -141,7 +152,11 @@ namespace ScreenManager.Service
                 str += screen.RoadList[i].RoadLenght;
                 str += SCREEN_ROAD_FLAG;
             }
-            bool result  = false ; 
+            bool result  = false ;
+            if (str.Length>512)
+            {
+                throw new SystemException("名称长度太长");
+            }
            
             try
             {
@@ -327,7 +342,7 @@ namespace ScreenManager.Service
         [DllImport("ScreenController.dll", EntryPoint = "setScreenLight")]
         private static extern bool setScreenLight(ref SCREEN_LIGHT_INFO lightInfo);
         [DllImport("ScreenController.dll", EntryPoint = "setScreenName")]
-        private static extern bool setScreenName(string ipAddr);
+        private static extern bool setScreenName(string name);
 
         public static bool setScreenLightByDll(ScreenBasicInfoModel screenBaiscInfo)
         {
@@ -344,14 +359,7 @@ namespace ScreenManager.Service
 
 
                 result = setScreenLight(ref screenLight);
-                if (!result)
-                {
-                    log.Error("set screen light failed");
-                    return result;
-                }
-
-
-                result = setScreenColor(screenBaiscInfo.ScreenColor);
+                
             }
             catch (System.Exception ex)
             {
@@ -427,8 +435,10 @@ namespace ScreenManager.Service
   
 
                 screenBaiscInfo.ScreenLength = getScreenLength();
+
+                screenBaiscInfo.ScreenStatus = getScreenOnOff();
                
-                return screenBaiscInfo;
+ 
             }
             catch (System.Exception ex)
             {
@@ -486,6 +496,9 @@ namespace ScreenManager.Service
             return result;
         }
 
+
+ 
+        
         [DllImport("ScreenController.dll", EntryPoint = "saveScreen")]
         private static extern bool saveScreen();
         public static bool saveScreenByDll()

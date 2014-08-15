@@ -233,7 +233,7 @@ CSCREENCONTROLLER_API bool  setScreenOff()
 CSCREENCONTROLLER_API int getScreenOnOff()
 {
 	LOG_INFO("getScreenOnOff");
-	int status = CInstanceFactory::getInstance()->getController()->getScreenLength();
+	int status = CInstanceFactory::getInstance()->getController()->getScreenOnOff();
 	
 	return status;
 }

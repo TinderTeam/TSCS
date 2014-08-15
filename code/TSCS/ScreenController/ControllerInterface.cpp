@@ -453,7 +453,7 @@ bool ControllerInterface::setScreenOn(void)
 {
 
 	std::string data;
-	data.push_back(2);
+	data.push_back(1);
 
 	bool result =this->sendCmd(CMD_SET_ON_OFF,data);
 
@@ -465,7 +465,7 @@ bool ControllerInterface::setScreenOff(void)
 {
 
 	std::string data;
-	data.push_back(1);
+	data.push_back(2);
  
 	bool result =this->sendCmd(CMD_SET_ON_OFF,data);
 

@@ -36,9 +36,10 @@ namespace ScreenManager.Model.UI
                 segment = value; 
                 
             }
-        }      
-        
+        }
 
+
+  
         public RoadPanel(RoadModel r,int l)
         {
             road = r;
@@ -117,8 +118,7 @@ namespace ScreenManager.Model.UI
 
         }
 
-
-
+  
 
         private void drawChangedSegment(Graphics gr)
         {
