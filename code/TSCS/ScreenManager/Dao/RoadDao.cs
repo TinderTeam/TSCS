@@ -83,6 +83,10 @@ namespace ScreenManager.Dao
                
                 sr.Close();
 
+                if (null == r)
+                {
+                    throw new SystemException();
+                }
                 return r;
             }
             else

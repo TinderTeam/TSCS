@@ -49,5 +49,10 @@ namespace ScreenManager.Model
             get { return segmentName; }
             set { segmentName = value; }
         }
+
+        public String ToString()
+        {
+            return "["+ "segmentID:" + SegmentID + "," + "segmentColor:"+ segmentColor +"address:" +address.ToString()  +"]";
+        }
     }
 }

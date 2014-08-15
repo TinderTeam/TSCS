@@ -647,6 +647,39 @@ namespace ScreenManager.Forms
                  {
 
                      roadDaoModel = roadDao.loadByFile();
+
+                     if (null != roadDaoModel)
+                     {
+                         if (roadDaoModel.ScreenLength <= this.ScreenModel.BasicInfo.ScreenLength && roadDaoModel.ScreenName.Equals(this.ScreenModel.BasicInfo.ScreenName))
+                         {
+
+                             for (int i = 0; i < roadDaoModel.RoadList.Count; i++)
+                             {
+
+                                 if (roadDaoModel.RoadList[i].RoadLenght > this.ScreenModel.RoadList[i].RoadLenght)
+                                 {
+                                     check = false;
+                                 }
+                             }
+                             if (check == true)
+                             {
+                                 this.SelcetedItem = null;
+                                 roadDaoModel.read(this.ScreenModel);
+                                 this.refreshRoadInfo();
+                                 this.refreshScrn();
+                             }
+                             else
+                             {
+                                 MessageBox.Show("路段长度不匹配");
+                             }
+                         }
+                         else
+                         {
+
+                             MessageBox.Show("屏幕名称或长度不匹配。");
+                         }
+                     }
+
                  } catch (System.Exception ex)
                  {
                      log.Error("Can not open file.",ex);
@@ -654,43 +687,7 @@ namespace ScreenManager.Forms
 
                  }
                
-
-                 if (roadDaoModel != null)
-                 {
-
-                     if (roadDaoModel.ScreenLength <=this.ScreenModel.BasicInfo.ScreenLength || !roadDaoModel.ScreenName.Equals(this.ScreenModel.BasicInfo.ScreenName))
-                     {
-
-                         for (int i = 0; i < roadDaoModel.RoadList.Count; i++)
-                         {
-
-                             if (roadDaoModel.RoadList[i].RoadLenght > this.ScreenModel.RoadList[i].RoadLenght)
-                             {
-                                 check = false;
-                             }
-                         }
-                         if (check == true)
-                         {
-                             this.SelcetedItem = null;
-                             roadDaoModel.read(this.ScreenModel);
-                             this.refreshRoadInfo();
-                             this.refreshScrn();
-                         }
-                         else
-                         {
-                             MessageBox.Show("路段长度不匹配");
-                         }
-                     }
-                     else
-                     {
-
-                         MessageBox.Show("屏幕名称或长度不匹配。");
-                     }
-                 }  
-                 else
-                 {
-                     MessageBox.Show("打开文件错误");
-                 }
+ 
 
         }
 

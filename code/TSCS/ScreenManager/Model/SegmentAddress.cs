@@ -21,6 +21,10 @@ namespace ScreenManager.Model
             get { return start; }
             set { start = value; }
         }
-        
+
+        public String ToString()
+        {
+            return "[" +"start:"+start +"," + "end:" + end + "]";
+        }
     }
 }

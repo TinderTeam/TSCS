@@ -46,7 +46,6 @@
             this.functionMnlst = new System.Windows.Forms.ToolStripMenuItem();
             this.scrnLengthMntm = new System.Windows.Forms.ToolStripMenuItem();
             this.EditIPMntm = new System.Windows.Forms.ToolStripMenuItem();
-            this.网段设置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpMnlst = new System.Windows.Forms.ToolStripMenuItem();
             this.helpMntm = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutMntm = new System.Windows.Forms.ToolStripMenuItem();
@@ -262,8 +261,7 @@
             // 
             this.functionMnlst.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.scrnLengthMntm,
-            this.EditIPMntm,
-            this.网段设置ToolStripMenuItem});
+            this.EditIPMntm});
             this.functionMnlst.Name = "functionMnlst";
             this.functionMnlst.Size = new System.Drawing.Size(65, 20);
             this.functionMnlst.Text = "专业设置";
@@ -271,22 +269,16 @@
             // scrnLengthMntm
             // 
             this.scrnLengthMntm.Name = "scrnLengthMntm";
-            this.scrnLengthMntm.Size = new System.Drawing.Size(142, 22);
+            this.scrnLengthMntm.Size = new System.Drawing.Size(152, 22);
             this.scrnLengthMntm.Text = "屏幕信息设置";
             this.scrnLengthMntm.Click += new System.EventHandler(this.scrnBasicInfoSetupMntm_Click);
             // 
             // EditIPMntm
             // 
             this.EditIPMntm.Name = "EditIPMntm";
-            this.EditIPMntm.Size = new System.Drawing.Size(142, 22);
+            this.EditIPMntm.Size = new System.Drawing.Size(152, 22);
             this.EditIPMntm.Text = "IP地址设置";
             this.EditIPMntm.Click += new System.EventHandler(this.EditIPMntm_Click);
-            // 
-            // 网段设置ToolStripMenuItem
-            // 
-            this.网段设置ToolStripMenuItem.Name = "网段设置ToolStripMenuItem";
-            this.网段设置ToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
-            this.网段设置ToolStripMenuItem.Text = "网段设置";
             // 
             // helpMnlst
             // 
@@ -1202,7 +1194,6 @@
         private System.Windows.Forms.ToolStripMenuItem openCloseScreenMntm;
         private System.Windows.Forms.ToolStripMenuItem saveScrnMntm;
         private System.Windows.Forms.ToolStripMenuItem initScrnMntm;
-        private System.Windows.Forms.ToolStripMenuItem 网段设置ToolStripMenuItem;
         private System.Windows.Forms.GroupBox groupRoadSegmentEdit;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
         private System.Windows.Forms.ListView lstVwSgmt;

@@ -229,31 +229,66 @@ namespace ScreenManager.Service
                 roadList[i].SegmentList.Clear();
             }
 
-
+             
             for (int i = 0; i < segInfoList.Count(); i++)
             {
-                    SegmentModel segment = new SegmentModel();
-                    segment.SegmentID = segInfoList[i].segNum;
-                    segment.SegmentColor = segInfoList[i].color;
-                    segment.Address.Start = segInfoList[i].startAddr;
-                    segment.Address.End = segInfoList[i].endAddr;
+
+
+                    RoadModel roadModel = getRoadByRoadID(segInfoList[i].roadNum, roadList);
+  
                     int roadID = segInfoList[i].roadNum;
+
                     if (segNum != -1)
                     {
-                        if (roadID >= 0 && roadID < roadList.Count)
+                        if (null != roadModel)
                         {
-                            roadList[roadID].SegmentList.Add(segment);
-                            roadList[roadID].RoadID = roadID;
+                            SegmentModel segment = new SegmentModel();
+                            segment.SegmentID = segInfoList[i].segNum;
+                            segment.SegmentColor = segInfoList[i].color;
+ 
+                            if (segInfoList[i].startAddr < 0 || segInfoList[i].startAddr > roadModel.RoadLenght)
+                            {
+                                segment.Address.Start = 0;
+                                log.Warn("the start addr is not in the right range.start address is " + segInfoList[i].startAddr);
+                            }
+                            else
+                            {
+                                segment.Address.Start = segInfoList[i].startAddr;
+                            }
+
+                            if (segInfoList[i].endAddr < 0 || segInfoList[i].endAddr > roadModel.RoadLenght)
+                            {
+                                segment.Address.End = roadModel.RoadLenght;
+                                log.Warn("the end addr is not in the right range.end address is " + segInfoList[i].endAddr);
+                            }
+                            else
+                            {
+                                  segment.Address.End = segInfoList[i].endAddr;
+                            }
+                            log.Info("the segment information is " + segment.ToString());
+                            roadModel.SegmentList.Add(segment);
                         }
                         else
                         {
-                            log.Error("the road id is not exist " + roadID);
+                            log.Error("the road id is not exist " + segInfoList[i].roadNum);
                         }
 
                     }
 
             }
             return result;
+        }
+
+        private static RoadModel getRoadByRoadID(int roadID,List<RoadModel> roadList)
+        {
+            for (int i = 0; i < roadList.Count; i++)
+            {
+                if (roadID == roadList[i].RoadID)
+                {
+                    return roadList[i];
+                }
+            }
+            return null;
         }
 
         [DllImport("ScreenController.dll", EntryPoint = "setSegmentColor")]
