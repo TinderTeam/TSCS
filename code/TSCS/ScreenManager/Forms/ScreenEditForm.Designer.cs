@@ -1102,11 +1102,13 @@
             this.Controls.Add(this.menuStrip);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip;
+            this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(1024, 768);
             this.MinimumSize = new System.Drawing.Size(1024, 726);
             this.Name = "ScreenEditForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "诱导屏控制系统";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.ScreenEditForm_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.ScreenEditForm_Paint);
             this.menuStrip.ResumeLayout(false);
