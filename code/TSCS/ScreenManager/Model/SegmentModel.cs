@@ -9,7 +9,7 @@ namespace ScreenManager.Model
     {
 
         int segmentID;
-        int segmentColor = 0;
+        int segmentColor = 1;
         String segmentName="未命名";
 
         SegmentAddress address = new SegmentAddress();

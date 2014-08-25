@@ -103,6 +103,7 @@ namespace ScreenManager.Model
         public int  createSegment()
         {
             SegmentModel sm = new SegmentModel(getSegmentList().Count-1);
+
             RoadModel r = getFirstExistRoad();
             if (r != null)
             {

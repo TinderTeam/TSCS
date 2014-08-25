@@ -1108,7 +1108,6 @@
             this.Name = "ScreenEditForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "诱导屏控制系统";
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.ScreenEditForm_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.ScreenEditForm_Paint);
             this.menuStrip.ResumeLayout(false);

@@ -93,7 +93,7 @@ namespace ScreenManager.Forms
                     textRoad.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
                     //   textRoad.TextChanged += new System.EventHandler(this.roadNameChanged);
 
-                    roadNameList.Add(textRoad.Text);
+                    roadNameList.Add(this.screenModel.RoadList[i].RoadID+ ":" + this.screenModel.RoadList[i].RoadName);
                     // 
                     // panelView
                     // 
@@ -296,19 +296,13 @@ namespace ScreenManager.Forms
             refreshSgmtList();
             refreshView();
             refreshSgmtInfo();
-
-
-         
-            // selected Other
-
+        
             cancelSelectedItem(this.selcetedItem);
             this.lstVwSgmt.SelectedItems.Clear();
             selectItem(this.lstVwSgmt.Items[index]);
             this.refreshSelectedItem();
             this.refreshView();
 
-         
-          
         }
         private void btnDltSgmt_Click(object sender, EventArgs e)
         {
@@ -376,7 +370,11 @@ namespace ScreenManager.Forms
                 if (this.ScreenModel.getRoadModelBySegmentId(this.SelcetedItem.Index).RoadID != cmb.SelectedIndex)
                 {
                     this.roadListView.list[this.ScreenModel.getRoadModelBySegmentId(this.SelcetedItem.Index).RoadID].PanelView.Segment = null;
-                    SegmentModel sgmtModel=this.ScreenModel.changeRoad(this.SelcetedItem.Index, cmb.SelectedIndex);                
+
+                    String[] strArray=cmb.Text.Split(':');
+                    int number = System.Convert.ToInt16(strArray[0]);
+       
+                    SegmentModel sgmtModel = this.ScreenModel.changeRoad(this.SelcetedItem.Index, number);                
                     this.roadListView.list[this.ScreenModel.getRoadModelBySegmentId(this.SelcetedItem.Index).RoadID].PanelView.Segment = this.ScreenModel.getSegmentList()[this.SelcetedItem.Index];
                     this.cmbRoad.Text = this.ScreenModel.getRoadModelBySegmentId(this.SelcetedItem.Index).RoadID + ":" + this.ScreenModel.getRoadModelBySegmentId(this.SelcetedItem.Index).RoadName;
                     refreshSgmtList();
@@ -1068,9 +1066,11 @@ namespace ScreenManager.Forms
 
                 for (int i = 0; i < cmbRoad.Items.Count; i++)
                 {
-                    System.Console.WriteLine("Items is : " + cmbRoad.Items[i] + "目标is: " + ScreenModel.RoadList[i].RoadID + ":" + ScreenModel.RoadList[i].RoadName);
-                    if (cmbRoad.Items[i].Equals(ScreenModel.RoadList[i].RoadID + ":" + ScreenModel.RoadList[i].RoadName))
-                    {
+
+                    int selectdedSegmentRoadID = ScreenModel.getRoadModelBySegmentId(System.Convert.ToInt16(item.SubItems[0].Text)).RoadID;
+                    String selectdedSegmentRoadName = ScreenModel.getRoadModelBySegmentId(System.Convert.ToInt16(item.SubItems[0].Text)).RoadName;
+                    if (cmbRoad.Items[i].Equals(selectdedSegmentRoadID + ":" + selectdedSegmentRoadName))
+                    {                     
                         this.cmbRoad.SelectedIndex = i;
                     }
                 }           

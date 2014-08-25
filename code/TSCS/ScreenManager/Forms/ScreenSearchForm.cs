@@ -75,6 +75,9 @@ namespace ScreenManager
             catch (SystemException ex)
             {
                 log.Error("get screen information failed", ex);
+                screenModel = new ScreenModel();
+                sef.loadScreen(screenModel);
+                sef.refreshScrn();
                 MessageBox.Show("连接屏幕失败，请重新搜索屏幕！");
 
             }
