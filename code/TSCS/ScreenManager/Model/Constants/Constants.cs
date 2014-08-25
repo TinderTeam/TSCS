@@ -13,6 +13,7 @@ namespace ScreenManager.Model.Constant
 {
     public static class Constants
     {
+        private static log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType); 
 
        
         public static String AUTO ="自动";
@@ -68,6 +69,18 @@ namespace ScreenManager.Model.Constant
             return -1;
         }
 
+        public String getColorByColorNum(int color)
+        {
+            if (color < colorArray.Length && color >= 0)
+            {
+                return colorArray[i];
+            }
+            else
+            {
+                log.Error("the color is invalid.color is" + color);
+                return "";
+            }
+        }
 
 
         public static String[] colorArray = { 
