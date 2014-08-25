@@ -140,7 +140,7 @@ namespace ScreenManager.Forms
 
                 if (!this.ScreenModel.RoadList[i].RoadName.Equals(""))
                 {
-                     roadNameList.Add(this.ScreenModel.RoadList[i].RoadName);
+                    roadNameList.Add(this.ScreenModel.RoadList[i].RoadID+ this.ScreenModel.RoadList[i].RoadName);
                 }
 
                 
@@ -278,8 +278,21 @@ namespace ScreenManager.Forms
       
         private void btnAddSgmt_Click(object sender, EventArgs e)
         {
-            int index =this.ScreenModel.createSegment();
-           
+            int index;
+
+            if (this.ScreenModel.getSegmentList().Count == 0)
+            {
+                index = this.ScreenModel.createSegment();
+            }
+            else if (this.selcetedItem == null)
+            {
+                index = this.ScreenModel.createSegment(0);
+            }
+            else
+            {
+                index = this.ScreenModel.createSegment(this.selcetedItem.Index);
+            }
+            // selected Other
             refreshSgmtList();
             refreshView();
             refreshSgmtInfo();
@@ -1052,8 +1065,15 @@ namespace ScreenManager.Forms
 
 
                 this.lblSegmentName.Text = item.SubItems[0].Text;
-                this.cmbRoad.SelectedIndex = this.ScreenModel.getRoadModelBySegmentId(System.Convert.ToInt16(item.SubItems[0].Text)).RoadID;
-             
+
+                for (int i = 0; i < cmbRoad.Items.Count; i++)
+                {
+                    System.Console.WriteLine("Items is : " + cmbRoad.Items[i] + "目标is: " + ScreenModel.RoadList[i].RoadID + ":" + ScreenModel.RoadList[i].RoadName);
+                    if (cmbRoad.Items[i].Equals(ScreenModel.RoadList[i].RoadID + ":" + ScreenModel.RoadList[i].RoadName))
+                    {
+                        this.cmbRoad.SelectedIndex = i;
+                    }
+                }           
                 this.txtStart.Maximum = this.ScreenModel.getRoadModelBySegmentId(System.Convert.ToInt16(item.SubItems[0].Text)).RoadLenght;
                 this.txtEnd.Maximum = this.ScreenModel.getRoadModelBySegmentId(System.Convert.ToInt16(item.SubItems[0].Text)).RoadLenght;
 
@@ -1155,7 +1175,7 @@ namespace ScreenManager.Forms
 
             for (int i = 0; i < 10; i++)
             {
-                roadNameList.Add(i.ToString() + ":" + ScreenModel.RoadList[i].RoadName);
+                roadNameList.Add(ScreenModel.RoadList[i].RoadID + ":" + ScreenModel.RoadList[i].RoadName);
             }
             this.cmbRoad.Items.AddRange(roadNameList.ToArray());
 

@@ -116,6 +116,24 @@ namespace ScreenManager.Model
             
         }
 
+        public int createSegment(int index)
+        {
+            SegmentModel selectSgmt=getSegmentList()[index];
+            SegmentModel sm = new SegmentModel();
+            sm.Address.End = selectSgmt.Address.End;
+            sm.Address.Start = selectSgmt.Address.Start;
+            sm.SegmentColor = selectSgmt.SegmentColor;
+            sm.SegmentName = selectSgmt.SegmentName;
+            sm.SegmentID = selectSgmt.SegmentID;
+            RoadModel r = getRoadModelBySegmentId(index);
+            if (r != null)
+            {
+                r.SegmentList.Add(sm);
+            }
+            getSegmentList();
+            return sm.SegmentID;
+
+        }
 
         public RoadModel getFirstExistRoad()
         {
@@ -129,6 +147,8 @@ namespace ScreenManager.Model
             }
             return null;
         }
+
+     
 
         public void deleteByIndex(int id)
         {
