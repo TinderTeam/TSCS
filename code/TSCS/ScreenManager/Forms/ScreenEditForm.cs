@@ -378,13 +378,10 @@ namespace ScreenManager.Forms
                     this.roadListView.list[this.ScreenModel.getRoadModelBySegmentId(this.SelcetedItem.Index).RoadID].PanelView.Segment = this.ScreenModel.getSegmentList()[this.SelcetedItem.Index];
                     this.cmbRoad.Text = this.ScreenModel.getRoadModelBySegmentId(this.SelcetedItem.Index).RoadID + ":" + this.ScreenModel.getRoadModelBySegmentId(this.SelcetedItem.Index).RoadName;
                     refreshSgmtList();
-
                     cancelSelectedItem(this.selcetedItem);
                     this.lstVwSgmt.SelectedItems.Clear();
                     selectItem( this.lstVwSgmt.Items[sgmtModel.SegmentID]);
-
-                    refreshSgmtList();
-                 
+                    refreshSgmtList();               
                     refreshView();
                 }
                
@@ -1073,7 +1070,8 @@ namespace ScreenManager.Forms
                     {                     
                         this.cmbRoad.SelectedIndex = i;
                     }
-                }           
+                }      
+     
                 this.txtStart.Maximum = this.ScreenModel.getRoadModelBySegmentId(System.Convert.ToInt16(item.SubItems[0].Text)).RoadLenght;
                 this.txtEnd.Maximum = this.ScreenModel.getRoadModelBySegmentId(System.Convert.ToInt16(item.SubItems[0].Text)).RoadLenght;
 
@@ -1222,6 +1220,8 @@ namespace ScreenManager.Forms
             RoadPanel rp = (RoadPanel)sender;
             rp.repaint();
         }
+
+
 
        
 
