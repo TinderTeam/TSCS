@@ -20,6 +20,9 @@
 #define CMD_SET_LD "SETLD"  //单独设置路段数据
 #define CMD_GET_LD "GETLD"
 
+#define CMD_SET_LD_BY_ADDR "S--LD"  //单独设置路段数据
+#define CMD_GET_LD_BY_ADDR "G--LD"
+
 #define CMD_SET_L "SET-L"  //设置屏亮度控制方式和亮度等级
 #define CMD_GET_L "GET-L"
 

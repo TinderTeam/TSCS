@@ -193,6 +193,14 @@ CSCREENCONTROLLER_API bool setScreenIpAddr(char * ipAddr,char * macAddr)
 	return result;
 }
 
+CSCREENCONTROLLER_API bool getSegmentColor(int segNum,SEGMENT_INFO & segmentInfo)
+{
+	LOG_INFO("getSegmentColor");
+	bool result = CInstanceFactory::getInstance()->getController()->getSegmentColor(segNum,segmentInfo);
+	//LOG_INFO(StringUtil::addToString("set segment color result is ",result).c_str());
+	return result;
+}
+
 CSCREENCONTROLLER_API bool setSegmentColor(int segNum,int color)
 {
 	LOG_INFO("setSegmentColor");
@@ -200,6 +208,23 @@ CSCREENCONTROLLER_API bool setSegmentColor(int segNum,int color)
 	//LOG_INFO(StringUtil::addToString("set segment color result is ",result).c_str());
 	return result;
 }
+
+CSCREENCONTROLLER_API bool setSegmentColorByAddr(int roadNum,int startAddr,int endAddr,int color)
+{
+	LOG_INFO("setSegmentColorByAddr");
+	bool result = CInstanceFactory::getInstance()->getController()->setSegmentColorByAddr(roadNum,startAddr,endAddr,color);
+	//LOG_INFO(StringUtil::addToString("set segment color result is ",result).c_str());
+	return result;
+}
+
+CSCREENCONTROLLER_API bool getSegmentByAddr(int segNum,int color)
+{
+	LOG_INFO("setSegmentColor");
+	bool result = CInstanceFactory::getInstance()->getController()->setSegmentColor(segNum,color);
+	//LOG_INFO(StringUtil::addToString("set segment color result is ",result).c_str());
+	return result;
+}
+
 
 CSCREENCONTROLLER_API bool saveScreen(void)
 {

@@ -50,8 +50,11 @@ extern "C" CSCREENCONTROLLER_API bool setScreenOff();
 extern "C" CSCREENCONTROLLER_API int getScreenOnOff();
 
 
-extern "C" CSCREENCONTROLLER_API bool setSegmentColor(int segNum,int color);
+extern "C" CSCREENCONTROLLER_API bool getSegmentColor(int segNum,SEGMENT_INFO & segmentInfo);
 
+extern "C" CSCREENCONTROLLER_API bool setSegmentColor(int segNum,int color);
+ 
+extern "C" CSCREENCONTROLLER_API bool setSegmentColorByAddr(int roadNum,int startAddr,int endAddr);
 extern "C" CSCREENCONTROLLER_API bool initScreen(void);
 extern "C" CSCREENCONTROLLER_API bool saveScreen(void);
 
