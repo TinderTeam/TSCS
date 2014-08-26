@@ -140,9 +140,9 @@ bool ControllerInterface::getScreenLight(SCREEN_LIGHT_INFO & lightInfo)
 
 	if(revData.length()>=3)
 	{
-		lightInfo.lightCtr = revData[0];
-		lightInfo.lightA = revData[1];
-		lightInfo.lightB = revData[2];
+		lightInfo.lightCtr = (unsigned char)revData[0];
+		lightInfo.lightA =  (unsigned char)revData[1];
+		lightInfo.lightB =  (unsigned char)revData[2];
 
 	}
 
@@ -178,7 +178,7 @@ int ControllerInterface::getScreenColor()
 	int color = -1;
     if(!revData.empty())
 	{
-      color = revData[0];
+      color = (unsigned char)revData[0];
 
 	}
 	
@@ -307,43 +307,69 @@ bool ControllerInterface::getScreenDisp(SEGMENT_INFO segmentInfo[],int length)
 {
 	std::string revData;
 	std::string segmentStr;
-	bool   result = this->getRecvDataByCmd(CMD_GET_DISP,revData);
-	if(!result)
+	bool   result = false;
+
+ 
+	int count = 0;
+	while(true)
 	{
-		LOG_ERROR("read disp failed");
-		return false;
-	}
-	else
-	{
+		
+		if(count == 10)
+		{
+			LOG_ERROR("read 10 times, can not get a right segment information");
+			return false;
+		}
+		count++;
+        result = this->getRecvDataByCmd(CMD_GET_DISP,revData);
+		if(!result)
+		{
+			 LOG_ERROR("read disp failed");
+			 return false;
+		}
+
 		int firstSegID = -1;
 		if(revData.length() > 2)
 		{
-			firstSegID = (unsigned char)revData[2];
+			 firstSegID = (unsigned char)revData[2];
 		}
-		if(firstSegID != 0)
+		else
 		{
-		   LOG_INFO("we should discard the first package");
-           result = this->getRecvDataByCmd(CMD_GET_DISP,revData);
-		   if(!result)
-		   {
-			   LOG_ERROR("read disp failed");
-			   return false;
-		   }
+			 LOG_INFO("there is no segments");
+			 return true;
 		}
+
+		if(firstSegID == 0)
+		{
+			LOG_INFO("now get the right first segment message");
+			break;
+		}
+		else
+		{
+		    LOG_ERROR("we should discard the first package");
+		}
+
+	}
 
 		if(revData.length() > 2)
 		{
 			segmentStr = revData.substr(2,revData.length());
 			int segNum = (unsigned char)revData[1];
-			if(segNum > ((revData.length()-2)/7))
+
+			int nowCount = ((revData.length()-2)/7);
+			while(segNum > nowCount)
 			{
-				LOG_INFO("the segment number bigger than one package,we should read again");
+				LOG_INFO("the segment number bigger than last packages,we should read again");
 				result = this->getRecvDataByCmd(CMD_GET_DISP,revData);
 				if(result)
 				{
-					if(revData.length() > 2)
+					if(revData.length() > (2+7))
 					{
 						segmentStr += revData.substr(2,revData.length());
+					}
+					else
+					{
+						LOG_INFO("now the segment information is empty,no need to read again");
+						break;
 					}
 				}
 				else
@@ -351,26 +377,25 @@ bool ControllerInterface::getScreenDisp(SEGMENT_INFO segmentInfo[],int length)
 					LOG_ERROR("read sencond package failed ");
 					return false;
 				}
+				nowCount +=  ((revData.length()-2)/7);
 			}
 
 		}
-      
-
 
 		int j=0;
-		for(int i=2;i<revData.length();)
+		for(int i=0;i<segmentStr.length();)
 		{
 			if(j<length)
 			{
-				segmentInfo[j].segNum = (unsigned char)revData[i];
+				segmentInfo[j].segNum = (unsigned char)segmentStr[i];
 				i++;
-				segmentInfo[j].roadNum = (unsigned char)revData[i];
+				segmentInfo[j].roadNum = (unsigned char)segmentStr[i];
 				i++;
-				segmentInfo[j].color = (unsigned char)revData[i];
+				segmentInfo[j].color = (unsigned char)segmentStr[i];
 				i++;
-				segmentInfo[j].startAddr = ((unsigned char)revData[i])*256 + (unsigned char)revData[i+1];
+				segmentInfo[j].startAddr = ((unsigned char)segmentStr[i])*256 + (unsigned char)segmentStr[i+1];
 				i = i + 2;
-				segmentInfo[j].endAddr = ((unsigned char)revData[i])*256 + (unsigned char)revData[i+1];
+				segmentInfo[j].endAddr = ((unsigned char)segmentStr[i])*256 + (unsigned char)segmentStr[i+1];
 				i = i + 2;
 				j++;
 			}
@@ -380,7 +405,7 @@ bool ControllerInterface::getScreenDisp(SEGMENT_INFO segmentInfo[],int length)
 			}
 
 		}
-	}
+ 
 
 
 	return result;
@@ -413,16 +438,63 @@ bool ControllerInterface::setScreenIpAddr(std::string & ipAddr,std::string & mac
 
 
 }
+
 bool ControllerInterface::setSegmentColor(int segNum,int color)
 {
 	std::string data;
 	data.push_back(segNum);
 	data.push_back(color);
- 
+
 	bool result =this->sendCmd(CMD_SET_LD,data);
 
 	return result;
 }
+
+bool ControllerInterface::getSegmentColor(int segNum,SEGMENT_INFO segmentInfo)
+{
+	std::string data;
+	data.push_back(segNum);
+ 
+
+	std::string recvData;
+	bool result =this->getRecvDataByCmd(CMD_GET_LD_BY_ADDR,recvData);
+
+	if(recvData.length() == 8)
+	{
+		segmentInfo.segNum = (unsigned char)recvData[1];
+		segmentInfo.roadNum = (unsigned char)recvData[2];
+		segmentInfo.endAddr = ((unsigned char)recvData[3])*256 + (unsigned char)recvData[4];
+		segmentInfo.endAddr =  ((unsigned char)recvData[5])*256 + (unsigned char)recvData[6];
+		segmentInfo.color = (unsigned char)recvData[7];
+	}
+	else
+	{
+		LOG_ERROR("the recieve data length is not right");
+		result = false;
+	}
+
+	return result;
+}
+
+
+bool ControllerInterface::setSegmentColorByAddr(int roadNum,int startAddr,int endAddr,int color)
+{
+	std::string data;
+	data.push_back(roadNum);
+	data.push_back(startAddr/256);
+	data.push_back(startAddr%256);
+	data.push_back(endAddr/256);
+	data.push_back(endAddr%256);
+	data.push_back(color);
+ 
+	bool result =this->sendCmd(CMD_SET_LD_BY_ADDR,data);
+
+	return result;
+}
+
+
+
+
 bool ControllerInterface::saveScreen(bool update,bool save)
 {
 	std::string data;
