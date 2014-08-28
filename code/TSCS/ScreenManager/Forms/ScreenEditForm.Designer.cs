@@ -120,6 +120,7 @@
             this.lblStatusScreenIP = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.lblStatusScreenOpen = new System.Windows.Forms.Label();
+            this.skinEngine1 = new Sunisoft.IrisSkin.SkinEngine(((System.ComponentModel.Component)(this)));
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
@@ -1086,6 +1087,11 @@
             this.lblStatusScreenOpen.TabIndex = 8;
             this.lblStatusScreenOpen.Text = "打开";
             // 
+            // skinEngine1
+            // 
+            this.skinEngine1.SerialNumber = "";
+            this.skinEngine1.SkinFile = null;
+            // 
             // ScreenEditForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1250,5 +1256,6 @@
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel4;
         private System.Windows.Forms.Label lblSegmentName;
         private System.Windows.Forms.Label label20;
+        private Sunisoft.IrisSkin.SkinEngine skinEngine1;
     }
 }

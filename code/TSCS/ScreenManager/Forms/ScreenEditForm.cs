@@ -1207,7 +1207,7 @@ namespace ScreenManager.Forms
 
         private void ScreenEditForm_Load(object sender, EventArgs e)
         {
-
+            skinEngine1.SkinFile = Application.StartupPath + @"\skin.ssk";
         }
 
         private void ScreenEditForm_Paint(object sender, PaintEventArgs e)
