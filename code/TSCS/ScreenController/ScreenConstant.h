@@ -34,6 +34,8 @@
 
 #define CMD_SET_IP "XG-IP"  //…Ë÷√IPµÿ÷∑
 
+#define CMD_FRESH "Fresh"
+
 #define SPLIT_FLAG  ";"
 #define IP_SPLIT_FLAG  "."
 #define MAC_SPLIT_FLAG  "-"

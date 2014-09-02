@@ -146,6 +146,8 @@ bool ControllerInterface::getScreenLight(SCREEN_LIGHT_INFO & lightInfo)
 
 	}
 
+	LOG_INFO("function finish");
+
 	return result;
 }
 
@@ -195,6 +197,8 @@ bool ControllerInterface::setScreenLength(int length)
 	data.push_back((char)(length%256));
 	bool result =this->sendCmd(CMD_SET_SP,data);
 
+	LOG_INFO("function finish");
+
 	return result;
 }
 int ControllerInterface::getScreenLength()
@@ -220,6 +224,8 @@ int ControllerInterface::getScreenLength()
 		}
 
 	}
+
+    LOG_INFO("function finish");
 
 	return length;
 }
@@ -298,7 +304,7 @@ bool ControllerInterface::setScreenDisp(SEGMENT_INFO segmentInfo[],int length,in
 		return result;
 	}
 	result = this->saveScreen(true,false);
-
+    LOG_INFO("function finish");
 	return result;
 
 
@@ -379,6 +385,7 @@ bool ControllerInterface::getScreenDisp(SEGMENT_INFO segmentInfo[],int length)
 				}
 				nowCount +=  ((revData.length()-2)/7);
 			}
+			LOG_INFO("read finish");
 
 		}
 
@@ -401,11 +408,13 @@ bool ControllerInterface::getScreenDisp(SEGMENT_INFO segmentInfo[],int length)
 			}
 			else
 			{
+				LOG_WARN("read length is bigger than need read length");
 				break;
 			}
 
 		}
  
+	LOG_INFO("finish getScreenDisp");
 
 
 	return result;
@@ -434,6 +443,7 @@ bool ControllerInterface::setScreenIpAddr(std::string & ipAddr,std::string & mac
 
 	bool result =this->sendCmd(CMD_SET_IP,data);
 
+    LOG_INFO("function finish");
 	return result;
 
 
@@ -450,7 +460,7 @@ bool ControllerInterface::setSegmentColor(int segNum,int color)
 	return result;
 }
 
-bool ControllerInterface::getSegmentColor(int segNum,SEGMENT_INFO segmentInfo)
+bool ControllerInterface::getSegmentColor(int segNum,SEGMENT_INFO & segmentInfo,int & segCount)
 {
 	std::string data;
 	data.push_back(segNum);
@@ -461,6 +471,7 @@ bool ControllerInterface::getSegmentColor(int segNum,SEGMENT_INFO segmentInfo)
 
 	if(recvData.length() == 8)
 	{
+		segCount = (unsigned char)recvData[0];
 		segmentInfo.segNum = (unsigned char)recvData[1];
 		segmentInfo.roadNum = (unsigned char)recvData[2];
 		segmentInfo.endAddr = ((unsigned char)recvData[3])*256 + (unsigned char)recvData[4];
@@ -472,7 +483,7 @@ bool ControllerInterface::getSegmentColor(int segNum,SEGMENT_INFO segmentInfo)
 		LOG_ERROR("the recieve data length is not right");
 		result = false;
 	}
-
+    LOG_INFO("function finish");
 	return result;
 }
 
@@ -544,6 +555,30 @@ bool ControllerInterface::setScreenOff(void)
 	return result;
 }
 
+
+bool ControllerInterface::setFreshOn(void)
+{
+
+	std::string data;
+	data.push_back(1);
+
+	bool result =this->sendCmd(CMD_FRESH,data);
+
+	return result;
+
+
+}
+bool ControllerInterface::setFreshOff(void)
+{
+
+	std::string data;
+	data.push_back(0);
+
+	bool result =this->sendCmd(CMD_FRESH,data);
+
+	return result;
+}
+
 int ControllerInterface::getScreenOnOff(void)
 {
 
@@ -600,6 +635,7 @@ bool ControllerInterface::getRecvDataByCmd(std::string cmdCode,std::string & rev
         revData.push_back(temp[i]);
 	}
 
+	LOG_INFO("function finish");
 	return result;
 
 }
@@ -627,9 +663,8 @@ bool ControllerInterface::sendCmd(std::string cmdCode,std::string  data)
 		LOG_ERROR("recive data is not contains ok.");
 		return false;
 	}
-
-	//if return ok, send success
-
+ 
+    LOG_INFO("function finish");
 	return result;
 
 }
@@ -693,7 +728,7 @@ bool ControllerInterface::getData(std::string & sendData,std::string & revData)
 
 	result = CInstanceFactory::getInstance()->getDataProtocol().decode(rawData,revData);
 
-	
+	LOG_INFO("function finish");
 
 	return result;
 }

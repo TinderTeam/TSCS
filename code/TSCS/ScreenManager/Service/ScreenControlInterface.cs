@@ -105,6 +105,6 @@ namespace ScreenManager.Service
         /// <returns></returns>
        Boolean setcreenLight(ScreenManager.Model.ScreenBasicInfoModel basicModel);
 
-       Boolean setScreenSegmentColor(int segmentID, int color);
+       Boolean setScreenSegmentColor(int roadNum, int startAddr, int endAddr, int color);
     }
 }

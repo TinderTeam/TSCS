@@ -193,10 +193,10 @@ CSCREENCONTROLLER_API bool setScreenIpAddr(char * ipAddr,char * macAddr)
 	return result;
 }
 
-CSCREENCONTROLLER_API bool getSegmentColor(int segNum,SEGMENT_INFO & segmentInfo)
+CSCREENCONTROLLER_API bool getSegmentColor(int segNum,SEGMENT_INFO & segmentInfo,int & segCount)
 {
 	LOG_INFO("getSegmentColor");
-	bool result = CInstanceFactory::getInstance()->getController()->getSegmentColor(segNum,segmentInfo);
+	bool result = CInstanceFactory::getInstance()->getController()->getSegmentColor(segNum,segmentInfo,segCount);
 	//LOG_INFO(StringUtil::addToString("set segment color result is ",result).c_str());
 	return result;
 }
@@ -255,6 +255,25 @@ CSCREENCONTROLLER_API bool  setScreenOff()
 	return result;
 }
 
+CSCREENCONTROLLER_API bool  setFreshOn()
+{
+
+	LOG_INFO("setFreshOn");
+
+	bool result = CInstanceFactory::getInstance()->getController()->setFreshOn();
+
+	return result;
+}
+
+CSCREENCONTROLLER_API bool  setFreshOff()
+{
+	LOG_INFO("setFreshOff");
+	bool result = CInstanceFactory::getInstance()->getController()->setFreshOff();
+
+	//LOG_INFO(StringUtil::addToString("set Screen off result is ",result).c_str());
+	return result;
+}
+
 CSCREENCONTROLLER_API int getScreenOnOff()
 {
 	LOG_INFO("getScreenOnOff");
@@ -262,6 +281,8 @@ CSCREENCONTROLLER_API int getScreenOnOff()
 	
 	return status;
 }
+
+
 
 // This is the constructor of a class that has been exported.
 // see ScreenController.h for the class definition

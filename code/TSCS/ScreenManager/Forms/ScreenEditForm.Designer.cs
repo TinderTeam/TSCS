@@ -168,7 +168,7 @@
             this.helpMnlst});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(1008, 25);
+            this.menuStrip.Size = new System.Drawing.Size(1016, 24);
             this.menuStrip.TabIndex = 0;
             this.menuStrip.Text = "菜单栏";
             // 
@@ -179,27 +179,27 @@
             this.saveMntm,
             this.exitMntm});
             this.fileMnlst.Name = "fileMnlst";
-            this.fileMnlst.Size = new System.Drawing.Size(44, 21);
+            this.fileMnlst.Size = new System.Drawing.Size(41, 20);
             this.fileMnlst.Text = "文件";
             // 
             // openMntm
             // 
             this.openMntm.Name = "openMntm";
-            this.openMntm.Size = new System.Drawing.Size(109, 22);
+            this.openMntm.Size = new System.Drawing.Size(112, 22);
             this.openMntm.Text = "载入...";
             this.openMntm.Click += new System.EventHandler(this.openMntm_Click);
             // 
             // saveMntm
             // 
             this.saveMntm.Name = "saveMntm";
-            this.saveMntm.Size = new System.Drawing.Size(109, 22);
+            this.saveMntm.Size = new System.Drawing.Size(112, 22);
             this.saveMntm.Text = "保存...";
             this.saveMntm.Click += new System.EventHandler(this.saveMntm_Click);
             // 
             // exitMntm
             // 
             this.exitMntm.Name = "exitMntm";
-            this.exitMntm.Size = new System.Drawing.Size(109, 22);
+            this.exitMntm.Size = new System.Drawing.Size(112, 22);
             this.exitMntm.Text = "退出";
             this.exitMntm.Click += new System.EventHandler(this.exitMntm_Click);
             // 
@@ -213,48 +213,48 @@
             this.saveScrnMntm,
             this.initScrnMntm});
             this.basicMutn.Name = "basicMutn";
-            this.basicMutn.Size = new System.Drawing.Size(68, 21);
+            this.basicMutn.Size = new System.Drawing.Size(65, 20);
             this.basicMutn.Text = "基本设置";
             // 
             // searchScrnMntm
             // 
             this.searchScrnMntm.Name = "searchScrnMntm";
-            this.searchScrnMntm.Size = new System.Drawing.Size(148, 22);
+            this.searchScrnMntm.Size = new System.Drawing.Size(142, 22);
             this.searchScrnMntm.Text = "搜索屏幕";
             this.searchScrnMntm.Click += new System.EventHandler(this.searchScrnMntm_Click);
             // 
             // colorCtrlMntm
             // 
             this.colorCtrlMntm.Name = "colorCtrlMntm";
-            this.colorCtrlMntm.Size = new System.Drawing.Size(148, 22);
+            this.colorCtrlMntm.Size = new System.Drawing.Size(142, 22);
             this.colorCtrlMntm.Text = "屏幕颜色控制";
             this.colorCtrlMntm.Click += new System.EventHandler(this.colorCtrlMntm_Click);
             // 
             // lightCtrlMntm
             // 
             this.lightCtrlMntm.Name = "lightCtrlMntm";
-            this.lightCtrlMntm.Size = new System.Drawing.Size(148, 22);
+            this.lightCtrlMntm.Size = new System.Drawing.Size(142, 22);
             this.lightCtrlMntm.Text = "屏幕亮度控制";
             this.lightCtrlMntm.Click += new System.EventHandler(this.lightCtrlMntm_Click);
             // 
             // openCloseScreenMntm
             // 
             this.openCloseScreenMntm.Name = "openCloseScreenMntm";
-            this.openCloseScreenMntm.Size = new System.Drawing.Size(148, 22);
+            this.openCloseScreenMntm.Size = new System.Drawing.Size(142, 22);
             this.openCloseScreenMntm.Text = "屏幕开关控制";
             this.openCloseScreenMntm.Click += new System.EventHandler(this.openCloseScreenMntm_Click);
             // 
             // saveScrnMntm
             // 
             this.saveScrnMntm.Name = "saveScrnMntm";
-            this.saveScrnMntm.Size = new System.Drawing.Size(148, 22);
+            this.saveScrnMntm.Size = new System.Drawing.Size(142, 22);
             this.saveScrnMntm.Text = "保存屏幕";
             this.saveScrnMntm.Click += new System.EventHandler(this.saveScrnMntm_Click);
             // 
             // initScrnMntm
             // 
             this.initScrnMntm.Name = "initScrnMntm";
-            this.initScrnMntm.Size = new System.Drawing.Size(148, 22);
+            this.initScrnMntm.Size = new System.Drawing.Size(142, 22);
             this.initScrnMntm.Text = "初始化屏幕";
             this.initScrnMntm.Click += new System.EventHandler(this.initScrnMntm_Click);
             // 
@@ -264,20 +264,20 @@
             this.scrnLengthMntm,
             this.EditIPMntm});
             this.functionMnlst.Name = "functionMnlst";
-            this.functionMnlst.Size = new System.Drawing.Size(68, 21);
+            this.functionMnlst.Size = new System.Drawing.Size(65, 20);
             this.functionMnlst.Text = "专业设置";
             // 
             // scrnLengthMntm
             // 
             this.scrnLengthMntm.Name = "scrnLengthMntm";
-            this.scrnLengthMntm.Size = new System.Drawing.Size(148, 22);
+            this.scrnLengthMntm.Size = new System.Drawing.Size(142, 22);
             this.scrnLengthMntm.Text = "屏幕信息设置";
             this.scrnLengthMntm.Click += new System.EventHandler(this.scrnBasicInfoSetupMntm_Click);
             // 
             // EditIPMntm
             // 
             this.EditIPMntm.Name = "EditIPMntm";
-            this.EditIPMntm.Size = new System.Drawing.Size(148, 22);
+            this.EditIPMntm.Size = new System.Drawing.Size(142, 22);
             this.EditIPMntm.Text = "IP地址设置";
             this.EditIPMntm.Click += new System.EventHandler(this.EditIPMntm_Click);
             // 
@@ -287,19 +287,19 @@
             this.helpMntm,
             this.aboutMntm});
             this.helpMnlst.Name = "helpMnlst";
-            this.helpMnlst.Size = new System.Drawing.Size(44, 21);
+            this.helpMnlst.Size = new System.Drawing.Size(41, 20);
             this.helpMnlst.Text = "帮助";
             // 
             // helpMntm
             // 
             this.helpMntm.Name = "helpMntm";
-            this.helpMntm.Size = new System.Drawing.Size(124, 22);
+            this.helpMntm.Size = new System.Drawing.Size(118, 22);
             this.helpMntm.Text = "帮助...";
             // 
             // aboutMntm
             // 
             this.aboutMntm.Name = "aboutMntm";
-            this.aboutMntm.Size = new System.Drawing.Size(124, 22);
+            this.aboutMntm.Size = new System.Drawing.Size(118, 22);
             this.aboutMntm.Text = "关于软件";
             this.aboutMntm.Click += new System.EventHandler(this.aboutMntm_Click);
             // 
@@ -481,9 +481,9 @@
             // 
             this.groupRoadSegmentEdit.Controls.Add(this.tableLayoutPanel5);
             this.groupRoadSegmentEdit.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupRoadSegmentEdit.Location = new System.Drawing.Point(675, 3);
+            this.groupRoadSegmentEdit.Location = new System.Drawing.Point(680, 3);
             this.groupRoadSegmentEdit.Name = "groupRoadSegmentEdit";
-            this.groupRoadSegmentEdit.Size = new System.Drawing.Size(330, 674);
+            this.groupRoadSegmentEdit.Size = new System.Drawing.Size(333, 674);
             this.groupRoadSegmentEdit.TabIndex = 1;
             this.groupRoadSegmentEdit.TabStop = false;
             this.groupRoadSegmentEdit.Text = "路段管理";
@@ -502,7 +502,7 @@
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(324, 654);
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(327, 654);
             this.tableLayoutPanel5.TabIndex = 0;
             // 
             // lstVwSgmt
@@ -531,7 +531,7 @@
             // sgmtID
             // 
             this.sgmtID.Text = "路段号";
-            this.sgmtID.Width = 50;
+            this.sgmtID.Width = 80;
             // 
             // rdName
             // 
@@ -582,10 +582,10 @@
             // tabPage1
             // 
             this.tabPage1.Controls.Add(this.tableLayoutPanel1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Location = new System.Drawing.Point(4, 21);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(307, 255);
+            this.tabPage1.Size = new System.Drawing.Size(307, 256);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "路段颜色设置";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -603,7 +603,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(301, 249);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(301, 250);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // label6
@@ -632,10 +632,10 @@
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.tableLayoutPanel16);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Location = new System.Drawing.Point(4, 21);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(307, 255);
+            this.tabPage2.Size = new System.Drawing.Size(307, 256);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "路段信息设置";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -668,7 +668,7 @@
             this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 22F));
             this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel16.Size = new System.Drawing.Size(301, 249);
+            this.tableLayoutPanel16.Size = new System.Drawing.Size(301, 250);
             this.tableLayoutPanel16.TabIndex = 2;
             // 
             // tableLayoutPanel8
@@ -753,7 +753,7 @@
             this.tableLayoutPanel7.Name = "tableLayoutPanel7";
             this.tableLayoutPanel7.RowCount = 1;
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel7.Size = new System.Drawing.Size(295, 60);
+            this.tableLayoutPanel7.Size = new System.Drawing.Size(295, 61);
             this.tableLayoutPanel7.TabIndex = 20;
             // 
             // btnAddSgmt
@@ -919,7 +919,7 @@
             this.groupScreenView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupScreenView.Location = new System.Drawing.Point(3, 3);
             this.groupScreenView.Name = "groupScreenView";
-            this.groupScreenView.Size = new System.Drawing.Size(666, 674);
+            this.groupScreenView.Size = new System.Drawing.Size(671, 674);
             this.groupScreenView.TabIndex = 0;
             this.groupScreenView.TabStop = false;
             // 
@@ -948,7 +948,7 @@
             this.paintPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
             this.paintPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 0F));
             this.paintPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.paintPanel.Location = new System.Drawing.Point(9, 30);
+            this.paintPanel.Location = new System.Drawing.Point(11, 30);
             this.paintPanel.Name = "paintPanel";
             this.paintPanel.RowCount = 11;
             this.paintPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
@@ -974,11 +974,11 @@
             this.formTablePanel.Controls.Add(this.groupScreenView, 1, 0);
             this.formTablePanel.Controls.Add(this.groupRoadSegmentEdit, 2, 0);
             this.formTablePanel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.formTablePanel.Location = new System.Drawing.Point(0, 25);
+            this.formTablePanel.Location = new System.Drawing.Point(0, 24);
             this.formTablePanel.Name = "formTablePanel";
             this.formTablePanel.RowCount = 1;
             this.formTablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.formTablePanel.Size = new System.Drawing.Size(1008, 680);
+            this.formTablePanel.Size = new System.Drawing.Size(1016, 680);
             this.formTablePanel.TabIndex = 1;
             // 
             // tableLayoutPanel15
@@ -1029,7 +1029,7 @@
             // 
             this.statusStrip1.Location = new System.Drawing.Point(0, 708);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1008, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1016, 22);
             this.statusStrip1.TabIndex = 2;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -1096,7 +1096,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1008, 730);
+            this.ClientSize = new System.Drawing.Size(1016, 730);
             this.Controls.Add(this.lblStatusScreenOpen);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.lblStatusScreenIP);

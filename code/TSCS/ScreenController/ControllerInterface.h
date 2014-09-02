@@ -37,12 +37,14 @@ public:
 
 	virtual bool setScreenIpAddr(std::string & ipAddr,std::string & macAddr);
 
-	virtual bool getSegmentColor(int segNum,SEGMENT_INFO segmentInfo);
+	virtual bool getSegmentColor(int segNum,SEGMENT_INFO & segmentInfo,int & segCount);
 	virtual bool setSegmentColor(int segNum,int color);
  
   	virtual bool setSegmentColorByAddr(int roadNum,int startAddr,int endAddr,int color);
 	virtual bool setScreenLight(SCREEN_LIGHT_INFO & lightInfo);
 	virtual bool getScreenLight(SCREEN_LIGHT_INFO & lightInfo);
+	virtual bool setFreshOn(void);
+	virtual bool setFreshOff(void);
  
 private:
 	bool connected;

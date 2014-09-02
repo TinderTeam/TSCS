@@ -373,7 +373,7 @@ namespace ScreenManager.Forms
 
                     String[] strArray=cmb.Text.Split(':');
                     int number = System.Convert.ToInt16(strArray[0]);
-                    System.Console.WriteLine("转到的数字"+number);
+       
                     SegmentModel sgmtModel = this.ScreenModel.changeRoad(this.SelcetedItem.Index, number);                
                     this.roadListView.list[this.ScreenModel.getRoadModelBySegmentId(this.SelcetedItem.Index).RoadID].PanelView.Segment = this.ScreenModel.getSegmentList()[this.SelcetedItem.Index];
                     this.cmbRoad.Text = this.ScreenModel.getRoadModelBySegmentId(this.SelcetedItem.Index).RoadID + ":" + this.ScreenModel.getRoadModelBySegmentId(this.SelcetedItem.Index).RoadName;
@@ -423,30 +423,38 @@ namespace ScreenManager.Forms
 
             ComboBox combBox = (ComboBox)sender;
 
-            if (this.selcetedItem != null)
+            try
             {
-                SegmentModel segMengt = this.ScreenModel.getSegmentList()[selcetedItem.Index];
-
-                bool result = ServiceContext.getInstance().getScreenControl().setScreenSegmentColor(segMengt.SegmentID, combBox.SelectedIndex);
-                if (result)
+                if (this.selcetedItem != null)
                 {
-                    MessageBox.Show("修改路段颜色成功");
-                    segMengt.SegmentColor = combBox.SelectedIndex;
-                }
-                else
-                {
-                    MessageBox.Show("修改路段颜色失败");
-                }
-         
-                refreshSgmtList();
-                refreshView();
-                refreshSgmtInfo();
+                    SegmentModel segMengt = this.ScreenModel.getSegmentList()[selcetedItem.Index];
 
+                    RoadModel road = this.ScreenModel.getRoadModelBySegmentId(segMengt.SegmentID);
+
+                    bool result = ServiceContext.getInstance().getScreenControl().setScreenSegmentColor(road.RoadID, segMengt.Address.Start, segMengt.Address.End, combBox.SelectedIndex);
+                    if (result)
+                    {
+                        MessageBox.Show("修改路段颜色成功");
+                        segMengt.SegmentColor = combBox.SelectedIndex;
+                    }
+                    else
+                    {
+                        MessageBox.Show("修改路段颜色失败");
+                    }
+
+                    refreshSgmtList();
+                    refreshView();
+                    refreshSgmtInfo();
+
+                }
             }
-            else
+            catch (System.Exception ex)
             {
-                ;
+            	log.Error("set segment color failed",ex);
+                MessageBox.Show("修改路段颜色失败");
             }
+
+            
         }
 
 

@@ -115,27 +115,40 @@ namespace ScreenManager.Service
  
             }
 
-            screen = ScreenControlDllOperate.getScreenNameInfoByDll();
-         
-            ScreenBasicInfoModel screenBasic = ScreenControlDllOperate.getScreenBasicInfoByDll();
+            //setFreshOn
 
-            if (null != screenBasic)
+            result = ScreenControlDllOperate.setFreshOffByDll();
+
+            if (!result)
             {
-                screen.ScreenIP = this.connectedIP;
-
-                screen.ScreenColor = screenBasic.ScreenColor;
+                log.Error("set fresh off failed");
  
-                screen.ScreenLightCtrl = screenBasic.LightCtrl;
-   
-                screen.LightLevelA = screenBasic.LightLevelA;
-                screen.LightLevelB = screenBasic.LightLevelB;
-                screen.BasicInfo.ScreenLength = screenBasic.ScreenLength;
-                screen.BasicInfo.ScreenStatus = screenBasic.ScreenStatus;
- 
-            
             }
-            ScreenControlDllOperate.getSegmentInfoByDll(screen.RoadList);
+            else
+            {
+                screen = ScreenControlDllOperate.getScreenNameInfoByDll();
 
+                ScreenBasicInfoModel screenBasic = ScreenControlDllOperate.getScreenBasicInfoByDll();
+
+                if (null != screenBasic)
+                {
+                    screen.ScreenIP = this.connectedIP;
+
+                    screen.ScreenColor = screenBasic.ScreenColor;
+
+                    screen.ScreenLightCtrl = screenBasic.LightCtrl;
+
+                    screen.LightLevelA = screenBasic.LightLevelA;
+                    screen.LightLevelB = screenBasic.LightLevelB;
+                    screen.BasicInfo.ScreenLength = screenBasic.ScreenLength;
+                    screen.BasicInfo.ScreenStatus = screenBasic.ScreenStatus;
+
+
+                }
+                ScreenControlDllOperate.getSegmentInfoByDll(screen.RoadList);
+            }
+
+ 
             ScreenControlDllOperate.closeConnectByDll();
             log.Info(screen);
 
@@ -224,16 +237,16 @@ namespace ScreenManager.Service
             return result;
         }
 
-        public Boolean setScreenSegmentColor(int segmentID,int color)
+        public Boolean setScreenSegmentColor(int roadNum,int startAddr,int endAddr,int color)
         {
             bool result = ScreenControlDllOperate.connectScreenByDLL(connectedIP);
             if (result)
             {
-                result = ScreenControlDllOperate.setSegmentColorByDll(segmentID, color);
+                result = ScreenControlDllOperate.setSegmentColorByAddrByDll(roadNum, startAddr, endAddr, color);
                 if (!result)
                 {
                     log.Warn("set failed try again");
-                    result = ScreenControlDllOperate.setSegmentColorByDll(segmentID,color);
+                    result = ScreenControlDllOperate.setSegmentColorByAddrByDll(roadNum, startAddr, endAddr, color);
 
                 }
             }

@@ -56,7 +56,7 @@ namespace ScreenManager.Service
             {
                 log.Error("call dll exception",ex);
             }
-            
+            log.Info("function out. the result is " + result);
             return result;
         }
 
@@ -64,6 +64,7 @@ namespace ScreenManager.Service
         private static extern bool setScreenIpAddr(string ipAddr, string macAddr);
         public static bool setScreenIpAddrByDLL(string ipAddr,string macAddr)
         {
+            log.Info("function in");
             bool result = false;
             try
             {
@@ -73,6 +74,7 @@ namespace ScreenManager.Service
             {
                  log.Error("call dll exception",ex);
             }
+            log.Info("function out. the result is " + result);
             return result;
         }
 
@@ -80,6 +82,7 @@ namespace ScreenManager.Service
         private static extern IntPtr getScreenCS();
         public static ScreenModel getScreenNameInfoByDll()
         {
+            log.Info("function in");
             IntPtr cs;
             string str = "";
             bool result = true;
@@ -132,7 +135,7 @@ namespace ScreenManager.Service
                     }
                 }
             }
- 
+            log.Info("function out. the result is " + result);
             return screen;
         }
 
@@ -140,7 +143,7 @@ namespace ScreenManager.Service
         private static extern bool setScreenCS(string cs);
         public static bool setScreenNameInfoByDll(ScreenModel screen)
         {
-            
+            log.Info("function in");
             String str = "";
             str += screen.ScreenName;
             str += SCREEN_ROAD_FLAG;
@@ -174,8 +177,8 @@ namespace ScreenManager.Service
                 log.Error("set screen cs failed");
             }
 
-            
 
+            log.Info("function out. the result is " + result);
             return result;
         }
 
@@ -185,6 +188,7 @@ namespace ScreenManager.Service
         private static extern bool getScreenDisp(IntPtr roadInfo, int length);
         public static  bool getSegmentInfoByDll(List<RoadModel> roadList)
         {
+            log.Info("function in");
             int segNum = 150;
 
             SEGMENT_INFO[] segInfoList = new SEGMENT_INFO[segNum];
@@ -276,11 +280,13 @@ namespace ScreenManager.Service
                     }
 
             }
+            log.Info("function out. the result is " + result);
             return result;
         }
 
         private static RoadModel getRoadByRoadID(int roadID,List<RoadModel> roadList)
         {
+            log.Info("function in");
             for (int i = 0; i < roadList.Count; i++)
             {
                 if (roadID == roadList[i].RoadID)
@@ -288,6 +294,7 @@ namespace ScreenManager.Service
                     return roadList[i];
                 }
             }
+
             return null;
         }
 
@@ -310,7 +317,29 @@ namespace ScreenManager.Service
                 log.Error("call dll exception", ex);
             }
 
+            log.Info("function out. the result is " + result);
+            return result;
+        }
 
+        [DllImport("ScreenController.dll", EntryPoint = "setSegmentColorByAddr")]
+        private static extern bool setSegmentColorByAddr(int roadNum, int startAddr,int endAddr,int color);
+        public static bool setSegmentColorByAddrByDll(int roadNum, int startAddr,int endAddr,int color)
+        {
+
+            log.Info("set segment color. the roadNum id is  " + roadNum + "the start address is " +startAddr  + "the end address is " +endAddr +", the color is " + color);
+            bool result = false;
+            try
+            {
+
+                result = setSegmentColorByAddr( roadNum, startAddr, endAddr, color);
+
+            }
+            catch (System.Exception ex)
+            {
+                log.Error("call dll exception", ex);
+            }
+
+            log.Info("function out. the result is " + result);
             return result;
         }
  
@@ -332,12 +361,13 @@ namespace ScreenManager.Service
                 log.Error("call dll exception", ex);
             }
 
-
+            log.Info("function out. the result is " + result);
             return result;
         }
 
         private static bool setSegmentList(ScreenModel screen)
         {
+            log.Info("function in");
             List<SegmentModel> segmentList = screen.getSegmentList();
             int segmentNum = segmentList.Count;
 
@@ -368,7 +398,7 @@ namespace ScreenManager.Service
             bool result = setScreenDisp(segPt, segmentNum,screen.ScreenColor);
 
             Marshal.FreeHGlobal(segPt);
-
+            log.Info("function out. the result is " + result);
             return result;
         }
 
@@ -381,6 +411,7 @@ namespace ScreenManager.Service
 
         public static bool setScreenLightByDll(ScreenBasicInfoModel screenBaiscInfo)
         {
+            log.Info("function in");
              bool result = false;
             try
             {
@@ -400,13 +431,14 @@ namespace ScreenManager.Service
             {
                 log.Error("call dll exception", ex);
             }
-
+            log.Info("function out. the result is " + result);
            return result;
         }
         [DllImport("ScreenController.dll", EntryPoint = "setScreenColor")]
         private static extern bool setScreenColor(int color);
         public static bool setScreenColorByDll(int color)
         {
+            log.Info("function in");
             bool result = false;
             try
             {
@@ -416,7 +448,7 @@ namespace ScreenManager.Service
             {
                 log.Error("call dll exception", ex);
             }
-
+            log.Info("function out. the result is " + result);
             return result;
 
         }
@@ -432,6 +464,7 @@ namespace ScreenManager.Service
         private static extern int getScreenOnOff();
         public static ScreenBasicInfoModel getScreenBasicInfoByDll()
         {
+            log.Info("function in");
             ScreenBasicInfoModel screenBaiscInfo = new ScreenBasicInfoModel();
             bool result = false;
             try
@@ -479,7 +512,7 @@ namespace ScreenManager.Service
             {
                 log.Error("call dll exception", ex);
             }
-
+            log.Info("function out. the result is " + result);
             return screenBaiscInfo;
         }
 
@@ -487,6 +520,7 @@ namespace ScreenManager.Service
         private static extern bool setScreenLength(int length);
         public static bool setScreenLengthByDll(int length)
         {
+            log.Info("function in");
             bool result = false;
             try
             {
@@ -496,6 +530,7 @@ namespace ScreenManager.Service
             {
                log.Error("call dll exception", ex);
             }
+            log.Info("function out. the result is " + result);
             return result;
         }
                 
@@ -503,6 +538,7 @@ namespace ScreenManager.Service
         private static extern bool setScreenOff();
         public static bool setScreenOffByDll()
         {
+            log.Info("function in");
             bool result = false;
             try
             {
@@ -512,6 +548,7 @@ namespace ScreenManager.Service
             {
                log.Error("call dll exception", ex);
             }
+            log.Info("function out. the result is " + result);
             return result;
         }
 
@@ -519,6 +556,7 @@ namespace ScreenManager.Service
         private static extern bool setScreenOn();
         public static bool setScreenOnByDll()
         {
+            log.Info("function in");
             bool result = false;
             try
             {
@@ -528,9 +566,27 @@ namespace ScreenManager.Service
             {
                 log.Error("call dll exception", ex);
             }
+            log.Info("function out. the result is " + result);
             return result;
         }
 
+        [DllImport("ScreenController.dll", EntryPoint = "setFreshOff")]
+        private static extern bool setFreshOff();
+        public static bool setFreshOffByDll()
+        {
+            log.Info("function in");
+            bool result = false;
+            try
+            {
+                result = setFreshOff();
+            }
+            catch (System.Exception ex)
+            {
+                log.Error("call dll exception", ex);
+            }
+            log.Info("function out. the result is " + result);
+            return result;
+        }
 
  
         
@@ -538,6 +594,7 @@ namespace ScreenManager.Service
         private static extern bool saveScreen();
         public static bool saveScreenByDll()
         {
+            log.Info("function in");
             bool result = false;
             try
             {
@@ -547,6 +604,7 @@ namespace ScreenManager.Service
             {
                 log.Error("call dll exception", ex);
             }
+            log.Info("function out. the result is " + result);
             return result;
         }
 
@@ -554,6 +612,7 @@ namespace ScreenManager.Service
         private static extern bool initScreen();
         public static bool initScreenByDll()
         {
+            log.Info("function in");
             bool result = false;
             try
             {
@@ -563,6 +622,7 @@ namespace ScreenManager.Service
             {
                 log.Error("call dll exception", ex);
             }
+            log.Info("function out. the result is " + result);
             return result; 
         }
 
@@ -570,6 +630,7 @@ namespace ScreenManager.Service
         private static extern bool closeConnect();
         public static bool closeConnectByDll()
         {
+            log.Info("function in");
             log.Info("now close the connect");
             bool result = false;
             try
@@ -580,6 +641,7 @@ namespace ScreenManager.Service
             {
                 log.Error("call dll exception", ex);
             }
+            log.Info("function out. the result is " + result);
             return result; 
         }
     }

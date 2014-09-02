@@ -44,17 +44,18 @@ extern "C" CSCREENCONTROLLER_API bool getScreenDisp(SEGMENT_INFO segmentInfo[],i
 
 extern "C" CSCREENCONTROLLER_API bool setScreenIpAddr(char * ipAddr,char * macAddr);
 
-
+extern "C" CSCREENCONTROLLER_API bool setFreshOff();
+extern "C" CSCREENCONTROLLER_API bool setFreshOn();
 extern "C" CSCREENCONTROLLER_API bool setScreenOn();
 extern "C" CSCREENCONTROLLER_API bool setScreenOff();
 extern "C" CSCREENCONTROLLER_API int getScreenOnOff();
 
 
-extern "C" CSCREENCONTROLLER_API bool getSegmentColor(int segNum,SEGMENT_INFO & segmentInfo);
+extern "C" CSCREENCONTROLLER_API bool getSegmentColor(int segNum,SEGMENT_INFO & segmentInfo,int & segCount);
 
 extern "C" CSCREENCONTROLLER_API bool setSegmentColor(int segNum,int color);
  
-extern "C" CSCREENCONTROLLER_API bool setSegmentColorByAddr(int roadNum,int startAddr,int endAddr);
+extern "C" CSCREENCONTROLLER_API bool setSegmentColorByAddr(int roadNum,int startAddr,int endAddr,int color);
 extern "C" CSCREENCONTROLLER_API bool initScreen(void);
 extern "C" CSCREENCONTROLLER_API bool saveScreen(void);
 

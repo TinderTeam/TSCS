@@ -68,20 +68,7 @@ namespace ScreenManager.Model.Constant
             }
             return -1;
         }
-
-        public String getColorByColorNum(int color)
-        {
-            if (color < colorArray.Length && color >= 0)
-            {
-                return colorArray[i];
-            }
-            else
-            {
-                log.Error("the color is invalid.color is" + color);
-                return "";
-            }
-        }
-
+  
 
         public static String[] colorArray = { 
                                                 DEFAULT_COLOR,
