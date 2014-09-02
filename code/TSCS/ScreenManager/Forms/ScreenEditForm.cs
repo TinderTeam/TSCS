@@ -378,12 +378,13 @@ namespace ScreenManager.Forms
                     SegmentModel sgmtModel = this.ScreenModel.changeRoad(this.SelcetedItem.Index, number);                
                     this.roadListView.list[this.ScreenModel.getRoadModelBySegmentId(this.SelcetedItem.Index).RoadID].PanelView.Segment = this.ScreenModel.getSegmentList()[this.SelcetedItem.Index];
                     this.cmbRoad.Text = this.ScreenModel.getRoadModelBySegmentId(this.SelcetedItem.Index).RoadID + ":" + this.ScreenModel.getRoadModelBySegmentId(this.SelcetedItem.Index).RoadName;
+                    
                     refreshSgmtList();
                     cancelSelectedItem(this.selcetedItem);
                     this.lstVwSgmt.SelectedItems.Clear();
                     selectItem( this.lstVwSgmt.Items[sgmtModel.SegmentID]);
-                    refreshSgmtList();               
-                    refreshView();
+                    this.screenModel.checkLength();
+                    this.refreshScrn();
                 }
                
             }
@@ -1076,13 +1077,27 @@ namespace ScreenManager.Forms
                     {                     
                         this.cmbRoad.SelectedIndex = i;
                     }
-                }      
-     
+                }
+
                 this.txtStart.Maximum = this.ScreenModel.getRoadModelBySegmentId(System.Convert.ToInt16(item.SubItems[0].Text)).RoadLenght;
                 this.txtEnd.Maximum = this.ScreenModel.getRoadModelBySegmentId(System.Convert.ToInt16(item.SubItems[0].Text)).RoadLenght;
+                if (System.Convert.ToInt16(item.SubItems[2].Text) > this.txtStart.Maximum)
+                {
+                    this.txtStart.Value = this.txtStart.Maximum;
+                }
+                else {
+                    this.txtStart.Value = System.Convert.ToInt16(item.SubItems[2].Text);
+                }
 
-                this.txtStart.Value = System.Convert.ToInt16(item.SubItems[2].Text);
-                this.txtEnd.Value = System.Convert.ToInt16(item.SubItems[3].Text);
+                if (System.Convert.ToInt16(item.SubItems[3].Text) > this.txtEnd.Maximum)
+                {
+                    this.txtEnd.Value = this.txtEnd.Maximum;
+                }
+                else
+                {
+                    this.txtEnd.Value = System.Convert.ToInt16(item.SubItems[3].Text);
+                }
+                
 
 
                 this.cmbRdClr.SelectedIndex = this.ScreenModel.getSegmentList()[System.Convert.ToInt16(item.SubItems[0].Text)].SegmentColor;

@@ -76,7 +76,7 @@ namespace ScreenManager.Model
 
             if (this.getSegmentList()[segmentIndex].Address.Start > roadList[roadIndex].RoadLenght)
             {
-                sm.Address.Start = roadList[roadIndex].RoadLenght;
+                sm.Address.Start = 0;
             }
             else if (this.getSegmentList()[segmentIndex].Address.End > roadList[roadIndex].RoadLenght)
             {

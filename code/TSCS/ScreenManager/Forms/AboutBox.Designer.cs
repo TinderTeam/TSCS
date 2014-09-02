@@ -41,6 +41,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.label6 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -137,14 +138,13 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(182, 189);
+            this.label5.Location = new System.Drawing.Point(241, 189);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(155, 12);
+            this.label5.Size = new System.Drawing.Size(95, 12);
             this.label5.TabIndex = 27;
-            this.label5.Text = "  Email ：zszmled@163.com";
+            this.label5.Text = "zszmled@163.com";
             this.toolTip1.SetToolTip(this.label5, "双击复制");
             this.label5.DoubleClick += new System.EventHandler(this.label5_DoubleClick);
-        
             // 
             // linkLabel1
             // 
@@ -157,11 +157,21 @@
             this.linkLabel1.Text = "http://www.szzsyk.com/";
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(197, 189);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(47, 12);
+            this.label6.TabIndex = 29;
+            this.label6.Text = "Email：";
+            // 
             // AboutBox
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(435, 261);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -203,5 +213,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.Label label6;
     }
 }

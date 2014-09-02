@@ -52,7 +52,8 @@ namespace ScreenManager
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void selcetedScreen(object sender, MouseEventArgs e)
-        {           
+        {
+            this.Cursor = Cursors.WaitCursor;
             System.Windows.Forms.ListView view = (System.Windows.Forms.ListView)sender;
             System.Windows.Forms.ListViewItem item = view.SelectedItems[0];
 
