@@ -87,6 +87,11 @@ namespace ScreenManager.Forms
                     roadLength.Size = new System.Drawing.Size(120, 21);
                     roadLength.TabIndex = 4;
                     roadLength.Maximum = form.ScreenModel.ScreenLong;
+
+                    if (form.ScreenModel.RoadList[i].RoadLenght > roadLength.Maximum)
+                    {
+                        form.ScreenModel.RoadList[i].RoadLenght = form.ScreenModel.ScreenLong;
+                    }
                     roadLength.Value = form.ScreenModel.RoadList[i].RoadLenght;
               
                     roadName.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -164,6 +169,15 @@ namespace ScreenManager.Forms
                         this.form.cancelSelectedItem(this.form.SelcetedItem);
                         this.form.SelcetedItem = null;
                         this.form.ScreenModel.cleanSegment();
+                        ///
+                        ///Edit By Nan 
+                        ///2014-9-2
+                        ///增加校验
+                        if (!this.form.ScreenModel.checkLength())
+                        {
+                           // MessageBox.Show("路段长度超过限制，系统自动截断");
+                        }
+                        ///
                         this.form.refreshRoadInfo();
                         this.form.refreshSgmtInfo();
                         this.form.refreshScrn();

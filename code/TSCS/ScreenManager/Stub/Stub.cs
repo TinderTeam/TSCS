@@ -18,6 +18,7 @@ namespace ScreenManager.Stub
             m.ScreenColor = 2;
             m.LightLevelA = 100;
             m.LightLevelB = 100;
+            m.ScreenLong = 100;
             for (int j = 0; j < 10; j=j+2)
             {
                 m.RoadList[j] = getRoadStub(j.ToString());
@@ -62,7 +63,7 @@ namespace ScreenManager.Stub
             RoadModel roadModel = new RoadModel();
             roadModel.BaseColor = 0;
             roadModel.RoadID = System.Convert.ToInt16(id);
-            roadModel.RoadName = "RoadStub" + id;
+            roadModel.RoadName = "---";
             List<SegmentModel> sl = new List<SegmentModel>();
 
             int k = 0;

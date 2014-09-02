@@ -5,7 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
-
+using Microsoft.Win32;
 namespace ScreenManager.Forms
 {
     partial class AboutBox : Form
@@ -18,11 +18,9 @@ namespace ScreenManager.Forms
             this.labelVersion.Text = String.Format("Version {0}", AssemblyVersion);
             this.labelCopyright.Text = AssemblyCopyright;
             this.labelCompanyName.Text = AssemblyCompany;
- 
+            
         }
-
         #region Assembly Attribute Accessors
-
         public string AssemblyTitle
         {
             get
@@ -105,5 +103,20 @@ namespace ScreenManager.Forms
         {
             this.logoPictureBox.Load(ScreenManager.Util.SysConfig.getSystemPath()+"/logo.png");
         }
+
+        private void label5_DoubleClick(object sender, EventArgs e)
+        {
+            Clipboard.SetDataObject(this.label5.Text);
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("http://www.szzsyk.com/");
+            MessageBox.Show("已复制到剪贴板");
+        }
+
+
+
+
     }
 }

@@ -91,6 +91,7 @@ namespace ScreenManager
             this.listViewScrn.UseCompatibleStateImageBehavior = false;
             this.listViewScrn.View = System.Windows.Forms.View.Details;
             this.listViewScrn.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.selcetedScreen);
+   
             // 
             // name
             // 
@@ -141,8 +142,6 @@ namespace ScreenManager
             this.MinimizeBox = false;
             this.Name = "ScreenSearchForm";
             this.ShowInTaskbar = false;
-            this.TopMost = true;
-            this.Load += new System.EventHandler(this.ScreenSearchForm_Load);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);

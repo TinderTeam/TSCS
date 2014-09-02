@@ -39,6 +39,7 @@ namespace ScreenManager.Model.UI
             for (int i = 0; i < list.Count; i++)
             {
                 list[i].PanelView.Segment = null;
+                list[i].PanelView.Cursor = Cursors.Arrow;
             }
         }
 

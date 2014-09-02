@@ -9,11 +9,8 @@ using System.Data;
 using System.Xml.Serialization;
 using System.Xml;
 using System.Drawing;
-
 using System.IO;
-
 using System.Windows.Forms;
-
 using ScreenManager.Model.UI;
 using ScreenManager.Service;
 using ScreenManager.Util;
@@ -24,22 +21,22 @@ namespace ScreenManager.Dao
     public class RoadDao
     {
 
-        public bool saveAsFile(ScreenModel screenModel)
+        public void saveAsFile(ScreenModel screenModel)
         {
             SaveFileDialog fileDialog = new SaveFileDialog();
 
             fileDialog.InitialDirectory = "C://";
 
-            fileDialog.Filter = "TrafficScreen files(*.ts)|*.ts|所有文件(*.*)|*.*";
+            fileDialog.Filter = "TrafficScreen files(*.trafc)|*.trafc|所有文件(*.*)|*.*";
 
             fileDialog.FilterIndex = 1;
 
             fileDialog.RestoreDirectory = true;
 
 
+            System.Windows.Forms.DialogResult result = fileDialog.ShowDialog();
 
-
-            if (fileDialog.ShowDialog() == DialogResult.OK)
+            if (result == DialogResult.OK)
             {
 
                 RoadDaoModel roadDaoModel = new RoadDaoModel();
@@ -49,11 +46,14 @@ namespace ScreenManager.Dao
                 Stream writer = new FileStream(fileDialog.FileName, FileMode.Create);
                 // Serialize the object, and close the TextWriter
                 serializer.Serialize(writer, roadDaoModel);
-                return true;
+            }
+            else if (result == DialogResult.Cancel)
+            {
+                ;
             }
             else
             {
-                return false;
+                MessageBox.Show("保存文件错误");
             }
           
         }
@@ -67,7 +67,7 @@ namespace ScreenManager.Dao
 
             fileDialog.InitialDirectory = "C://";
 
-            fileDialog.Filter = "TrafficScreen files(*.ts)|*.ts|所有文件(*.*)|*.*";
+            fileDialog.Filter = "TrafficScreen files(*.trafc)|*.trafc|所有文件(*.*)|*.*";
 
             fileDialog.FilterIndex = 1;
 

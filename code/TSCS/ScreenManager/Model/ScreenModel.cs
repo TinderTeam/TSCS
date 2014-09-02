@@ -23,7 +23,36 @@ namespace ScreenManager.Model
            
         }
 
-
+       /// <summary>
+       /// 校验道路
+       /// </summary>
+       /// <returns></returns>
+      public bool checkLength(){
+          bool result = true ;
+      
+          foreach (RoadModel road in this.RoadList){
+              //校验道路
+              if (road.RoadLenght > this.ScreenLong)
+              {
+                  road.RoadLenght = this.ScreenLong;
+                  result = false;
+              }
+              //校验路段
+              foreach(SegmentModel sgmt in road.SegmentList){
+                  if (sgmt.Address.Start > road.RoadLenght)
+                  {
+                      sgmt.Address.Start = road.RoadLenght;
+                      result = false;
+                  }
+                  if (sgmt.Address.End > road.RoadLenght)
+                  {
+                      sgmt.Address.End = road.RoadLenght;
+                      result = false;
+                  }
+              }
+          }
+          return result;
+      }
 
       public void  cleanSegment()
       {

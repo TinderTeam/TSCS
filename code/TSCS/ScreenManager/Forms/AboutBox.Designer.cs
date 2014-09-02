@@ -27,6 +27,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AboutBox));
             this.logoPictureBox = new System.Windows.Forms.PictureBox();
             this.labelProductName = new System.Windows.Forms.Label();
@@ -38,6 +39,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -109,9 +112,9 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(182, 68);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(197, 12);
+            this.label2.Size = new System.Drawing.Size(245, 12);
             this.label2.TabIndex = 24;
-            this.label2.Text = "公    司：深圳市中世银科有限公司";
+            this.label2.Text = "公    司：深圳市中世银科照明科技有限公司";
             // 
             // label3
             // 
@@ -127,9 +130,9 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(182, 151);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(197, 12);
+            this.label4.Size = new System.Drawing.Size(65, 12);
             this.label4.TabIndex = 26;
-            this.label4.Text = "官    网：http://www.szzsyk.com/";
+            this.label4.Text = "官    网：";
             // 
             // label5
             // 
@@ -138,13 +141,28 @@
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(155, 12);
             this.label5.TabIndex = 27;
-            this.label5.Text = "  Email ：zmzsled@163.com";
+            this.label5.Text = "  Email ：zszmled@163.com";
+            this.toolTip1.SetToolTip(this.label5, "双击复制");
+            this.label5.DoubleClick += new System.EventHandler(this.label5_DoubleClick);
+        
+            // 
+            // linkLabel1
+            // 
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.Location = new System.Drawing.Point(241, 151);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(137, 12);
+            this.linkLabel1.TabIndex = 28;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "http://www.szzsyk.com/";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // AboutBox
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(435, 261);
+            this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -183,5 +201,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.LinkLabel linkLabel1;
     }
 }

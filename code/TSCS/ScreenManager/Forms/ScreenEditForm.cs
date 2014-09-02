@@ -72,14 +72,14 @@ namespace ScreenManager.Forms
                     panelView.Paint += new System.Windows.Forms.PaintEventHandler(this.panel_Paint);
 
                     if(!this.ScreenModel.RoadList[i].RoadName.Equals("")){
-                    
-                    lblIndex.Anchor = System.Windows.Forms.AnchorStyles.None;
+
+                    lblIndex.Anchor = System.Windows.Forms.AnchorStyles.Left;
                     lblIndex.Location = new System.Drawing.Point(41, 23);
                     lblIndex.Text = "";
                     lblIndex.Size = new System.Drawing.Size(56, 21);
                     lblIndex.TabIndex = 0;
-
-
+                    lblIndex.AutoSize = true;
+                  
                     // 
                     // textRoad
                     // 
@@ -153,14 +153,15 @@ namespace ScreenManager.Forms
         public void loadScreen(ScreenModel m)
         {
             screenModel = m;
-           
+            if (!screenModel.checkLength())
+            {
+                //MessageBox.Show("路段长度信息超过允许值，系统将自动截断。");
+            }
             cancelSelectedItem(null);
             this.SelcetedItem = null;
 
             this.refreshRoadInfo();
-          
-            refreshScrn();
-          
+            refreshScrn();       
             refreshStatusBar();
          
         }
@@ -716,10 +717,7 @@ namespace ScreenManager.Forms
         private void saveMntm_Click(object sender, EventArgs e)
         {
             ScreenManager.Dao.RoadDao roadDao = new ScreenManager.Dao.RoadDao();
-            if (!roadDao.saveAsFile(this.ScreenModel))
-            {
-               MessageBox.Show("保存文件错误");
-            }
+            roadDao.saveAsFile(this.ScreenModel);
         }
 
 
@@ -1228,6 +1226,7 @@ namespace ScreenManager.Forms
             RoadPanel rp = (RoadPanel)sender;
             rp.repaint();
         }
+
 
 
 

@@ -78,11 +78,11 @@ namespace ScreenManager
                 screenModel = new ScreenModel();
                 sef.loadScreen(screenModel);
                 sef.refreshScrn();
+                this.Cursor = Cursors.Arrow;
                 MessageBox.Show("连接屏幕失败，请重新搜索屏幕！");
-
             }
             view.Items.Clear();
-    
+            this.Cursor = Cursors.Arrow;
 
         }
 
@@ -139,9 +139,6 @@ namespace ScreenManager
             this.listViewScrn.Items.AddRange(ItemList);
         }
 
-        private void ScreenSearchForm_Load(object sender, EventArgs e)
-        {
 
-        }
     }
 }
