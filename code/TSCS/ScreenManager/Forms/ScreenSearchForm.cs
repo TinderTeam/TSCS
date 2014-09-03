@@ -62,10 +62,10 @@ namespace ScreenManager
 
             try
             {
-                screenModel = ServiceContext.getInstance().getScreenControl().getScreenInfo(screenModel.BasicInfo.ScreenIP);
+                //screenModel = ServiceContext.getInstance().getScreenControl().getScreenInfo(screenModel.BasicInfo.ScreenIP);
 
                 //Test Stub
-                // screenModel = ScreenManager.Stub.Stub.getScreenModelStub();
+                screenModel = ScreenManager.Stub.Stub.getScreenModelStub();
                 //UpdateScreen
                 sef.loadScreen(screenModel);
                 sef.refreshScrn();
@@ -108,7 +108,7 @@ namespace ScreenManager
             this.btnSearchIP.Enabled = true;
 
             //Test
-            //screenList.List = ScreenManager.Stub.Stub.getScreenStub();
+            screenList.List = ScreenManager.Stub.Stub.getScreenStub();
             //
             //加载屏幕列表
             this.reloadIPList();

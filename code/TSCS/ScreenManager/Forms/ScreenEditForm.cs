@@ -329,7 +329,7 @@ namespace ScreenManager.Forms
         {
             this.btnSet.Enabled = false;
             this.cancelSelectedItem(this.SelcetedItem);
-
+            this.refreshScrn();
             bool result = ScreenManager.Service.ServiceContext.getInstance().getScreenControl().setScreenSegmentInfo(this.ScreenModel);
             if (!result)
             {
@@ -859,7 +859,7 @@ namespace ScreenManager.Forms
                 int length = panel.Width;
                 int roadLength = panel.Road.RoadLenght;
                 double clickPoint;
-                clickPoint = (double)e.X / (double)length;
+                clickPoint = (double)e.X / ((double)length * ((double)roadLength / (double)this.ScreenModel.ScreenLong));
                 clickValue = (int)(clickPoint * (double)roadLength);
 
                 int index = panel.Road.getSegmentModelByPositon(clickValue);

@@ -107,12 +107,13 @@ namespace ScreenManager.Forms
         private void label5_DoubleClick(object sender, EventArgs e)
         {
             Clipboard.SetDataObject(this.label5.Text);
+            MessageBox.Show("已复制到剪贴板");
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start("http://www.szzsyk.com/");
-            MessageBox.Show("已复制到剪贴板");
+           
         }
 
 
